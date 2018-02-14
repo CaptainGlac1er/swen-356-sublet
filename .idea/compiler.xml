@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="swen-256-suble" />
         <module name="swen-256-sublet" />
+        <module name="swen-356-sublet" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="swen-256-suble" target="1.8" />
       <module name="swen-256-sublet" target="1.8" />
+      <module name="swen-356-sublet" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
