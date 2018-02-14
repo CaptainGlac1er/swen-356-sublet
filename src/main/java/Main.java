@@ -1,5 +1,6 @@
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
+import sublet.objects.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,8 @@ public class Main {
     public static void main(String[] args) {
         get("/", (req,res)->{
             Map<String,Object> model = new HashMap<>();
-            model.put("message","Hello World 123");
+            Item item = new Item("Hello Test","This is a description");
+            model.put("message",item);
             return new ModelAndView(model, "velocity/index.vm");
         }, new VelocityTemplateEngine());
         get("/hello", (req, res) -> "Hello World");

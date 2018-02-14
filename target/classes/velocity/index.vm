@@ -4,7 +4,7 @@
 <title>sublet 356</title>
 </header>
 <body>
-<h1>$message</h1>
-
+<h1>$message.getName()</h1>
+<h3>$message.getDescription()</h3>
 </body>
 </html>
