@@ -1,0 +1,5 @@
+#parse("velocity/Layout.vm")
+#@mainLayout()
+    <h1>$message.getName()</h1>
+    <h3>$message.getDescription()</h3>
+#end

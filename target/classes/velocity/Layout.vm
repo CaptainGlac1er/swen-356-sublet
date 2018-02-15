@@ -1,0 +1,11 @@
+#macro(mainLayout)
+<!doctype html>
+<html>
+    <header>
+        <title>sublet 356 test</title>
+    </header>
+    <body>
+        $bodyContent
+    </body>
+</html>
+#end
