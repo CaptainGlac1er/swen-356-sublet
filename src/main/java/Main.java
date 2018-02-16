@@ -5,10 +5,8 @@ import sublet.controllers.AboutController;
 import sublet.controllers.IndexController;
 import sublet.objects.*;
 import sublet.util.Path;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static spark.Spark.*;
 
 public class Main {
