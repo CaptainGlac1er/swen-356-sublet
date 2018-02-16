@@ -13,7 +13,7 @@ import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) {
-        port(80);
+        port(4000);
         get(Path.Web.INDEX, IndexController.serveIndexPage);
         get(Path.Web.ABOUT, AboutController.serveIndexPage);
         get("/hello", (req, res) -> "Hello World");
