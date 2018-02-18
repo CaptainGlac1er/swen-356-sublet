@@ -10,11 +10,6 @@
                font-family: "Trebuchet MS", Helvetica, sans-serif;
             }
             body{
-<<<<<<< HEAD
-                background-color: ;
-=======
-                min-width: 1100px;
->>>>>>> 434557b6ff7c640bbbef99c5833989d61af56c87
                 grid-auto-columns: 1fr;
                 grid-template-rows: 1fr 8fr;
             }

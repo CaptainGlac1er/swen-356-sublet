@@ -1,10 +1,9 @@
 package sublet.util;
 
+import org.apache.velocity.app.VelocityEngine;
 import spark.ModelAndView;
 import spark.Request;
-
-import org.apache.velocity.app.*;
-import spark.template.velocity.*;
+import spark.template.velocity.VelocityTemplateEngine;
 
 import java.util.Map;
 
