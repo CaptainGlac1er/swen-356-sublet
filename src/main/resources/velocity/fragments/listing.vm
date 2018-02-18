@@ -1,0 +1,5 @@
+<div class="listing">
+    <h2 class="listing-text">$listing.getUser()</h2>
+    <h3 class="listing-text description-text">$listing.getDesc()</h3>
+    <h3 class="listing-text rent-text">$listing.getRent()</h3>
+</div>
