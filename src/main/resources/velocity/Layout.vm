@@ -11,16 +11,16 @@
             }
             body{
                 background-color: ;
+<<<<<<< HEAD
                 display: grid;
+=======
+
+>>>>>>> fe22863c720e7c80415fb7c73fa02b1797eac4ca
                 grid-auto-columns: 1fr;
                 grid-template-rows: 1fr 6fr;
             }
             .header{
                 z-index: 1000;
-                overflow: hidden;
-                position: fixed;
-                top: 0;
-                left: 0;
                 height: 50px;
                 width: 100%;
 

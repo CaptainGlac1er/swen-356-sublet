@@ -19,7 +19,7 @@ public class Main {
         port(4000);
         get(Path.Web.INDEX, IndexController.serveIndexPage);
         get(Path.Web.ABOUT, AboutController.serveIndexPage);
-        get("/newlisting", ListingController.listingsForumPage);
+        get(Path.Web.NEWLISTING, ListingController.listingsForumPage);
         Class.forName("org.h2.Driver");
         Connection conn = DriverManager.getConnection("jdbc:h2:~/TigerTenant", "sa", "");
         // add application code here
