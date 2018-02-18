@@ -1,8 +1,8 @@
 package sublet.models;
-// gender, rit housing, furnished
 
 import java.util.List;
 import static java.util.Arrays.asList;
+
 
 public class Listing {
     private String user;
