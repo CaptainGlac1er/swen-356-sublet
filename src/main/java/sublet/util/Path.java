@@ -5,10 +5,16 @@ public class Path {
     public static class Web{
         public static final String INDEX = "/";
         public static final String ABOUT = "/about";
+        public static final String USER = "/user";
+        public static final String NEWLISTING = USER + "/new";
+
+
     }
     public static class Template{
-        public static final String INDEX = "/velocity/pages/index.vm";
-        public static final String ABOUT = "/velocity/pages/about.vm";
+        private static final String PAGELOC = "/velocity/pages/";
+        public static final String INDEX = PAGELOC + "index.vm";
+        public static final String ABOUT = PAGELOC + "about.vm";
+        public static final String NEW = PAGELOC + "new.vm";
 
     }
 }
