@@ -11,11 +11,6 @@
             }
             body{
                 background-color: ;
-<<<<<<< HEAD
-                display: grid;
-=======
-
->>>>>>> fe22863c720e7c80415fb7c73fa02b1797eac4ca
                 grid-auto-columns: 1fr;
                 grid-template-rows: 1fr 6fr;
             }
@@ -115,10 +110,9 @@
         </style>
     </header>
     <body>
-        <div class="header">
-            <h1>Tiger Tenant</h1>
-        </div>
+        #parse("/velocity/fragments/header.vm")
         $bodyContent
+        #parse("/velocity/fragments/footer.vm")
     </body>
 </html>
 #end
