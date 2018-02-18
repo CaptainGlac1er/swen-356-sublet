@@ -10,9 +10,8 @@
                font-family: "Trebuchet MS", Helvetica, sans-serif;
             }
             body{
-                background-color: ;
                 grid-auto-columns: 1fr;
-                grid-template-rows: 1fr 6fr;
+                grid-template-rows: 1fr 8fr;
             }
             .header{
                 z-index: 1000;
@@ -67,13 +66,15 @@
                 }
                 .form-title{
                     display: block;
+                    color: #999999;
 
                 }
                 .form-container{
-                    margin-top: 100px;
+                    margin-top: 25px;
                     margin-left: 100px;
                     display: grid;
-                    grid-template-rows: 1fr 7fr;
+                    grid-template-rows: 1fr 9fr;
+                    margin-bottom: 30px;
                 }
                 .form-group{
                     margin-bottom: 15px;
@@ -102,6 +103,9 @@
                     border: 0;
                     font-size: 20px;
                     color: white;
+                }
+                .btn:hover{
+                    cursor: pointer;
                 }
             .text-area{
                 height: 150px;
