@@ -3,12 +3,15 @@ import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import sublet.controllers.AboutController;
 import sublet.controllers.IndexController;
+import sublet.controllers.ListingController;
 import sublet.objects.*;
 import sublet.util.Path;
+
+
 import java.sql.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
 import static spark.Spark.*;
 
 public class Main {
@@ -16,10 +19,7 @@ public class Main {
         port(4000);
         get(Path.Web.INDEX, IndexController.serveIndexPage);
         get(Path.Web.ABOUT, AboutController.serveIndexPage);
-        get("/hello", (req, res) -> "Hello World");
-        get("/hello/:name", (req,res)->{
-            return "Hello" + req.params("name");
-        });
+        get("/newlisting", ListingController.listingsForumPage);
         Class.forName("org.h2.Driver");
         Connection conn = DriverManager.getConnection("jdbc:h2:~/TigerTenant", "sa", "");
         // add application code here
