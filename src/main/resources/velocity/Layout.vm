@@ -7,14 +7,13 @@
             *{
                padding: 0;
                margin: 0;
-             font-family: "Trebuchet MS", Helvetica, sans-serif;
+               font-family: "Trebuchet MS", Helvetica, sans-serif;
             }
             body{
                 background-color: ;
-
                 display: grid;
                 grid-auto-columns: 1fr;
-                grid-template-rows: 1fr 4fr;
+                grid-template-rows: 1fr 6fr;
             }
             .header{
                 z-index: 1000;
@@ -71,6 +70,48 @@
                 .rent-text{
 
                 }
+                .form-title{
+                    display: block;
+
+                }
+                .form-container{
+                    margin-top: 100px;
+                    margin-left: 100px;
+                    display: grid;
+                    grid-template-rows: 1fr 7fr;
+                }
+                .form-group{
+                    margin-bottom: 15px;
+                }
+                .form-input{
+                    height: 50px;
+                    width: 50vw;
+                    border-radius: 10px;
+                    border: 2px solid rgb(255, 190, 118);
+                    overflow: scroll;
+                    padding: 10px;
+                    font-size: 18px;
+                    color: #444444;
+                }
+                .form-input::placeholder{
+                    font-size: 18px;
+                    opacity: .5;
+                    color: #444444;
+                }
+                .btn{
+                    height: 50px;
+                    margin: auto;
+                    width: 50vw;
+                    background-color: rgb(255, 190, 118);
+                    border-radius: 10px;
+                    border: 0;
+                    font-size: 20px;
+                    color: white;
+                }
+            .text-area{
+                height: 150px;
+                resize: none;
+            }
         </style>
     </header>
     <body>
