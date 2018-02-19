@@ -29,6 +29,11 @@
         </div>
         <button type="submit" class="btn">Submit</button>
     </form>
+
+    <script>
+        $('body').find('.link').removeClass('active');
+        $('.listings-new-link').addClass('active');
+    </script>
 </div>
 
 #end

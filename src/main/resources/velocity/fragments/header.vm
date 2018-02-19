@@ -1,3 +1,4 @@
 <div class="header">
     <h1>Tiger Tenant</h1>
+    #parse("/velocity/fragments/navbar.vm")
 </div>
