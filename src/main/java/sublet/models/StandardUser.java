@@ -21,6 +21,9 @@ public class StandardUser {
         this.birthday = birthday;
         this.gradYear = gradYear;
     }
+    public String getFname(){
+        return this.fname;
+    }
 
     public boolean checkPass(String UID, String pw){
         return UID.equals(pw);

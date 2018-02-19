@@ -3,7 +3,9 @@ package sublet.controllers;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import sublet.models.CurrentUser;
 import sublet.models.Listing;
+import sublet.models.StandardUser;
 import sublet.util.PageRender;
 import sublet.util.Path;
 
@@ -29,6 +31,8 @@ public class IndexController {
         listings.add((listing));
 
         model.put("listings",listings);
+        model.put("currentuser", CurrentUser.getCurrentUser());
+        System.out.println(((StandardUser)model.get("currentuser")).getFname());
         return PageRender.render(request,model, Path.Template.INDEX);
     };
 }
