@@ -1,7 +1,9 @@
 package sublet.models;
 
-// import java.util.List;
-// import static java.util.Arrays.asList;
+import java.util.List;
+import static java.util.Arrays.asList;
+
+import java.util.List;
 
 public class Listing {
 
@@ -18,15 +20,14 @@ public class Listing {
     public enum IsFurnishedOptions{ FURNISHED, UNFURNISHED, PARTIALLYFURNISHED }
     IsFurnishedOptions is_furnished;
 
-    /* private List<String> pick_gender = asList("Coed", "Female only", "Male only");
-    private String gender;
+     private List<String> pick_gender = asList("Coed", "Female only", "Male only");
+    //private String gender;
     private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
             "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
             "Off campus");
-    private String housing_type;
+    //private String housing_type;
     private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
-    private String is_furnished;
-    */
+    //private String is_furnished;
 
 
     public Listing(String user,
@@ -35,7 +36,8 @@ public class Listing {
                    PaymentFrequencyOptions payment_frequency,
                    GenderOptions gender,
                    HousingTypeOptions housing_type,
-                   IsFurnishedOptions is_furnished){
+                   IsFurnishedOptions is_furnished
+ ){
         this.user = user;
         this.desc = desc;
         this.rent = rent;

@@ -19,7 +19,6 @@ public class IndexController {
 
         String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
 
-
         Listing listing = new Listing("user123@rit.edu", desc, "$500/month",
                 Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
@@ -32,7 +31,6 @@ public class IndexController {
 
         model.put("listings",listings);
         model.put("currentuser", CurrentUser.getCurrentUser());
-        System.out.println(((StandardUser)model.get("currentuser")).getFname());
         return PageRender.render(request,model, Path.Template.INDEX);
     };
 }

@@ -5,5 +5,9 @@
         #parse("/velocity/fragments/listing.vm")
     #end
 
+    <script>
+        $('body').find('.link').removeClass('active');
+        $('.home-link').addClass('active');
+    </script>
     </div>
 #end
