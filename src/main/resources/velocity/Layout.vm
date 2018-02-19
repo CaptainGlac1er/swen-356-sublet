@@ -115,6 +115,7 @@
     </header>
     <body>
         #parse("/velocity/fragments/header.vm")
+        #parse("/velocity/fragments/navbar.vm")
         $bodyContent
         #parse("/velocity/fragments/footer.vm")
     </body>
