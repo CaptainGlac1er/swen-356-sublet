@@ -2,7 +2,7 @@ package sublet.models;
 import java.util.Date;
 
 public class StandardUser {
-    private String UID;
+    private long UID;
     private String fname;
     private String lname;
     private String username;
@@ -11,7 +11,7 @@ public class StandardUser {
     private Date birthday;
     private Date gradYear;
 
-    public StandardUser(String UID, String fname, String lname, String username, String pass, String email, Date birthday, Date gradYear){
+    public StandardUser(long UID, String fname, String lname, String username, String pass, String email, Date birthday, Date gradYear){
         this.UID = UID;
         this.fname = fname;
         this.lname = lname;
