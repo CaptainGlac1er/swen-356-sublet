@@ -10,7 +10,6 @@
                font-family: "Trebuchet MS", Helvetica, sans-serif;
             }
             body{
-                min-width: 1100px;
                 grid-auto-columns: 1fr;
                 grid-template-rows: 1fr 8fr;
             }
@@ -115,10 +114,9 @@
         </style>
     </header>
     <body>
-        <div class="header">
-            <h1>Tiger Tenant</h1>
-        </div>
+        #parse("/velocity/fragments/header.vm")
         $bodyContent
+        #parse("/velocity/fragments/footer.vm")
     </body>
 </html>
 #end

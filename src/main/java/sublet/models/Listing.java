@@ -1,14 +1,24 @@
 package sublet.models;
-// gender, rit housing, furnished
 
-import java.util.List;
-import static java.util.Arrays.asList;
+// import java.util.List;
+// import static java.util.Arrays.asList;
 
 public class Listing {
+
     private String user;
     private String desc;
     private String rent;
-    private List<String> pick_gender = asList("Coed", "Female only", "Male only");
+    public enum PaymentFrequencyOptions{ MONTHLY, SEMESTERLY }
+    PaymentFrequencyOptions payment_frequency;
+    public enum GenderOptions{ COED, FEMALE, MALE }
+    GenderOptions gender;
+    public enum HousingTypeOptions{ COLONYMANOR, GLOBALVILLAGE, PARKPOINT, PERKINSGREEN, PROVINCE, RACQUETCLUB, RITINN,
+        RIVERKNOLL, LODGE, UNIVERSITYCOMMONS, OFFCAMPUS }
+    HousingTypeOptions housing_type;
+    public enum IsFurnishedOptions{ FURNISHED, UNFURNISHED, PARTIALLYFURNISHED }
+    IsFurnishedOptions is_furnished;
+
+    /* private List<String> pick_gender = asList("Coed", "Female only", "Male only");
     private String gender;
     private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
             "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
@@ -16,12 +26,20 @@ public class Listing {
     private String housing_type;
     private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
     private String is_furnished;
+    */
 
 
-    public Listing(String user, String desc, String rent, String gender, String housing_type, String is_furnished){
+    public Listing(String user,
+                   String desc,
+                   String rent,
+                   PaymentFrequencyOptions payment_frequency,
+                   GenderOptions gender,
+                   HousingTypeOptions housing_type,
+                   IsFurnishedOptions is_furnished){
         this.user = user;
         this.desc = desc;
         this.rent = rent;
+        this.payment_frequency = payment_frequency;
         this.gender = gender;
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
@@ -36,13 +54,16 @@ public class Listing {
     public String getRent(){
         return this.rent;
     }
-    public String getGender(){
+    public PaymentFrequencyOptions getPayment_frequency() {
+        return this.payment_frequency;
+    }
+    public GenderOptions getGender(){
         return this.gender;
     }
-    public String getHousingType(){
+    public HousingTypeOptions getHousingType(){
         return this.housing_type;
     }
-    public String getIsFurnished(){
+    public IsFurnishedOptions getIsFurnished(){
         return this.is_furnished;
     }
 }
