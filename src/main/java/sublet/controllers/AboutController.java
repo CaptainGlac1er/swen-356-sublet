@@ -10,9 +10,10 @@ import sublet.util.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AboutController {
+public class AboutController extends Controller {
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String,Object> model = new HashMap<>();
+        Controller.AddCurrentState(model,request, response);
         return PageRender.render(request,model, Path.Template.ABOUT);
     };
 }

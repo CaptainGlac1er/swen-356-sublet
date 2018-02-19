@@ -10,10 +10,11 @@ import sublet.util.PageRender;
 import sublet.util.Path;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IndexController {
+public class IndexController extends Controller {
     public static Route serveIndexPage = (Request request, Response response) -> {
         Map<String,Object> model = new HashMap<>();
 
@@ -30,7 +31,7 @@ public class IndexController {
         listings.add((listing));
 
         model.put("listings",listings);
-        model.put("currentuser", CurrentUser.getCurrentUser());
+        Controller.AddCurrentState(model,request,response);
         return PageRender.render(request,model, Path.Template.INDEX);
     };
 }
