@@ -4,11 +4,17 @@ import spark.Request;
 import spark.Response;
 import sublet.models.CurrentUser;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    protected static void AddCurrentState(Map<String,Object> additions, Request request, Response response){
-        additions.put("currentuser", CurrentUser.getCurrentUser(request, response));
+    Map<String, Object> model;
+    public Controller(Request request, Response response){
+            model = new HashMap<>();
+            model.put("currentuser", CurrentUser.getCurrentUser(request, response));
 
+    }
+    public Map<String, Object> getModel(){
+        return model;
     }
 }

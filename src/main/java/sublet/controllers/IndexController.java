@@ -15,23 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IndexController extends Controller {
-    public static Route serveIndexPage = (Request request, Response response) -> {
-        Map<String,Object> model = new HashMap<>();
-
-        String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
-
-        Listing listing = new Listing("user123@rit.edu", desc, "$500/month",
-                Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-               Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
-
-        ArrayList<Listing> listings = new ArrayList<>();
-        listings.add((listing));
-        listings.add((listing));
-        listings.add((listing));
-        listings.add((listing));
-
-        model.put("listings",listings);
-        Controller.AddCurrentState(model,request,response);
-        return PageRender.render(request,model, Path.Template.INDEX);
-    };
+    public IndexController(Request request, Response response) {
+        super(request, response);
+    }
 }
