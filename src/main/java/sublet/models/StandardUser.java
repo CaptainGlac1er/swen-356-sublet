@@ -1,7 +1,7 @@
 package sublet.models;
 import java.util.Date;
 
-public class StandardUser {
+public class StandardUser extends User{
     private long UID;
     private String fname;
     private String lname;

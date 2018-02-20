@@ -17,7 +17,6 @@ public class ListingService {
     };
     public static Route listingsPost = (request, response) -> {
         ListingController controller = new ListingController(request, response);
-        Map<String, Object> model = new HashMap<>();
         Listing L = new Listing("Meme", request.queryParams("dis"),request.queryParams("rent"),
                 Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);

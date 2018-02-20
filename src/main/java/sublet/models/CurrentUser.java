@@ -9,11 +9,14 @@ import java.util.Map;
 import java.util.Random;
 
 public class CurrentUser {
-    private static Map<Long,StandardUser> currentUsers = new HashMap<>();
-    public static StandardUser getCurrentUser(Request request, Response response){
+    private static Map<Long,User> currentUsers = new HashMap<>();
+    public static User getCurrentUser(Request request, Response response){
+        if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
+            return new GuestUser();
+        }
         request.session(true);
         System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
-        StandardUser currentUser;
+        User currentUser;
         if(request.session().attribute("session") == null){
             long newSession;
             if(request.cookie("session") != null && currentUsers.containsKey(newSession = Long.parseLong(request.cookie("session")))){
