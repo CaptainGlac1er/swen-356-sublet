@@ -5,29 +5,92 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
+/**
+ * This is the listing class. It is the underlying representation of the information within a listing
+ * Language: Java
+ * Created: 2/14/18
+ * Revisited: 2/21/18
+ * @author Stephen Cook(sjc5897@g.rit.edu)
+ * @author Molly Feldmann (mef4232@g.rit.edu)
+ */
 public class Listing {
+
+    /**
+     * Enum used to represent payment frequency options
+     */
+    public enum PaymentFrequencyOptions{
+        MONTHLY ("Per Month"), SEMESTERLY ("Per Semester"), YEARLY ("Per Year");
+        private String to_str;
+        PaymentFrequencyOptions(String to_str){
+            this.to_str = to_str;
+        }
+        public String getTo_str(){
+            return to_str;
+        }
+    }
+    /**
+     * Enum used to represent gender options
+     */
+    public enum GenderOptions{
+        COED("Co-Ed"),
+        FEMALE ("Female Only"),
+        MALE ("Male Only");
+        private String to_str;
+        GenderOptions(String to_str){
+            this.to_str = to_str;
+        }
+        public String getTo_str(){
+            return to_str;
+        }
+    }
+    /**
+     * Enum used to represent housing options
+     */
+    public enum HousingTypeOptions {
+        COLONY ("Colony Manor"), GLOBAL("Global Village"), PARKPOINT ("Park Point"), PERKINS ("Perkins Green"),
+        PROVINCE ("Province"), RACQUETCLUB ("Racquet Club"), RITINN ("RIT Inn"),
+        RIVERKNOLL ("Riverknoll"), LODGE ("The Lodge"), UC ("University Commons"), OFFCAMPUS ("Off Campus Housing");
+        private String to_str;
+        HousingTypeOptions(String to_str){
+            this.to_str = to_str;
+        }
+        public String getTo_str(){
+            return to_str;
+        }
+    }
+    /**
+     * Enum used to represent furnished options
+     */
+    public enum IsFurnishedOptions{
+        FURNISHED ("Furnished"), UNFURNISHED("Unfurnished"), PART ("Partially Furnished");
+        private String to_str;
+        IsFurnishedOptions(String to_str){
+            this.to_str = to_str;
+        }
+        public String getTo_str(){
+            return to_str;
+        }
+    }
 
     private String user;
     private String desc;
     private String rent;
-    public enum PaymentFrequencyOptions{ MONTHLY, SEMESTERLY }
-    PaymentFrequencyOptions payment_frequency;
-    public enum GenderOptions{ COED, FEMALE, MALE }
-    GenderOptions gender;
-    public enum HousingTypeOptions{ COLONYMANOR, GLOBALVILLAGE, PARKPOINT, PERKINSGREEN, PROVINCE, RACQUETCLUB, RITINN,
-        RIVERKNOLL, LODGE, UNIVERSITYCOMMONS, OFFCAMPUS }
-    HousingTypeOptions housing_type;
-    public enum IsFurnishedOptions{ FURNISHED, UNFURNISHED, PARTIALLYFURNISHED }
-    IsFurnishedOptions is_furnished;
+    private IsFurnishedOptions is_furnished;
+    private GenderOptions gender;
+    private HousingTypeOptions housing_type;
+    private PaymentFrequencyOptions payment_frequency;
 
-     private List<String> pick_gender = asList("Coed", "Female only", "Male only");
-    //private String gender;
-    private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
-            "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
-            "Off campus");
-    //private String housing_type;
-    private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
-    //private String is_furnished;
+
+
+
+//     private List<String> pick_gender = asList("Coed", "Female only", "Male only");
+//    //private String gender;
+//    private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
+//            "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
+//            "Off campus");
+//    //private String housing_type;
+//    private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
+//    //private String is_furnished;
 
 
     public Listing(String user,

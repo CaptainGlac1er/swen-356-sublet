@@ -11,11 +11,10 @@
             <input class="form-input" placeholder="Rent" id="rent" name="rent" class="form-control" type="text">
         </div>
         <div class="form-group">
-            <select class="form-input" name="Gender">
-                <option value="Male only">Listings</option>
-                <option value="saab">Saab</option>
-                <option value="fiat">Fiat</option>
-                <option value="audi">Audi</option>
+            <select class="form-input" name="Gender" id="gender">
+                <option value= Listing.MALE>Male Only</option>
+                <option value= Listing.FEMALE>Female Only</option>
+                <option value= Listing.COED>Any</option>
             </select>
         </div>
         <div class="form-group">
