@@ -1,5 +1,8 @@
 package sublet.models;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static java.util.Arrays.asList;
 
@@ -72,6 +75,11 @@ public class Listing {
         }
     }
 
+    public static ArrayList<GenderOptions> genderLst = new ArrayList<>(Arrays.asList(GenderOptions.values()));
+    public static ArrayList<HousingTypeOptions> housingLst = new ArrayList<>(Arrays.asList(HousingTypeOptions.values()));
+    public static ArrayList<IsFurnishedOptions>  furnishedLst = new ArrayList<>(Arrays.asList(IsFurnishedOptions.values()));
+    public static ArrayList<PaymentFrequencyOptions> paymentLst = new ArrayList<>(Arrays.asList(PaymentFrequencyOptions.values()));
+
     private String user;
     private String desc;
     private String rent;
@@ -79,18 +87,6 @@ public class Listing {
     private GenderOptions gender;
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
-
-
-
-
-//     private List<String> pick_gender = asList("Coed", "Female only", "Male only");
-//    //private String gender;
-//    private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
-//            "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
-//            "Off campus");
-//    //private String housing_type;
-//    private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
-//    //private String is_furnished;
 
 
     public Listing(String user,
@@ -108,6 +104,43 @@ public class Listing {
         this.gender = gender;
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
+    }
+    public static GenderOptions selectGender(String option){
+        switch(option){
+            case "FEMALE":
+                return GenderOptions.FEMALE;
+            case "MALE":
+                return GenderOptions.MALE;
+            case "COED":
+                return GenderOptions.COED;
+            default:
+                return GenderOptions.MALE;
+        }
+    }
+
+    public static HousingTypeOptions selectHousing(String option){
+        for(HousingTypeOptions a : housingLst ){
+            if(a.getTo_str().equals(option)){
+                return a;
+            }
+        }
+        return HousingTypeOptions.PARKPOINT;
+    }
+    public static IsFurnishedOptions selectFurnished(String option){
+        for(IsFurnishedOptions a : furnishedLst ){
+            if(a.getTo_str().equals(option)){
+                return a;
+            }
+        }
+        return IsFurnishedOptions.FURNISHED;
+    }
+    public static PaymentFrequencyOptions selectPayment(String option){
+        for(PaymentFrequencyOptions a : paymentLst ){
+            if(a.getTo_str().equals(option)){
+                return a;
+            }
+        }
+        return PaymentFrequencyOptions.SEMESTERLY;
     }
 
     public String getUser(){
