@@ -72,7 +72,7 @@ public class Listing {
         }
     }
 
-    private String user;
+    private User user;
     private String desc;
     private String rent;
     private IsFurnishedOptions is_furnished;
@@ -93,7 +93,7 @@ public class Listing {
 //    //private String is_furnished;
 
 
-    public Listing(String user,
+    public Listing(User user,
                    String desc,
                    String rent,
                    PaymentFrequencyOptions payment_frequency,
@@ -110,7 +110,7 @@ public class Listing {
         this.is_furnished = is_furnished;
     }
 
-    public String getUser(){
+    public User getUser(){
         return this.user;
     }
     public String getDesc(){

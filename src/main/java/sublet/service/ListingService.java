@@ -17,10 +17,7 @@ public class ListingService {
     };
     public static Route listingsPost = (request, response) -> {
         ListingController controller = new ListingController(request, response);
-        Listing L = new Listing("Meme", request.queryParams("dis"),request.queryParams("rent"),
-                Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
-        controller.addListing(L);
+        controller.addListing();
         return PageRender.render(request, controller.getModel(), Path.Template.NEWLISTING);
     };
 }
