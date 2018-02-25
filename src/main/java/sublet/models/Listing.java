@@ -141,7 +141,7 @@ public class Listing {
         return PaymentFrequencyOptions.SEMESTERLY;
     }
 
-    public String getUser(){
+    public User getUser(){
         return this.user;
     }
     public String getDesc(){
