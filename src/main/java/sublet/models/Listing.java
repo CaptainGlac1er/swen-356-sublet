@@ -80,7 +80,7 @@ public class Listing {
     public static ArrayList<IsFurnishedOptions>  furnishedLst = new ArrayList<>(Arrays.asList(IsFurnishedOptions.values()));
     public static ArrayList<PaymentFrequencyOptions> paymentLst = new ArrayList<>(Arrays.asList(PaymentFrequencyOptions.values()));
 
-    private String user;
+    private User user;
     private String desc;
     private String rent;
     private IsFurnishedOptions is_furnished;
@@ -88,9 +88,7 @@ public class Listing {
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
 
-
-    public Listing(String user,
-                   String desc,
+    public Listing(User user,String desc,
                    String rent,
                    PaymentFrequencyOptions payment_frequency,
                    GenderOptions gender,

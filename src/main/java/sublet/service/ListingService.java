@@ -4,6 +4,8 @@ import spark.Route;
 import sublet.controllers.Controller;
 import sublet.controllers.ListingController;
 import sublet.models.Listing;
+import sublet.models.Listings;
+import sublet.models.User;
 import sublet.util.PageRender;
 import sublet.util.Path;
 
@@ -22,11 +24,11 @@ public class ListingService {
     };
     public static Route listingsPost = (request, response) -> {
         ListingController controller = new ListingController(request, response);
-        Listing L = new Listing("Meme", request.queryParams("dis"),request.queryParams("rent"),
+        Listing L = new Listing(new User(), request.queryParams("dis"),request.queryParams("rent"),
                 Listing.selectPayment(request.queryParams("payment")), Listing.selectGender(request.queryParams("gender")),
                 Listing.selectHousing(request.queryParams("housing")), Listing.selectFurnished(request.queryParams("furnished")));
-        controller.addListing(L);
-        controller.getModel().put("listings",controller.getListings());
+        Listings.AddListing(L);
+        controller.getModel().put("listings", Listings.GetListings());
         return PageRender.render(request, controller.getModel(), Path.Template.INDEX);
     };
 }

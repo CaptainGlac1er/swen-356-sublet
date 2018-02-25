@@ -28,5 +28,8 @@ public class StandardUser extends User{
     public boolean checkPass(String UID, String pw){
         return UID.equals(pw);
     }
+    public boolean checkIfSameUser(StandardUser user){
+        return user.UID == this.UID;
+    }
 
 }

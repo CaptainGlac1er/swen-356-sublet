@@ -11,15 +11,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    Map<String, Object> model;
+    User sessionUser;
+    Request currentRequest;
+    Response currentResponse;
+    Map<String, Object> model = new HashMap<>();
     public Controller(Request request, Response response){
-        model = new HashMap<>();
-        User user =  CurrentUser.getCurrentUser(request, response);
-        model.put("currentuser", user);
-        if(user instanceof GuestUser){
+        currentRequest = request;
+        currentResponse = response;
+        sessionUser =  CurrentUser.getCurrentUser(request, response);
+        model.put("currentuser", sessionUser);
+        if(sessionUser instanceof GuestUser){
             model.put("loggedin", false);
         }
-        if(user instanceof StandardUser){
+        if(sessionUser instanceof StandardUser){
             model.put("loggedin", true);
         }
     }
