@@ -25,9 +25,24 @@
         </div>
         <div class="form-group">
             <select class="form-input" name="Gender" id="gender">
-                <option value= Listing.MALE>Male Only</option>
-                <option value= Listing.FEMALE>Female Only</option>
-                <option value= Listing.COED>Any</option>
+                #foreach($gend in $gender)
+                    <option value="$gend">$gend.getTo_str()</option>
+                #end
+            </select>
+            <select class="form-input" name="Gender" id="gender">
+                #foreach($pay in $payment)
+                    <option value="$pay">$pay.getTo_str()</option>
+                #end
+            </select>
+            <select class="form-input" name="Gender" id="gender">
+                #foreach($h in $house)
+                    <option value="$h">$h.getTo_str()</option>
+                #end
+            </select>
+            <select class="form-input" name="Gender" id="gender">
+                #foreach($f in $furn)
+                    <option value="$f">$f.getTo_str()</option>
+                #end
             </select>
         </div>
         <div class="form-group">

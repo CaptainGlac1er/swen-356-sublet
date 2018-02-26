@@ -1,5 +1,7 @@
 package sublet.models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static java.util.Arrays.asList;
 
@@ -130,6 +132,10 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
     }
+    public static ArrayList<GenderOptions> genderList = new ArrayList<>(Arrays.asList(GenderOptions.values()));
+    public static ArrayList<HousingTypeOptions> housingList = new ArrayList<>(Arrays.asList(HousingTypeOptions.values()));
+    public static ArrayList<IsFurnishedOptions> furnishedList = new ArrayList<>(Arrays.asList(IsFurnishedOptions.values()));
+    public static ArrayList<PaymentFrequencyOptions> paymentList = new ArrayList<>(Arrays.asList(PaymentFrequencyOptions.values()));
     public long getLID(){return this.lid;}
     public User getUser(){
         return this.user;
