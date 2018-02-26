@@ -148,6 +148,7 @@
     <body>
         #parse("/velocity/fragments/header.vm")
         #parse("/velocity/fragments/navbar.vm")
+        #parse("/velocity/fragments/error.vm")
         $bodyContent
         #parse("/velocity/fragments/footer.vm")
     </body>

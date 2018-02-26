@@ -29,7 +29,7 @@ public abstract class Controller {
         links.put("LISTING",Path.Web.LISTING);
         links.put("LOGIN", Path.Web.LOGIN);
         links.put("LOGOUT", Path.Web.LOGOUT);
-        model.put("links", links);
+        addToModel("links", links);
     }
     public abstract void Execute();
     public abstract void Execute(Command command);
@@ -43,6 +43,9 @@ public abstract class Controller {
             model.put("loggedin", true);
         }
 
+    }
+    public void addToModel(String name, Object object){
+        this.model.put(name, object);
     }
     public Map<String, Object> getModel(){
         return model;

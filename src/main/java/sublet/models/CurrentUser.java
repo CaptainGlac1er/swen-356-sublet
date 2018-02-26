@@ -2,6 +2,7 @@ package sublet.models;
 
 import spark.Request;
 import spark.Response;
+import sublet.Exceptions.LoginException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ public class CurrentUser {
     private static Map<Long,StandardUser> userDataBase = new HashMap<>();
     private static Map<Long,Long> currentUsers = new HashMap<>();
 
-    public static long loginUser(String user, String password){
+    public static long loginUser(String user, String password) throws LoginException {
         long newSession;
         StandardUser currentUser;
         for (StandardUser u:
@@ -25,7 +26,7 @@ public class CurrentUser {
                     return newSession;
                 }
         }
-        throw new NullPointerException();
+        throw new LoginException("Incorrect Login Information");
     }
     public static void logoutUser(long sid){
         currentUsers.remove(sid);
