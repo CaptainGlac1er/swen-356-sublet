@@ -1,10 +1,10 @@
 <div class="navBarContainer">
     <ul class="navbar">
         <li>
-        <a class="link home-link" href="/">Home</a>
+        <a class="link home-link" href="${links.get("INDEX")}">Home</a>
         </li>
         <li>
-        <a class="link listings-new-link" href="/listing/new">New Post</a>
+        <a class="link listings-new-link" href="${links.get("NEWLISTING")}">New Post</a>
         </li>
     </ul>
 </div>

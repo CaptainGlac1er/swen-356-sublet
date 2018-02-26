@@ -1,6 +1,8 @@
 package sublet.util;
 
 
+import java.util.HashMap;
+
 public class Path {
     public static class Web{
         public static final String INDEX = "/";
