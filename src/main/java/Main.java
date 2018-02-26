@@ -1,5 +1,6 @@
 import org.apache.velocity.app.VelocityEngine;
 import sublet.controllers.ListingController;
+import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
 import sublet.models.StandardUser;
@@ -20,6 +21,11 @@ public class Main {
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty("runtime.references.strict", true);
         ve.init();
+        StandardUser user = new StandardUser(1234, "Test", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+        CurrentUser.
+        user = new StandardUser(12345, "Test", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+
+
         port(4000);
         String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
 

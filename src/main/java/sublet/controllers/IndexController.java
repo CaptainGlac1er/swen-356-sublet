@@ -22,7 +22,6 @@ public class IndexController extends Controller {
 
     @Override
     public void Execute() {
-
     }
 
     public ArrayList<Listing> getListings(){

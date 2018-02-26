@@ -17,7 +17,7 @@ import java.util.Map;
 public class UserService {
     public static Route serveIndexPage = (Request request, Response response) -> {
         Controller controller = new UserController(request, response);
-
+        controller.Execute();
 
         return PageRender.render(request,controller.getModel(), Path.Template.USER);
     };

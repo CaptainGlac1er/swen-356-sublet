@@ -6,7 +6,7 @@ public class StandardUser extends User{
     private String fname;
     private String lname;
     private String username;
-    private String password;
+    private int password;
     private String email;
     private Date birthday;
     private Date gradYear;
@@ -16,7 +16,7 @@ public class StandardUser extends User{
         this.fname = fname;
         this.lname = lname;
         this.username = username;
-        this.password = pass;
+        this.password = pass.hashCode();
         this.email = email;
         this.birthday = birthday;
         this.gradYear = gradYear;
@@ -25,8 +25,8 @@ public class StandardUser extends User{
         return this.fname;
     }
 
-    public boolean checkPass(String UID, String pw){
-        return UID.equals(pw);
+    public boolean checkPass(String pw){
+        return this.password == pw.hashCode();
     }
     public boolean checkIfSameUser(StandardUser user){
         return user.UID == this.UID;

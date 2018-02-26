@@ -2,6 +2,7 @@ package sublet.controllers;
 
 import spark.Request;
 import spark.Response;
+import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
 
@@ -15,6 +16,13 @@ public class UserController extends Controller {
 
     @Override
     public void Execute() {
+        switch (currentRequest.queryParams("submit")){
+            case "login":
+                CurrentUser.loginUser(currentRequest.queryParams("username"),currentRequest.queryParams("password"),currentResponse);
+                break;
+            default:
+                break;
+        }
     }
 
     public ArrayList<Listing> getListings(){
