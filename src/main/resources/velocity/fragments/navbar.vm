@@ -4,7 +4,7 @@
         <a class="link home-link" href="/">Home</a>
         </li>
         <li>
-        <a class="link listings-new-link" href="/user/new">New Post</a>
+        <a class="link listings-new-link" href="/listing/new">New Post</a>
         </li>
     </ul>
 </div>

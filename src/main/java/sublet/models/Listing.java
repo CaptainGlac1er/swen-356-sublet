@@ -71,7 +71,7 @@ public class Listing {
             return to_str;
         }
     }
-
+    private long lid;
     private User user;
     private String desc;
     private String rent;
@@ -94,13 +94,13 @@ public class Listing {
 
 
     public Listing(User user,
-                   String desc,
-                   String rent,
-                   PaymentFrequencyOptions payment_frequency,
-                   GenderOptions gender,
-                   HousingTypeOptions housing_type,
-                   IsFurnishedOptions is_furnished
- ){
+                    String desc,
+                    String rent,
+                    PaymentFrequencyOptions payment_frequency,
+                    GenderOptions gender,
+                    HousingTypeOptions housing_type,
+                    IsFurnishedOptions is_furnished
+    ){
         this.user = user;
         this.desc = desc;
         this.rent = rent;
@@ -109,7 +109,25 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
     }
-
+    public Listing(long lid,
+                   User user,
+                   String desc,
+                   String rent,
+                   PaymentFrequencyOptions payment_frequency,
+                   GenderOptions gender,
+                   HousingTypeOptions housing_type,
+                   IsFurnishedOptions is_furnished
+    ){
+        this.lid = lid;
+        this.user = user;
+        this.desc = desc;
+        this.rent = rent;
+        this.payment_frequency = payment_frequency;
+        this.gender = gender;
+        this.housing_type = housing_type;
+        this.is_furnished = is_furnished;
+    }
+    public long getLID(){return this.lid;}
     public User getUser(){
         return this.user;
     }

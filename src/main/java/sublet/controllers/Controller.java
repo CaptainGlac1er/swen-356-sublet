@@ -10,7 +10,7 @@ import sublet.models.User;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Controller {
+public abstract class Controller {
     User sessionUser;
     Request currentRequest;
     Response currentResponse;
@@ -27,6 +27,7 @@ public class Controller {
             model.put("loggedin", true);
         }
     }
+    public abstract void Execute();
     public Map<String, Object> getModel(){
         return model;
     }

@@ -26,7 +26,7 @@
         <div class="form-group">
             <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text"></textarea>
         </div>
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" name="submit" value="add" class="btn">Submit</button>
     </form>
 
     <script>

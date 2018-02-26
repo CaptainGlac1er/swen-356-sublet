@@ -17,7 +17,14 @@ public class ListingService {
     };
     public static Route listingsPost = (request, response) -> {
         ListingController controller = new ListingController(request, response);
-        controller.addListing();
+        controller.Execute();
+        //controller.addListing();
         return PageRender.render(request, controller.getModel(), Path.Template.NEWLISTING);
+    };
+    public static Route removePost = (request, response) -> {
+        ListingController controller = new ListingController(request, response);
+        controller.removeListing();
+        return PageRender.render(request, controller.getModel(), Path.Template.NEWLISTING);
+
     };
 }
