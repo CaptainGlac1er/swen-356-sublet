@@ -1,7 +1,6 @@
 package sublet.util;
 
 
-import java.util.HashMap;
 
 public class Path {
     public static class Web{
@@ -10,6 +9,7 @@ public class Path {
         public static final String USER = "/user";
         public static final String LISTING = "/listing";
         public static final String NEWLISTING = LISTING + "/new";
+        public static final String LOGIN = USER + "/login";
 
 
     }
@@ -20,6 +20,7 @@ public class Path {
         public static final String NEWLISTING = PAGELOC + "new.vm";
         public static final String USER = PAGELOC + "user.vm";
         public static final String LISTING = PAGELOC + "listing.vm";
+        public static final String LOGIN = PAGELOC + "login.vm";
 
     }
 }

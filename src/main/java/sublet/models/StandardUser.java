@@ -21,13 +21,22 @@ public class StandardUser extends User{
         this.birthday = birthday;
         this.gradYear = gradYear;
     }
+    public long getUID() {return this.UID;}
     public String getFname(){
         return this.fname;
     }
 
-    public boolean checkPass(String pw){
+    public boolean checkPass(String pw) {
         return this.password == pw.hashCode();
     }
+    public String getLname(){
+        return this.lname;
+    }
+    public String getUsername() { return this.username; }
+    public long getPassword() { return this.password; }
+    public String getEmail(){ return this.email; }
+    public Date getBirthday(){ return this.birthday; }
+    public Date getGradYear() { return this.gradYear;}
     public boolean checkIfSameUser(StandardUser user){
         return user.UID == this.UID;
     }

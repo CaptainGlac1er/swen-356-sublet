@@ -1,6 +1,6 @@
 #parse("velocity/Layout.vm")
 #@mainLayout()
-<div class="listings" method="post">
+<div class="listings">
     <form action="/listing" method="post">
         #foreach($listing in $listings)
             #parse("/velocity/fragments/listing.vm")

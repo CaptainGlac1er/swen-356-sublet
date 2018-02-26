@@ -9,26 +9,28 @@ import java.util.Map;
 import java.util.Random;
 
 public class CurrentUser {
-    private static Map<Long,User> userDataBase = new HashMap<>();
+    private static Map<Long,StandardUser> userDataBase = new HashMap<>();
     private static Map<Long,Long> currentUsers = new HashMap<>();
 
-    public static void loginUser(String user, String password, Response response){
+    public static long loginUser(String user, String password){
         long newSession;
-        User currentUser;
-        for (User u:
+        StandardUser currentUser;
+        for (StandardUser u:
              userDataBase.values()) {
-                if(u instanceof StandardUser && ((StandardUser)u).checkPass(password)){
+                System.out.println(u.getUsername() + " " + u.getPassword() + " == " + user + " " + password.hashCode());
+                if(u.getUsername().equals(user) &&u.checkPass(password)){
                     newSession = (new Random()).nextLong();
-                    currentUser = new StandardUser(newSession, getRandomString(), getRandomString(), "JD", "asdfghjkl", "fdsjf@fdjf.net", new Date(), new Date());
-                    response.cookie("session", Long.toString(newSession),600000);
-
+                    currentUser = u;
+                    currentUsers.put(newSession,currentUser.getUID());
+                    return newSession;
                 }
         }
+        throw new NullPointerException();
     }
     public static void registerUser(StandardUser user){
-        userDataBase.put()
+        userDataBase.put(user.getUID(),user);
     }
-    public static User getCurrentUser(Request request, Response response){
+    public static User getCurrentUser(Request request){
         if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
             return new GuestUser();
         }
@@ -42,11 +44,16 @@ public class CurrentUser {
             }else {
                 return new GuestUser();
             }
-            currentUsers.put(newSession, currentUser);
+            if(currentUser != null) {
+                currentUsers.put(newSession, ((StandardUser)currentUser).getUID());
+            }
         }else{
             currentUser = userDataBase.get(currentUsers.get(request.session().attribute("session")));
         }
         return currentUser;
+    }
+    public static User getCurrentUser(long sid){
+        return userDataBase.get(currentUsers.get(sid));
     }
 
     private static String getRandomString(){

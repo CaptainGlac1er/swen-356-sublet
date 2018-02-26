@@ -21,9 +21,10 @@ public class Main {
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty("runtime.references.strict", true);
         ve.init();
-        StandardUser user = new StandardUser(1234, "Test", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
-        CurrentUser.
-        user = new StandardUser(12345, "Test", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+        StandardUser user = new StandardUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+        CurrentUser.registerUser(user);
+        user = new StandardUser(12345, "Bill", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+        CurrentUser.registerUser(user);
 
 
         port(4000);
@@ -55,6 +56,8 @@ public class Main {
         get(Path.Web.USER, UserService.serveIndexPage);
         post(Path.Web.NEWLISTING, ListingService.listingsPost);
         post(Path.Web.LISTING, ListingService.listingsPost);
+        get(Path.Web.LOGIN, UserService.serveLoginPage);
+        post(Path.Web.LOGIN, UserService.serveLoginPage);
 
 
         Class.forName("org.h2.Driver");

@@ -3,6 +3,7 @@ import spark.Request;
 import spark.Response;
 import sublet.models.Listing;
 import sublet.models.Listings;
+import sublet.models.StandardUser;
 
 import java.util.Random;
 
@@ -31,16 +32,17 @@ public class ListingController extends Controller {
     }
 
     private void addListing(){
+        if(sessionUser instanceof StandardUser) {
+            Listing L = new Listing((new Random()).nextLong(), sessionUser,
+                    currentRequest.queryParams("dis"),
+                    currentRequest.queryParams("rent"),
+                    Listing.PaymentFrequencyOptions.MONTHLY,
+                    Listing.GenderOptions.MALE,
+                    Listing.HousingTypeOptions.PARKPOINT,
+                    Listing.IsFurnishedOptions.FURNISHED);
 
-        Listing L = new Listing((new Random()).nextLong(),sessionUser,
-                                currentRequest.queryParams("dis"),
-                                currentRequest.queryParams("rent"),
-                                Listing.PaymentFrequencyOptions.MONTHLY,
-                                Listing.GenderOptions.MALE,
-                                Listing.HousingTypeOptions.PARKPOINT,
-                                Listing.IsFurnishedOptions.FURNISHED);
-
-        Listings.AddListing(L);
+            Listings.AddListing(L);
+        }
     }
     private void modifyListing(){
         Listing listing = Listings.GetListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);

@@ -19,7 +19,19 @@ public abstract class Controller {
     public Controller(Request request, Response response){
         currentRequest = request;
         currentResponse = response;
-        sessionUser =  CurrentUser.getCurrentUser(request, response);
+        updateUserStatus(CurrentUser.getCurrentUser(request));
+        HashMap<String, String> links = new HashMap<>();
+        links.put("NEWLISTING",Path.Web.NEWLISTING);
+        links.put("USER",Path.Web.USER);
+        links.put("INDEX",Path.Web.INDEX);
+        links.put("ABOUT",Path.Web.ABOUT);
+        links.put("LISTING",Path.Web.LISTING);
+        links.put("LOGIN", Path.Web.LOGIN);
+        model.put("links", links);
+    }
+    public abstract void Execute();
+    protected void updateUserStatus(User user){
+        sessionUser =  user;
         model.put("currentuser", sessionUser);
         if(sessionUser instanceof GuestUser){
             model.put("loggedin", false);
@@ -27,15 +39,8 @@ public abstract class Controller {
         if(sessionUser instanceof StandardUser) {
             model.put("loggedin", true);
         }
-        HashMap<String, String> links = new HashMap<>();
-        links.put("NEWLISTING",Path.Web.NEWLISTING);
-        links.put("USER",Path.Web.USER);
-        links.put("INDEX",Path.Web.INDEX);
-        links.put("ABOUT",Path.Web.ABOUT);
-        links.put("LISTING",Path.Web.LISTING);
-        model.put("links", links);
+
     }
-    public abstract void Execute();
     public Map<String, Object> getModel(){
         return model;
     }

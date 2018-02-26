@@ -6,5 +6,10 @@
         <li>
         <a class="link listings-new-link" href="${links.get("NEWLISTING")}">New Post</a>
         </li>
+        #if(!$loggedin)
+        <li>
+        <a class="link listings-new-link" href="${links.get("LOGIN")}">Login</a>
+        </li>
+        #end
     </ul>
 </div>

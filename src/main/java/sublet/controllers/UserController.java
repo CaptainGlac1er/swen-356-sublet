@@ -5,6 +5,7 @@ import spark.Response;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
+import sublet.util.Path;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,12 +17,22 @@ public class UserController extends Controller {
 
     @Override
     public void Execute() {
-        switch (currentRequest.queryParams("submit")){
-            case "login":
-                CurrentUser.loginUser(currentRequest.queryParams("username"),currentRequest.queryParams("password"),currentResponse);
-                break;
-            default:
-                break;
+        if(currentRequest != null) {
+            switch ((currentRequest.queryParams().contains("submit")) ? currentRequest.queryParams("submit") : "") {
+                case "login":
+                    try {
+                        long session = CurrentUser.loginUser(currentRequest.queryParams("username"), currentRequest.queryParams("password"));
+                        sessionUser = CurrentUser.getCurrentUser(session);
+                        updateUserStatus(sessionUser);
+                        currentResponse.cookie("session", Long.toString(session), 600000);
+                        currentResponse.header("Location", Path.Web.USER);
+                        currentResponse.status(302);
+                    }catch (NullPointerException ne){
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
