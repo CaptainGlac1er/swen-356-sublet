@@ -13,6 +13,10 @@ import java.util.Map;
 public class ListingService {
     public static Route listingsForumPage = (request, response) -> {
         ListingController controller = new ListingController(request, response);
+        controller.getModel().put("gender",Listing.genderList);
+        controller.getModel().put("payment",Listing.paymentList);
+        controller.getModel().put("house",Listing.housingList);
+        controller.getModel().put("furn",Listing.furnishedList);
         return PageRender.render(request, controller.getModel(), Path.Template.NEWLISTING);
     };
     public static Route listingsPost = (request, response) -> {
