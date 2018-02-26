@@ -15,7 +15,7 @@ public class CurrentUser {
             return new GuestUser();
         }
         request.session(true);
-        System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
+        //*System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         User currentUser;
         if(request.session().attribute("session") == null){
             long newSession;

@@ -22,11 +22,15 @@ public class ListingController extends Controller {
                 removeListing();
                 break;
             case "modify":
+                modifyListing();
+                break;
+            case "edit":
+                editListing();
                 break;
         }
     }
 
-    public void addListing(){
+    private void addListing(){
 
         Listing L = new Listing((new Random()).nextLong(),sessionUser,
                                 currentRequest.queryParams("dis"),
@@ -38,9 +42,25 @@ public class ListingController extends Controller {
 
         Listings.AddListing(L);
     }
-    public void removeListing(){
+    private void modifyListing(){
+        Listing listing = Listings.GetListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);
+        if(listing != null){
+            listing.setDesc(currentRequest.queryParams("dis"));
+            listing.setRent(currentRequest.queryParams("rent"));
+            Listings.UpdateListing(listing, sessionUser);
+        }else{
+            //oops
+        }
+    }
+    private void editListing(){
+        Listing listing = Listings.GetListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);
+        if(listing != null){
+            model.put("listing", listing);
+        }
+    }
+    private void removeListing(){
         try {
-            Listings.RemoveListing(Long.parseLong(currentRequest.queryParams("lid")));
+            Listings.RemoveListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);
         }catch (Exception e){
 
         }

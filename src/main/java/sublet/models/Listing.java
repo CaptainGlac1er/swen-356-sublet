@@ -74,6 +74,9 @@ public class Listing {
     private long lid;
     private User user;
     private String desc;
+
+
+
     private String rent;
     private IsFurnishedOptions is_furnished;
     private GenderOptions gender;
@@ -148,5 +151,29 @@ public class Listing {
     }
     public IsFurnishedOptions getIsFurnished(){
         return this.is_furnished;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public void setRent(String rent) {
+        this.rent = rent;
+    }
+
+    public void setFurnished(IsFurnishedOptions is_furnished) {
+        this.is_furnished = is_furnished;
+    }
+
+    public void setGender(GenderOptions gender) {
+        this.gender = gender;
+    }
+
+    public void setHousingType(HousingTypeOptions housing_type) {
+        this.housing_type = housing_type;
+    }
+
+    public void setPayment(PaymentFrequencyOptions payment_frequency) {
+        this.payment_frequency = payment_frequency;
     }
 }

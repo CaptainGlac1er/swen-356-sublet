@@ -21,11 +21,24 @@ public class Listings {
                     ((StandardUser) l.getUser()).checkIfSameUser((StandardUser)user)) {
                 userListings.add(l);
             }
-
         }
         return userListings;
     }
-    public static void RemoveListing(long lid){
-        Listings.remove(lid);
+    public static void UpdateListing(Listing listing, User user){
+        if(user instanceof StandardUser && ((StandardUser)Listings.get(listing.getLID()).getUser()).checkIfSameUser((StandardUser)user)) {
+            Listings.remove(listing.getLID());
+            Listings.put(listing.getLID(), listing);
+        }
+    }
+    public static Listing GetListing(long lid, User user){
+        if(user instanceof StandardUser && ((StandardUser)Listings.get(lid).getUser()).checkIfSameUser((StandardUser)user)) {
+            return Listings.get(lid);
+        }
+        return null;
+    }
+    public static void RemoveListing(long lid, User user){
+        if(user instanceof StandardUser && ((StandardUser)Listings.get(lid).getUser()).checkIfSameUser((StandardUser)user)) {
+            Listings.remove(lid);
+        }
     }
 }

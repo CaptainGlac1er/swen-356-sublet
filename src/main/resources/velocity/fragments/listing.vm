@@ -1,11 +1,11 @@
 <div class="listing">
-    <h2 class="listing-text">$listing.getUser().getFname()</h2>
-    <h3 class="listing-text description-text">$listing.getDesc()</h3>
-    <h3 class="listing-text rent-text">$listing.getRent()</h3>
-    #if($loggedin && $listing.getUser().checkIfSameUser($currentuser))
+    <h2 class="listing-text">$!listing.getUser().getFname()</h2>
+    <h3 class="listing-text description-text">$!listing.getDesc()</h3>
+    <h3 class="listing-text rent-text">$!listing.getRent()</h3>
+    #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
         <div>
             <button type="submit" name="submit" value="remove">Remove</button>
-            <button type="submit" name="submit" value="modify">Modify</button>
+            <button type="submit" name="submit" value="edit">Edit</button>
         </div>
     #end
     ##<h3 class="listing-text rent-text">$listing.getGender()</h3>
