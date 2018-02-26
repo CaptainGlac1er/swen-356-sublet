@@ -31,11 +31,13 @@ public class CurrentUser {
         userDataBase.put(user.getUID(),user);
     }
     public static User getCurrentUser(Request request){
+        System.out.println(userDataBase.toString());
+        System.out.println(currentUsers.toString());
+        request.session(true);
+        System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
             return new GuestUser();
         }
-        request.session(true);
-        //*System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         User currentUser;
         if(request.session().attribute("session") == null){
             long newSession;

@@ -11,6 +11,10 @@ public class ListingController extends Controller {
 
     public ListingController(Request request, Response response) {
         super(request, response);
+        model.put("gender",Listing.genderList);
+        model.put("payment",Listing.paymentList);
+        model.put("house",Listing.housingList);
+        model.put("furn",Listing.furnishedList);
     }
 
     @Override

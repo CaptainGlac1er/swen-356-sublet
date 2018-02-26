@@ -24,7 +24,7 @@ public class UserController extends Controller {
                         long session = CurrentUser.loginUser(currentRequest.queryParams("username"), currentRequest.queryParams("password"));
                         sessionUser = CurrentUser.getCurrentUser(session);
                         updateUserStatus(sessionUser);
-                        currentResponse.cookie("session", Long.toString(session), 600000);
+                        currentResponse.cookie("/","session", Long.toString(session), 600000,false);
                         currentResponse.header("Location", Path.Web.USER);
                         currentResponse.status(302);
                     }catch (NullPointerException ne){

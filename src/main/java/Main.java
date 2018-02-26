@@ -1,4 +1,5 @@
 import org.apache.velocity.app.VelocityEngine;
+import spark.Spark;
 import sublet.controllers.ListingController;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
