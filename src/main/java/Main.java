@@ -58,7 +58,8 @@ public class Main {
         post(Path.Web.NEWLISTING, ListingService.listingsPost);
         post(Path.Web.LISTING, ListingService.listingsPost);
         get(Path.Web.LOGIN, UserService.serveLoginPage);
-        post(Path.Web.LOGIN, UserService.serveLoginPage);
+        post(Path.Web.LOGIN, UserService.serveLogin);
+        get(Path.Web.LOGOUT, UserService.serveLogout);
 
 
         Class.forName("org.h2.Driver");

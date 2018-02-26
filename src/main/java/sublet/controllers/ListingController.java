@@ -1,6 +1,7 @@
 package sublet.controllers;
 import spark.Request;
 import spark.Response;
+import sublet.Commands.Command;
 import sublet.models.Listing;
 import sublet.models.Listings;
 import sublet.models.StandardUser;
@@ -33,6 +34,11 @@ public class ListingController extends Controller {
                 editListing();
                 break;
         }
+    }
+
+    @Override
+    public void Execute(Command command) {
+
     }
 
     private void addListing(){

@@ -2,6 +2,7 @@ package sublet.controllers;
 
 import spark.Request;
 import spark.Response;
+import sublet.Commands.Command;
 import sublet.models.CurrentUser;
 import sublet.models.GuestUser;
 import sublet.models.StandardUser;
@@ -27,10 +28,12 @@ public abstract class Controller {
         links.put("ABOUT",Path.Web.ABOUT);
         links.put("LISTING",Path.Web.LISTING);
         links.put("LOGIN", Path.Web.LOGIN);
+        links.put("LOGOUT", Path.Web.LOGOUT);
         model.put("links", links);
     }
     public abstract void Execute();
-    protected void updateUserStatus(User user){
+    public abstract void Execute(Command command);
+    public void updateUserStatus(User user){
         sessionUser =  user;
         model.put("currentuser", sessionUser);
         if(sessionUser instanceof GuestUser){

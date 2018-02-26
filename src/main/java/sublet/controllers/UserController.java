@@ -2,6 +2,7 @@ package sublet.controllers;
 
 import spark.Request;
 import spark.Response;
+import sublet.Commands.Command;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -17,23 +18,12 @@ public class UserController extends Controller {
 
     @Override
     public void Execute() {
-        if(currentRequest != null) {
-            switch ((currentRequest.queryParams().contains("submit")) ? currentRequest.queryParams("submit") : "") {
-                case "login":
-                    try {
-                        long session = CurrentUser.loginUser(currentRequest.queryParams("username"), currentRequest.queryParams("password"));
-                        sessionUser = CurrentUser.getCurrentUser(session);
-                        updateUserStatus(sessionUser);
-                        currentResponse.cookie("/","session", Long.toString(session), 600000,false);
-                        currentResponse.header("Location", Path.Web.USER);
-                        currentResponse.status(302);
-                    }catch (NullPointerException ne){
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+
+    }
+
+    @Override
+    public void Execute(Command command) {
+        command.Execute(currentRequest, currentResponse, this);
     }
 
     public ArrayList<Listing> getListings(){

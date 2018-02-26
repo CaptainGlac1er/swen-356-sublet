@@ -3,6 +3,7 @@ package sublet.controllers;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import sublet.Commands.Command;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -22,6 +23,11 @@ public class IndexController extends Controller {
 
     @Override
     public void Execute() {
+    }
+
+    @Override
+    public void Execute(Command command) {
+
     }
 
     public ArrayList<Listing> getListings(){

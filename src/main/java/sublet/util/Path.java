@@ -10,6 +10,7 @@ public class Path {
         public static final String LISTING = "/listing";
         public static final String NEWLISTING = LISTING + "/new";
         public static final String LOGIN = USER + "/login";
+        public static final String LOGOUT = USER + "/logout";
 
 
     }

@@ -27,14 +27,17 @@ public class CurrentUser {
         }
         throw new NullPointerException();
     }
+    public static void logoutUser(long sid){
+        currentUsers.remove(sid);
+    }
     public static void registerUser(StandardUser user){
         userDataBase.put(user.getUID(),user);
     }
     public static User getCurrentUser(Request request){
-        System.out.println(userDataBase.toString());
-        System.out.println(currentUsers.toString());
+        //System.out.println(userDataBase.toString());
+        //System.out.println(currentUsers.toString());
         request.session(true);
-        System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
+        //System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
             return new GuestUser();
         }
