@@ -4,43 +4,43 @@
 <div class="form-container">
     <h3 class="form-title">Create a new Listing</h3>
     <form class="listing-form" action='' method="post">
+        #if($listing)
+            #set($type = "modify")
+            #set($address = "")
+            #set($rent = $listing.getRent())
+            #set($desc = $listing.getDesc())
+            #set($lid = $listing.getLID())
+        #else
+            #set($type = "add")
+            #set($address = "")
+            #set($rent = "")
+            #set($desc = "")
+            #set($lid = "")
+        #end
         <div class="form-group">
             <input class="form-input" placeholder="Address" id="address" name="address" class="form-control" type="text">
         </div>
         <div class="form-group">
-            <input class="form-input" placeholder="Rent" id="rent" name="rent" class="form-control" type="text">
+            <input class="form-input" placeholder="Rent" id="rent" name="rent" class="form-control" type="text" value="$rent">
         </div>
-        <select class="form-group" id="payment" name="payment" class="form-control" type="text">
-            #foreach($pay in $payment)
-                <option class="form-group" class="form-control" value=$pay>$pay.getTo_str()</option>
-            #end
-        </select>
-        <select class="form-group" id="gender" name="gender" class="form-control" type="text">
-            #foreach($gend in $gender)
-                <option class="form-group" class="form-control" value=${gend}>$gend.getTo_str()</option>
-            #end
-        </select>
-        <select class="form-group" id="housing" name="housing" class="form-control" type="text">
-            #foreach($house in $housing)
-                <option class="form-group" class="form-control" value=$house>$house.getTo_str()</option>
-            #end
-        </select>
-        <select class="form-group" id="furnished" name="furnished" class="form-control" type="text">
-            #foreach($furn in $furnished)
-                <option class="form-group" class="form-control" value=$furn>$furn.getTo_str()</option>
-            #end
-        </select>
-
-##        <div class="form-group">
-##            <input class="form-input" placeholder="Housing Type" id="htype" name="rent" class="form-control" type="text">
-##        </div>
-##        <div class="form-group">
-##            <input class="form-input" placeholder="Furnished?" id="is_furnished" name="rent" class="form-control" type="text">
-##        </div>
         <div class="form-group">
-            <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text"></textarea>
+            <select class="form-input" name="Gender" id="gender">
+                <option value= Listing.MALE>Male Only</option>
+                <option value= Listing.FEMALE>Female Only</option>
+                <option value= Listing.COED>Any</option>
+            </select>
         </div>
-        <button type="submit" class="btn">Submit</button>
+        <div class="form-group">
+            <input class="form-input" placeholder="Housing Type" id="htype" name="rent" class="form-control" type="text" value="">
+        </div>
+        <div class="form-group">
+            <input class="form-input" placeholder="Furnished?" id="is_furnished" name="rent" class="form-control" type="text">
+        </div>
+        <div class="form-group">
+            <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
+        </div>
+        <input type="hidden" name="lid" value="$lid"/>
+        <button type="submit" name="submit" value="$type" class="btn">Submit</button>
     </form>
 
     <script>

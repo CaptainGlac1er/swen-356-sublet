@@ -1,9 +1,11 @@
 #parse("velocity/Layout.vm")
 #@mainLayout()
-<div class="listings">
-    #foreach($listing in $listings)
-        #parse("/velocity/fragments/listing.vm")
-    #end
+<div class="listings" method="post">
+    <form action="/listing" method="post">
+        #foreach($listing in $listings)
+            #parse("/velocity/fragments/listing.vm")
+        #end
+    </form>
 
     <script>
         $('body').find('.link').removeClass('active');

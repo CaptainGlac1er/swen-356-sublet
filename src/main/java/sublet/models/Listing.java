@@ -1,8 +1,5 @@
 package sublet.models;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import static java.util.Arrays.asList;
 
@@ -74,27 +71,39 @@ public class Listing {
             return to_str;
         }
     }
-
-    public static ArrayList<GenderOptions> genderLst = new ArrayList<>(Arrays.asList(GenderOptions.values()));
-    public static ArrayList<HousingTypeOptions> housingLst = new ArrayList<>(Arrays.asList(HousingTypeOptions.values()));
-    public static ArrayList<IsFurnishedOptions>  furnishedLst = new ArrayList<>(Arrays.asList(IsFurnishedOptions.values()));
-    public static ArrayList<PaymentFrequencyOptions> paymentLst = new ArrayList<>(Arrays.asList(PaymentFrequencyOptions.values()));
-
+    private long lid;
     private User user;
     private String desc;
+
+
+
     private String rent;
     private IsFurnishedOptions is_furnished;
     private GenderOptions gender;
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
 
-    public Listing(User user,String desc,
-                   String rent,
-                   PaymentFrequencyOptions payment_frequency,
-                   GenderOptions gender,
-                   HousingTypeOptions housing_type,
-                   IsFurnishedOptions is_furnished
- ){
+
+
+
+//     private List<String> pick_gender = asList("Coed", "Female only", "Male only");
+//    //private String gender;
+//    private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
+//            "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
+//            "Off campus");
+//    //private String housing_type;
+//    private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
+//    //private String is_furnished;
+
+
+    public Listing(User user,
+                    String desc,
+                    String rent,
+                    PaymentFrequencyOptions payment_frequency,
+                    GenderOptions gender,
+                    HousingTypeOptions housing_type,
+                    IsFurnishedOptions is_furnished
+    ){
         this.user = user;
         this.desc = desc;
         this.rent = rent;
@@ -103,44 +112,25 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
     }
-    public static GenderOptions selectGender(String option){
-        switch(option){
-            case "FEMALE":
-                return GenderOptions.FEMALE;
-            case "MALE":
-                return GenderOptions.MALE;
-            case "COED":
-                return GenderOptions.COED;
-            default:
-                return GenderOptions.MALE;
-        }
+    public Listing(long lid,
+                   User user,
+                   String desc,
+                   String rent,
+                   PaymentFrequencyOptions payment_frequency,
+                   GenderOptions gender,
+                   HousingTypeOptions housing_type,
+                   IsFurnishedOptions is_furnished
+    ){
+        this.lid = lid;
+        this.user = user;
+        this.desc = desc;
+        this.rent = rent;
+        this.payment_frequency = payment_frequency;
+        this.gender = gender;
+        this.housing_type = housing_type;
+        this.is_furnished = is_furnished;
     }
-
-    public static HousingTypeOptions selectHousing(String option){
-        for(HousingTypeOptions a : housingLst ){
-            if(a.getTo_str().equals(option)){
-                return a;
-            }
-        }
-        return HousingTypeOptions.PARKPOINT;
-    }
-    public static IsFurnishedOptions selectFurnished(String option){
-        for(IsFurnishedOptions a : furnishedLst ){
-            if(a.getTo_str().equals(option)){
-                return a;
-            }
-        }
-        return IsFurnishedOptions.FURNISHED;
-    }
-    public static PaymentFrequencyOptions selectPayment(String option){
-        for(PaymentFrequencyOptions a : paymentLst ){
-            if(a.getTo_str().equals(option)){
-                return a;
-            }
-        }
-        return PaymentFrequencyOptions.SEMESTERLY;
-    }
-
+    public long getLID(){return this.lid;}
     public User getUser(){
         return this.user;
     }
@@ -161,5 +151,29 @@ public class Listing {
     }
     public IsFurnishedOptions getIsFurnished(){
         return this.is_furnished;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public void setRent(String rent) {
+        this.rent = rent;
+    }
+
+    public void setFurnished(IsFurnishedOptions is_furnished) {
+        this.is_furnished = is_furnished;
+    }
+
+    public void setGender(GenderOptions gender) {
+        this.gender = gender;
+    }
+
+    public void setHousingType(HousingTypeOptions housing_type) {
+        this.housing_type = housing_type;
+    }
+
+    public void setPayment(PaymentFrequencyOptions payment_frequency) {
+        this.payment_frequency = payment_frequency;
     }
 }
