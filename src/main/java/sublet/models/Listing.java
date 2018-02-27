@@ -1,5 +1,6 @@
 package sublet.models;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -175,4 +176,9 @@ public class Listing {
     }
 
     public void setAddress(String address){this.address = address;}
+
+    public static GenderOptions getGenderValue(String option){return GenderOptions.valueOf(option);}
+    public static HousingTypeOptions getHousing_type(String option){return HousingTypeOptions.valueOf(option);}
+    public static IsFurnishedOptions getIs_furnished(String option){return IsFurnishedOptions.valueOf(option);}
+    public static PaymentFrequencyOptions getPaymentValue(String option){return PaymentFrequencyOptions.valueOf(option);}
 }

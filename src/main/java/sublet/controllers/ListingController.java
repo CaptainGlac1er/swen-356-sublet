@@ -47,10 +47,10 @@ public class ListingController extends Controller {
                     currentRequest.queryParams("dis"),
                     currentRequest.queryParams("rent"),
                     currentRequest.queryParams("address"),
-                    Listing.PaymentFrequencyOptions.valueOf(currentRequest.queryParams("payment")),
-                    Listing.GenderOptions.valueOf(currentRequest.queryParams("gender")),
-                    Listing.HousingTypeOptions.valueOf(currentRequest.queryParams("housing")),
-                    Listing.IsFurnishedOptions.valueOf(currentRequest.queryParams("furn")));
+                    Listing.getPaymentValue(currentRequest.queryParams("payment")),
+                    Listing.getGenderValue(currentRequest.queryParams("gender")),
+                    Listing.getHousing_type(currentRequest.queryParams("housing")),
+                    Listing.getIs_furnished(currentRequest.queryParams("furn")));
 
             Listings.AddListing(L);
         }
