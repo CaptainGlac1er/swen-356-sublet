@@ -29,11 +29,14 @@
                     <option value=$gend>$gend.getTo_str()</option>
                 #end
             </select>
+        </div>
+        <div class="form-group">
             <select class="form-input" name="payment" id="payment" type="text">
                 #foreach($pay in $payment)
                     <option value=$pay>$pay.getTo_str()</option>
                 #end
             </select>
+        </div>
             <select class="form-input" name="housing" id="housing">
                 #foreach($h in $house)
                     <option value=$h>$h.getTo_str()</option>
