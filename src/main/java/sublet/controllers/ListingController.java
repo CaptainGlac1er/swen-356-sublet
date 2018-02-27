@@ -46,10 +46,10 @@ public class ListingController extends Controller {
             Listing L = new Listing((new Random()).nextLong(), sessionUser,
                     currentRequest.queryParams("dis"),
                     currentRequest.queryParams("rent"),
-                    Listing.PaymentFrequencyOptions.MONTHLY,
-                    Listing.GenderOptions.MALE,
-                    Listing.HousingTypeOptions.PARKPOINT,
-                    Listing.IsFurnishedOptions.FURNISHED);
+                    Listing.getPaymentOptions(currentRequest.queryParams("payment")),
+                    Listing.getGenderOptions(currentRequest.queryParams("gender")),
+                    Listing.getHousingType(currentRequest.queryParams("housing")),
+                    Listing.getFurnishedOptions(currentRequest.queryParams("furn")));
 
             Listings.AddListing(L);
         }

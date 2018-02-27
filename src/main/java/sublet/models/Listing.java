@@ -76,27 +76,11 @@ public class Listing {
     private long lid;
     private User user;
     private String desc;
-
-
-
     private String rent;
     private IsFurnishedOptions is_furnished;
     private GenderOptions gender;
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
-
-
-
-
-//     private List<String> pick_gender = asList("Coed", "Female only", "Male only");
-//    //private String gender;
-//    private List<String> pick_housing_type = asList("Colony Manor", "Global Village", "Park Point", "Perkins Green",
-//            "Province", "Racquet Club", "RIT Inn & Conference Center", "Riverknoll", "The Lodge", "University Commons",
-//            "Off campus");
-//    //private String housing_type;
-//    private List<String> pick_is_furnished = asList("Furnished", "Unfurnished", "Partially furnished");
-//    //private String is_furnished;
-
 
     public Listing(User user,
                     String desc,
@@ -136,6 +120,7 @@ public class Listing {
     public static ArrayList<HousingTypeOptions> housingList = new ArrayList<>(Arrays.asList(HousingTypeOptions.values()));
     public static ArrayList<IsFurnishedOptions> furnishedList = new ArrayList<>(Arrays.asList(IsFurnishedOptions.values()));
     public static ArrayList<PaymentFrequencyOptions> paymentList = new ArrayList<>(Arrays.asList(PaymentFrequencyOptions.values()));
+
     public long getLID(){return this.lid;}
     public User getUser(){
         return this.user;
@@ -181,5 +166,70 @@ public class Listing {
 
     public void setPayment(PaymentFrequencyOptions payment_frequency) {
         this.payment_frequency = payment_frequency;
+    }
+
+    public static GenderOptions getGenderOptions(String option) {
+        switch (option) {
+            case "MALE":
+                return GenderOptions.MALE;
+            case "FEMALE":
+                return GenderOptions.FEMALE;
+            case "COED":
+                return GenderOptions.COED;
+            default:
+                return GenderOptions.COED;
+        }
+    }
+    public static HousingTypeOptions getHousingType(String option){
+        switch (option){
+            case "COLONY":
+                return HousingTypeOptions.COLONY;
+            case "GLOBAL" :
+                return HousingTypeOptions.GLOBAL;
+            case "PARKPOINT":
+                return HousingTypeOptions.PARKPOINT;
+            case "PERKINS":
+                return HousingTypeOptions.PERKINS;
+            case "PROVINCE":
+                return HousingTypeOptions.PROVINCE;
+            case "RACQUETCLUB":
+                return HousingTypeOptions.RACQUETCLUB;
+            case "RITINN":
+                return HousingTypeOptions.RITINN;
+            case "RIVERKNOLL":
+                return HousingTypeOptions.RIVERKNOLL;
+            case "LODGE":
+                return HousingTypeOptions.LODGE;
+            case "UC":
+                return HousingTypeOptions.UC;
+            case "OFFCAMPUS":
+                return HousingTypeOptions.OFFCAMPUS;
+            default:
+                return HousingTypeOptions.OFFCAMPUS;
+        }
+    }
+    public static IsFurnishedOptions getFurnishedOptions(String option){
+        switch (option){
+            case "FURNISHED":
+                return IsFurnishedOptions.FURNISHED;
+            case "UNFURNISHED":
+                return IsFurnishedOptions.UNFURNISHED;
+            case "PART":
+                return IsFurnishedOptions.PART;
+            default:
+                return  IsFurnishedOptions.UNFURNISHED;
+        }
+    }
+    public static PaymentFrequencyOptions getPaymentOptions(String option){
+        switch (option){
+            case "MONTHLY":
+                return PaymentFrequencyOptions.MONTHLY;
+            case "SEMESTERLY":
+                return PaymentFrequencyOptions.SEMESTERLY;
+            case "YEARLY":
+                return PaymentFrequencyOptions.YEARLY;
+            default:
+                return  PaymentFrequencyOptions.MONTHLY;
+        }
     }
 }
