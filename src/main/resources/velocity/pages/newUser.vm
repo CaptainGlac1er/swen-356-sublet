@@ -7,7 +7,7 @@
     #set($email = "")
     #set($password = "")
 #else
-    #set($submit = ${links.get("NEWLISTING")})
+    #set($submit = ${links.get("NEWUSER")})
     #set($address = "")
     #set($rent = "")
     #set($desc = "")
