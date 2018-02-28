@@ -47,13 +47,6 @@
             </select>
         </div>
         <div class="form-group">
-            <select class="form-input" name="Housing" id="housing">
-                #foreach($h in $house)
-                    <option value="$h">$h.getTo_str()</option>
-                #end
-            </select>
-        </div>
-        <div class="form-group">
             <select class="form-input" name="furn" id="furn">
                 #foreach($f in $furn)
                     <option value=$f>$f.getTo_str()</option>
