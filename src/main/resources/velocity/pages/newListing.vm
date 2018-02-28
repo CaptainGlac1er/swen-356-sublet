@@ -45,7 +45,7 @@
             <select class="form-input" name="payment" id="payment" type="text">
                 #foreach($pay in $payment)
                     <option value=$pay
-                            #if($pay.equals($payments))
+                            #if($pay.getTo_str().equals($payments))
                                 selected
                             #end
                     >$pay.getTo_str()</option>
