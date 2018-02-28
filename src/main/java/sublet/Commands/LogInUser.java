@@ -18,8 +18,7 @@ public class LogInUser implements Command {
             User sessionUser = CurrentUser.getCurrentUser(session);
             controller.updateUserStatus(sessionUser);
             response.cookie("/", "session", Long.toString(session), 600000, false);
-            response.header("Location", Path.Web.USER);
-            response.status(302);
+            controller.addRedirect(Path.Web.USER);
         }catch (LoginException le){
             controller.addToModel("error", le.getMessage());
         }

@@ -61,6 +61,10 @@ public abstract class Controller {
     public Response getCurrentResponse(){
         return this.currentResponse;
     }
+    public void addRedirect(String url){
+        this.currentResponse.status(302);
+        this.currentResponse.header("Location", url);
+    }
     public Map<String, Object> getModel(){
         return model;
     }

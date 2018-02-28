@@ -26,8 +26,7 @@ public class AddListing implements Command {
                     Listing.getIs_furnished(request.queryParams("furn")));
 
             Listings.AddListing(L);
-            controller.getCurrentResponse().status(302);
-            controller.getCurrentResponse().header("Location", Path.Web.USER);
+            controller.addRedirect(Path.Web.USER);
         }
     }
 }

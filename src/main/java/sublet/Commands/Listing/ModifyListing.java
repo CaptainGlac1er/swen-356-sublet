@@ -22,7 +22,6 @@ public class ModifyListing implements Command {
         }else{
             throw new PermissionException("You can't edit this post");
         }
-        controller.getCurrentResponse().status(302);
-        controller.getCurrentResponse().header("Location", Path.Web.USER);
+        controller.addRedirect(Path.Web.USER);
     }
 }
