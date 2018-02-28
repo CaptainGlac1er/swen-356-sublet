@@ -90,7 +90,9 @@
                     font-size: 18px;
                     color: #444444;
                     transition: all 300ms;
+                    box-sizing:border-box;
                 }
+
                 .form-input::placeholder{
                     font-size: 18px;
                     opacity: .5;
