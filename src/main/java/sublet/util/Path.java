@@ -14,6 +14,7 @@ public class Path {
         public static final String REMOVELISTING = LISTING + "/remove";
         public static final String LOGIN = USER + "/login";
         public static final String LOGOUT = USER + "/logout";
+        public static final String NEWUSER = USER + "/newUser";
 
 
     }
@@ -25,6 +26,6 @@ public class Path {
         public static final String USER = PAGELOC + "user.vm";
         public static final String LISTING = PAGELOC + "listing.vm";
         public static final String LOGIN = PAGELOC + "login.vm";
-
+        public static final String NEWUSER = PAGELOC + "newUser.vm";
     }
 }

@@ -30,7 +30,7 @@ public abstract class Controller {
         links.put("LOGIN", Path.Web.LOGIN);
         links.put("LOGOUT", Path.Web.LOGOUT);
         links.put("MODIFYLISTING", Path.Web.MODIFYLISTING);
-        links.put("NEWLISTING", Path.Web.NEWLISTING);
+        links.put("NEWUSER", Path.Web.NEWUSER);
         addToModel("links", links);
     }
     public abstract void Execute();

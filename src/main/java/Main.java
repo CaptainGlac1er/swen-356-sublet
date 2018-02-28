@@ -65,6 +65,8 @@ public class Main {
         post(Path.Web.REMOVELISTING,ListingService.removeListing);
         post(Path.Web.MODIFYLISTING, ListingService.modifyListing);
 
+        get(Path.Web.NEWUSER, UserService.serveCreateUser);
+        post(Path.Web.NEWUSER, UserService.serveUser);
 
         Class.forName("org.h2.Driver");
         Connection conn = DriverManager.getConnection("jdbc:h2:~/TigerTenant", "sa", "");
