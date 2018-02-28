@@ -8,7 +8,7 @@ public class Path {
         public static final String ABOUT = "/about";
         public static final String USER = "/user";
         public static final String LISTING = "/listing";
-        public static final String NEWLISTING = LISTING + "/new";
+        public static final String NEWLISTING = LISTING + "/newListing";
         public static final String EDITLISTING = LISTING + "/edit";
         public static final String MODIFYLISTING = LISTING + "/modify";
         public static final String REMOVELISTING = LISTING + "/remove";
@@ -21,7 +21,7 @@ public class Path {
         private static final String PAGELOC = "/velocity/pages/";
         public static final String INDEX = PAGELOC + "index.vm";
         public static final String ABOUT = PAGELOC + "about.vm";
-        public static final String NEWLISTING = PAGELOC + "new.vm";
+        public static final String NEWLISTING = PAGELOC + "newListing.vm";
         public static final String USER = PAGELOC + "user.vm";
         public static final String LISTING = PAGELOC + "listing.vm";
         public static final String LOGIN = PAGELOC + "login.vm";
