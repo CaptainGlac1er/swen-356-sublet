@@ -31,8 +31,11 @@ public class CurrentUser {
     public static void logoutUser(long sid){
         currentUsers.remove(sid);
     }
-    public static void registerUser(StandardUser user){
+    public static long registerUser(StandardUser user){
+        long newSession = (new Random()).nextLong();
         userDataBase.put(user.getUID(),user);
+        currentUsers.put(newSession,user.getUID());
+        return newSession;
     }
     public static User getCurrentUser(Request request){
         //System.out.println(userDataBase.toString());

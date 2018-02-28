@@ -32,7 +32,7 @@
             <input class="form-input" placeholder="Email" id="email" name="email" class="form-control" type="text">
         </div>
         <div class="form-group">
-            <input class="form-input" placeholder="Password" id="password" name="password" class="form-control" type="text">
+            <input class="form-input" placeholder="Password" id="password" name="password" class="form-control" type="password">
         </div>
         <input type="hidden" name="lid" value="$lid"/>
         <button type="submit" class="btn">Submit</button>
