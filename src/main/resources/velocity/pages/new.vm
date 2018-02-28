@@ -18,30 +18,57 @@
             #set($lid = "")
         #end
         <div class="form-group">
+            <select class="form-input" name="housing" id="housing">
+                #foreach($h in $house)
+                    <option value=$h>$h.getTo_str()</option>
+                #end
+            </select>
+        </div>
+        <div class="form-group">
             <input class="form-input" placeholder="Address" id="address" name="address" class="form-control" type="text">
         </div>
         <div class="form-group">
             <input class="form-input" placeholder="Rent" id="rent" name="rent" class="form-control" type="text" value="$rent">
         </div>
         <div class="form-group">
+<<<<<<< HEAD
             <select class="form-input" name="Gender" id="gender">
                 #foreach($gend in $gender)
                     <option value="$gend">$gend.getTo_str()</option>
                 #end
             </select>
+        </div>
+        <div class="form-group">
             <select class="form-input" name="Payment" id="payment">
+=======
+            <select class="form-input" name="payment" id="payment" type="text">
+>>>>>>> 88baaa2b3edf5cb46b0d3eeba8da3e2fe100d36f
                 #foreach($pay in $payment)
-                    <option value="$pay">$pay.getTo_str()</option>
+                    <option value=$pay>$pay.getTo_str()</option>
                 #end
             </select>
+        </div>
+        <div class="form-group">
+<<<<<<< HEAD
             <select class="form-input" name="Housing" id="housing">
                 #foreach($h in $house)
                     <option value="$h">$h.getTo_str()</option>
+=======
+            <select class="form-input" name="gender" id="gender">
+                #foreach($gend in $gender)
+                    <option value=$gend>$gend.getTo_str()</option>
+>>>>>>> 88baaa2b3edf5cb46b0d3eeba8da3e2fe100d36f
                 #end
             </select>
+        </div>
+        <div class="form-group">
+<<<<<<< HEAD
             <select class="form-input" name="Furn" id="furn">
+=======
+            <select class="form-input" name="furn" id="furn">
+>>>>>>> 88baaa2b3edf5cb46b0d3eeba8da3e2fe100d36f
                 #foreach($f in $furn)
-                    <option value="$f">$f.getTo_str()</option>
+                    <option value=$f>$f.getTo_str()</option>
                 #end
             </select>
         </div>
@@ -52,10 +79,6 @@
         <button type="submit" name="submit" value="$type" class="btn">Submit</button>
     </form>
 
-    <script>
-        $('body').find('.link').removeClass('active');
-        $('.listings-new-link').addClass('active');
-    </script>
 </div>
 
 #end
