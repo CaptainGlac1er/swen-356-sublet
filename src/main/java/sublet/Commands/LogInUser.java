@@ -10,7 +10,9 @@ import sublet.util.Path;
 
 public class LogInUser implements Command {
     @Override
-    public void Execute(Request request, Response response, Controller controller) {
+    public void Execute(Controller controller) {
+        Request request = controller.getCurrentRequest();
+        Response response = controller.getCurrentResponse();
         try {
             long session = CurrentUser.loginUser(request.queryParams("username"), request.queryParams("password"));
             User sessionUser = CurrentUser.getCurrentUser(session);

@@ -2,9 +2,11 @@ package sublet.controllers;
 import spark.Request;
 import spark.Response;
 import sublet.Commands.Command;
+import sublet.Exceptions.BaseException;
 import sublet.models.Listing;
 import sublet.models.Listings;
 import sublet.models.StandardUser;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Random;
 
@@ -38,44 +40,23 @@ public class ListingController extends Controller {
 
     @Override
     public void Execute(Command command) {
+        try {
+            command.Execute(this);
+        }catch (BaseException be){
 
+        }
     }
 
     private void addListing(){
-        if(sessionUser instanceof StandardUser) {
-            Listing L = new Listing((new Random()).nextLong(), sessionUser,
-                    currentRequest.queryParams("dis"),
-                    currentRequest.queryParams("rent"),
-                    currentRequest.queryParams("address"),
-                    Listing.getPaymentValue(currentRequest.queryParams("payment")),
-                    Listing.getGenderValue(currentRequest.queryParams("gender")),
-                    Listing.getHousing_type(currentRequest.queryParams("housing")),
-                    Listing.getIs_furnished(currentRequest.queryParams("furn")));
-
-            Listings.AddListing(L);
-        }
+        throw new NotImplementedException();
     }
     private void modifyListing(){
-        Listing listing = Listings.GetListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);
-        if(listing != null){
-            listing.setDesc(currentRequest.queryParams("dis"));
-            listing.setRent(currentRequest.queryParams("rent"));
-            Listings.UpdateListing(listing, sessionUser);
-        }else{
-            //oops
-        }
+        throw new NotImplementedException();
     }
     private void editListing(){
-        Listing listing = Listings.GetListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);
-        if(listing != null){
-            model.put("listing", listing);
-        }
+        throw new NotImplementedException();
     }
     private void removeListing(){
-        try {
-            Listings.RemoveListing(Long.parseLong(currentRequest.queryParams("lid")),sessionUser);
-        }catch (Exception e){
-
-        }
+        throw new NotImplementedException();
     }
 }

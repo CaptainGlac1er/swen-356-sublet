@@ -9,10 +9,13 @@
 
     #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
         <div>
-            <button type="submit" name="submit" value="remove">Remove</button>
-            <button type="submit" name="submit" value="edit">Edit</button>
+            <form action="/listing/remove" method="post">
+            <button type="submit" name="lid" value="$listing.getLID()">Remove</button>
+            </form>
+            <form action="/listing/edit" method="post">
+            <button type="submit" name="lid" value="$listing.getLID()">Edit</button>
+            </form>
         </div>
     #end
     ##<h3 class="listing-text rent-text">$listing.getGender()</h3>
-    <input type="hidden" name="lid" value="$listing.getLID()"/>
 </div>

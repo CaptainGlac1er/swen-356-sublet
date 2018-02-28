@@ -29,6 +29,8 @@ public abstract class Controller {
         links.put("LISTING",Path.Web.LISTING);
         links.put("LOGIN", Path.Web.LOGIN);
         links.put("LOGOUT", Path.Web.LOGOUT);
+        links.put("MODIFYLISTING", Path.Web.MODIFYLISTING);
+        links.put("NEWLISTING", Path.Web.NEWLISTING);
         addToModel("links", links);
     }
     public abstract void Execute();
@@ -46,6 +48,18 @@ public abstract class Controller {
     }
     public void addToModel(String name, Object object){
         this.model.put(name, object);
+    }
+    public boolean isLoggedIn(){
+        return sessionUser instanceof StandardUser;
+    }
+    public User getSessionUser(){
+        return this.sessionUser;
+    }
+    public Request getCurrentRequest(){
+        return this.currentRequest;
+    }
+    public Response getCurrentResponse(){
+        return this.currentResponse;
     }
     public Map<String, Object> getModel(){
         return model;

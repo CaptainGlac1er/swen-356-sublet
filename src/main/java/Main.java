@@ -53,13 +53,17 @@ public class Main {
         Listings.AddListing(listing);
 
         get(Path.Web.INDEX, IndexService.serveIndexPage);
-        get(Path.Web.NEWLISTING, ListingService.listingsForumPage);
         get(Path.Web.USER, UserService.serveIndexPage);
-        post(Path.Web.NEWLISTING, ListingService.listingsPost);
-        post(Path.Web.LISTING, ListingService.listingsPost);
+
         get(Path.Web.LOGIN, UserService.serveLoginPage);
         post(Path.Web.LOGIN, UserService.serveLogin);
         get(Path.Web.LOGOUT, UserService.serveLogout);
+
+        get(Path.Web.NEWLISTING, ListingService.listingsForumPage);
+        post(Path.Web.NEWLISTING, ListingService.addListing);
+        post(Path.Web.EDITLISTING, ListingService.editListing);
+        post(Path.Web.REMOVELISTING,ListingService.removeListing);
+        post(Path.Web.MODIFYLISTING, ListingService.modifyListing);
 
 
         Class.forName("org.h2.Driver");

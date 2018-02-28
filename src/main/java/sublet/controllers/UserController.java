@@ -3,6 +3,7 @@ package sublet.controllers;
 import spark.Request;
 import spark.Response;
 import sublet.Commands.Command;
+import sublet.Exceptions.BaseException;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -23,7 +24,12 @@ public class UserController extends Controller {
 
     @Override
     public void Execute(Command command) {
-        command.Execute(currentRequest, currentResponse, this);
+
+        try{
+            command.Execute(this);
+        }catch (BaseException be){
+
+        }
     }
 
     public ArrayList<Listing> getListings(){
