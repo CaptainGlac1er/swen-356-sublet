@@ -22,15 +22,6 @@ public class UserController extends Controller {
 
     }
 
-    @Override
-    public void Execute(Command command) {
-
-        try{
-            command.Execute(this);
-        }catch (BaseException be){
-
-        }
-    }
 
     public ArrayList<Listing> getListings(){
         return Listings.GetListings(sessionUser);
