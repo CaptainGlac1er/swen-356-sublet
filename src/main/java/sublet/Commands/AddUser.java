@@ -1,6 +1,7 @@
 package sublet.Commands;
 
 import spark.Request;
+import sublet.Exceptions.RegisterException;
 import sublet.controllers.Controller;
 import sublet.models.*;
 import sublet.util.Path;
@@ -10,7 +11,7 @@ import java.util.Date;
 public class AddUser implements Command {
 
     @Override
-    public void Execute(Controller controller) {
+    public void Execute(Controller controller) throws RegisterException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
             if(request.queryParams("password").equals(request.queryParams("confirmpassword"))){
@@ -24,6 +25,8 @@ public class AddUser implements Command {
                 long session = CurrentUser.registerUser(user);
                 controller.createSession(session);
                 controller.addRedirect(Path.Web.USER);
+            }else{
+                throw new RegisterException("Passwords didn't match");
             }
 
         }
