@@ -61,6 +61,16 @@ public abstract class Controller {
     public Response getCurrentResponse(){
         return this.currentResponse;
     }
+
+    public void createSession(long session){
+        this.updateUserStatus(CurrentUser.getCurrentUser(session));
+        this.currentResponse.cookie("/", "session", Long.toString(session), 600000, false);
+    }
+    public void removeSession(long session){
+        this.updateUserStatus(new GuestUser());
+        this.currentResponse.removeCookie("session");
+    }
+
     public void addRedirect(String url){
         this.currentResponse.status(302);
         this.currentResponse.header("Location", url);

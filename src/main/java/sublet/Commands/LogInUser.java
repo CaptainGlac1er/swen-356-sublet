@@ -15,9 +15,7 @@ public class LogInUser implements Command {
         Response response = controller.getCurrentResponse();
         try {
             long session = CurrentUser.loginUser(request.queryParams("username"), request.queryParams("password"));
-            User sessionUser = CurrentUser.getCurrentUser(session);
-            controller.updateUserStatus(sessionUser);
-            response.cookie("/", "session", Long.toString(session), 600000, false);
+            controller.createSession(session);
             controller.addRedirect(Path.Web.USER);
         }catch (LoginException le){
             controller.addToModel("error", le.getMessage());

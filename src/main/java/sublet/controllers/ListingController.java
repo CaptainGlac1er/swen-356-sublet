@@ -22,20 +22,7 @@ public class ListingController extends Controller {
 
     @Override
     public void Execute() {
-        switch (currentRequest.queryParams("submit")){
-            case "add":
-                addListing();
-                break;
-            case "remove":
-                removeListing();
-                break;
-            case "modify":
-                modifyListing();
-                break;
-            case "edit":
-                editListing();
-                break;
-        }
+
     }
 
     @Override
@@ -45,18 +32,5 @@ public class ListingController extends Controller {
         }catch (BaseException be){
 
         }
-    }
-
-    private void addListing(){
-        throw new NotImplementedException();
-    }
-    private void modifyListing(){
-        throw new NotImplementedException();
-    }
-    private void editListing(){
-        throw new NotImplementedException();
-    }
-    private void removeListing(){
-        throw new NotImplementedException();
     }
 }

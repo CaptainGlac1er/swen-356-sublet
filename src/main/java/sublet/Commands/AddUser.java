@@ -21,9 +21,7 @@ public class AddUser implements Command {
                     request.queryParams("email"),
                     new Date(12345), new Date(3456));
             long session = CurrentUser.registerUser(user);
-            User sessionUser = CurrentUser.getCurrentUser(session);
-            controller.updateUserStatus(sessionUser);
-            controller.getCurrentResponse().cookie("/", "session", Long.toString(session), 600000, false);
+            controller.createSession(session);
             controller.addRedirect(Path.Web.USER);
         }
     }

@@ -13,6 +13,6 @@ public class LogOutUser implements Command {
     public void Execute(Controller controller) {
         Request request = controller.getCurrentRequest();
         CurrentUser.logoutUser(Long.parseLong(request.cookie("session")));
-        controller.updateUserStatus(new GuestUser());
+        controller.removeSession(Long.parseLong(request.cookie("session")));
     }
 }
