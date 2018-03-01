@@ -25,12 +25,4 @@ public class ListingController extends Controller {
 
     }
 
-    @Override
-    public void Execute(Command command) {
-        try {
-            command.Execute(this);
-        }catch (BaseException be){
-
-        }
-    }
 }
