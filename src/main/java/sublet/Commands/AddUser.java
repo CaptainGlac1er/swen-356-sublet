@@ -13,16 +13,19 @@ public class AddUser implements Command {
     public void Execute(Controller controller) {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
-            StandardUser user = new StandardUser(new Random().nextLong(),
-                    request.queryParams("fname"),
-                    request.queryParams("lname"),
-                    request.queryParams("username"),
-                    request.queryParams("password"),
-                    request.queryParams("email"),
-                    new Date(12345), new Date(3456));
-            long session = CurrentUser.registerUser(user);
-            controller.createSession(session);
-            controller.addRedirect(Path.Web.USER);
+            if(request.queryParams("password").equals(request.queryParams("confirmpassword"))){
+                StandardUser user = new StandardUser(new Random().nextLong(),
+                        request.queryParams("fname"),
+                        request.queryParams("lname"),
+                        request.queryParams("username"),
+                        request.queryParams("password"),
+                        request.queryParams("email"),
+                        new Date(12345), new Date(3456));
+                long session = CurrentUser.registerUser(user);
+                controller.createSession(session);
+                controller.addRedirect(Path.Web.USER);
+            }
+
         }
     }
 }
