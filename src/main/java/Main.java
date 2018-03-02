@@ -19,6 +19,7 @@ import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        Spark.staticFiles.location("/static");
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty("runtime.references.strict", true);
         ve.init();
