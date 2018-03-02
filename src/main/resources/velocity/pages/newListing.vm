@@ -1,7 +1,7 @@
 #parse("velocity/Layout.vm")
 #if($listing)
     #set($submit = ${links.get("MODIFYLISTING")})
-    #set($address = "")
+    #set($address = $listing.getAddress())
     #set($rent = $listing.getRent())
     #set($desc = $listing.getDesc())
     #set($payments = $listing.getPayment_frequency().getTo_str())
