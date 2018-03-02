@@ -1,0 +1,156 @@
+*{
+               padding: 0;
+               margin: 0;
+               font-family: "Trebuchet MS", Helvetica, sans-serif;
+            }
+            body{
+                grid-auto-columns: 1fr;
+                grid-template-rows: 1fr 8fr;
+            }
+            .header{
+                z-index: 1000;
+                height: 50px;
+                width: 100%;
+
+                background-color: rgba(255,255,255,.5);
+                display: grid;
+                grid-template-columns: 2fr 3fr 1fr 2fr;
+                grid-column-align: center;
+                padding: 20px;
+            }
+                .listing{
+                    /*-webkit-box-shadow: 11px 15px 98px -24px rgba(0,0,0,0.7);*/
+                    /*-moz-box-shadow: 11px 15px 98px -24px rgba(0,0,0,0.7);*/
+                    /*box-shadow: 11px 15px 98px -24px rgba(0,0,0,0.7);*/
+                    /*padding-left: 15px;*/
+                    border-radius: 20px;
+                    margin: 5px;
+                    background-color: rgb(255, 190, 118);
+                    /*border: 5px solid rgb(255, 190, 118);*/
+                    width: 100%;
+                    overflow: auto;
+                }
+                .listing *{
+                    box-sizing: border-box;
+                }
+                .listing h2{
+                    padding: 20px;
+                }
+                .listings{
+                    margin-top: 50px;
+                    width: 50%;
+                    margin: 0 auto;
+                    padding: 10px;
+                    background-color: white;
+                }
+                .listing-body{
+                    width:70%;
+                    float:right;
+                    padding: 10px;
+                    box-sizing: border-box;
+                }
+                .listing-side{
+                    width:30%;
+                    float:left;
+                    padding: 10px;
+                    box-sizing: border-box;
+                }
+                .listing-side.listing-text{
+                    width:30%;
+                    float:left;
+                }
+
+                .listing-controls{
+                    display: flex;
+                    clear: both;
+                    background-color: grey;
+                }
+                .listing-controls form{
+                    margin: 10px;
+                }
+                .description-text{
+                    background-color: white;
+                    padding: 10px;
+                }
+                .rent-text{
+
+                }
+                .form-title{
+                    display: block;
+                    color: #999999;
+
+                }
+                .form-container{
+                    margin-top: 25px;
+                    margin-left: 100px;
+                    display: grid;
+                    grid-template-rows: 1fr 9fr;
+                    margin-bottom: 30px;
+                }
+                .form-group{
+                    margin-bottom: 15px;
+                }
+                .form-input{
+                    height: 50px;
+                    width: 50%;
+                    border-radius: 10px;
+                    border: 2px solid rgb(255, 190, 118);
+                    overflow: scroll;
+                    padding: 10px;
+                    font-size: 18px;
+                    color: #444444;
+                    transition: all 300ms;
+                    box-sizing:border-box;
+                }
+
+                .form-input::placeholder{
+                    font-size: 18px;
+                    opacity: .5;
+                    color: #444444;
+                }
+                .form-input:focus{
+                    outline: 0;
+                    transform: scale(1.05);
+                }
+                .btn{
+                    height: 50px;
+                    margin: auto;
+                    width: 50vw;
+                    background-color: rgb(255, 190, 118);
+                    border-radius: 10px;
+                    border: 0;
+                    font-size: 20px;
+                    color: white;
+                }
+                .btn:hover{
+                    cursor: pointer;
+                }
+            .text-area{
+                height: 150px;
+                resize: none;
+            }
+
+            .navBarContainer{
+                justify-self: end;
+            }
+            .navbar{
+                display: inline;
+            }
+
+            .navbar li{
+                display: inline-block;
+                padding-bottom: 5px;
+                margin: 15px;
+            }
+            .link{
+                text-decoration: none;
+                transition: all 300ms;
+                color: black;
+
+            }
+            .link:hover{
+                margin-bottom: 20px;
+            }
+            .active{
+                border-bottom: 2px solid black;
+            }

@@ -12,6 +12,7 @@ import sublet.util.Path;
 public class ListingService {
     public static Route listingsForumPage = (request, response) -> {
         ListingController controller = new ListingController(request, response);
+        controller.Execute();
         return PageRender.render(request, controller.getModel(), Path.Template.NEWLISTING);
     };
     public static Route listingsPost = (request, response) -> {

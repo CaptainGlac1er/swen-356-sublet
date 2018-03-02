@@ -1,21 +1,26 @@
 <div class="listing">
     <h2 class="listing-text">$!listing.getUser().getFname()</h2>
-    <h3 class="listing-text description-text">$!listing.getDesc()</h3>
-    <h3 class="listing-text rent-text">$!listing.getRent()</h3>
-    <h3 class="listing-text rent-text">$!listing.getGender()</h3>
-    <h3 class="listing-text rent-text">$!listing.getPayment_frequency()</h3>
-    <h3 class="listing-text rent-text">$!listing.getHousingType()</h3>
-    <h3 class="listing-text rent-text">$!listing.getIsFurnished()</h3>
-
-    #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
-        <div>
-            <form action="/listing/remove" method="post">
-            <button type="submit" name="lid" value="$listing.getLID()">Remove</button>
-            </form>
-            <form action="/listing/edit" method="post">
-            <button type="submit" name="lid" value="$listing.getLID()">Edit</button>
-            </form>
+    <div class="listing-body">
+        <div class="description-text">
+            $!listing.getDesc()
         </div>
-    #end
+    </div>
+    <div class="listing-side">
+        <h3 class="listing-text">$!listing.getRent()</h3>
+        <h3 class="listing-text">$!listing.getGender()</h3>
+        <h3 class="listing-text">$!listing.getPayment_frequency()</h3>
+        <h3 class="listing-text">$!listing.getHousingType()</h3>
+        <h3 class="listing-text">$!listing.getIsFurnished()</h3>
+    </div>
+    <div class="listing-controls">
+        #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
+                <form action="/listing/remove" method="post">
+                <button type="submit" name="lid" value="$listing.getLID()">Remove</button>
+                </form>
+                <form action="/listing/edit" method="post">
+                <button type="submit" name="lid" value="$listing.getLID()">Edit</button>
+                </form>
+        #end
+    </div>
     ##<h3 class="listing-text rent-text">$listing.getGender()</h3>
 </div>
