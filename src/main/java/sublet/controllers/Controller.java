@@ -22,17 +22,7 @@ public abstract class Controller {
         currentRequest = request;
         currentResponse = response;
         updateUserStatus(CurrentUser.getCurrentUser(request));
-        HashMap<String, String> links = new HashMap<>();
-        links.put("NEWLISTING",Path.Web.NEWLISTING);
-        links.put("USER",Path.Web.USER);
-        links.put("INDEX",Path.Web.INDEX);
-        links.put("ABOUT",Path.Web.ABOUT);
-        links.put("LISTING",Path.Web.LISTING);
-        links.put("LOGIN", Path.Web.LOGIN);
-        links.put("LOGOUT", Path.Web.LOGOUT);
-        links.put("MODIFYLISTING", Path.Web.MODIFYLISTING);
-        links.put("NEWUSER", Path.Web.NEWUSER);
-        addToModel("links", links);
+        addToModel("links", Path.Web.class);
     }
 
     /**

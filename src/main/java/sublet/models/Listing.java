@@ -1,12 +1,7 @@
 package sublet.models;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import static java.util.Arrays.asList;
-
-import java.util.List;
 
 /**
  * This is the listing class. It is the underlying representation of the information within a listing

@@ -12,7 +12,9 @@
         #parse("/velocity/fragments/header.vm")
         #parse("/velocity/fragments/navbar.vm")
         #parse("/velocity/fragments/error.vm")
+        <div class="content">
         $bodyContent
+        </div>
         #parse("/velocity/fragments/footer.vm")
     </body>
 </html>

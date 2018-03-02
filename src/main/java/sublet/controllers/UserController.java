@@ -2,12 +2,8 @@ package sublet.controllers;
 
 import spark.Request;
 import spark.Response;
-import sublet.Commands.Command;
-import sublet.Exceptions.BaseException;
-import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
-import sublet.util.Path;
 
 import java.util.ArrayList;
 import java.util.Map;

@@ -1,4 +1,4 @@
-#parse("velocity/Layout.vm")
+#parse("../Layout.vm")
 #@mainLayout()
     <h1>This is sublet</h1>
     <h3>This is a description</h3>

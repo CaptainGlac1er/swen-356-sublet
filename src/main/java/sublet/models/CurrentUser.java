@@ -1,10 +1,8 @@
 package sublet.models;
 
 import spark.Request;
-import spark.Response;
 import sublet.Exceptions.LoginException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

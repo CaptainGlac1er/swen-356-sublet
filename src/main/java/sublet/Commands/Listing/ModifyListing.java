@@ -1,9 +1,8 @@
 package sublet.Commands.Listing;
 
 import spark.Request;
-import spark.Response;
 import sublet.Commands.Command;
-import sublet.Exceptions.*;
+import sublet.Exceptions.PermissionException;
 import sublet.controllers.Controller;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -13,7 +12,7 @@ public class ModifyListing implements Command {
     @Override
     public void Execute(Controller controller) throws PermissionException {
         Request request = controller.getCurrentRequest();
-        Listing listing = Listings.GetListing(Long.parseLong(request.queryParams("lid")),controller.getSessionUser());
+        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")),controller.getSessionUser());
         System.out.println((listing != null) ? listing.getDesc() : "NULL");
         if(listing != null){
             listing.setDesc(request.queryParams("dis"));

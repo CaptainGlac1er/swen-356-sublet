@@ -5,7 +5,6 @@ import spark.Response;
 import sublet.Exceptions.LoginException;
 import sublet.controllers.Controller;
 import sublet.models.CurrentUser;
-import sublet.models.User;
 import sublet.util.Path;
 
 public class LogInUser implements Command {

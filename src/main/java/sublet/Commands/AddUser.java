@@ -3,10 +3,12 @@ package sublet.Commands;
 import spark.Request;
 import sublet.Exceptions.RegisterException;
 import sublet.controllers.Controller;
-import sublet.models.*;
+import sublet.models.CurrentUser;
+import sublet.models.StandardUser;
 import sublet.util.Path;
-import java.util.Random;
+
 import java.util.Date;
+import java.util.Random;
 
 public class AddUser implements Command {
 

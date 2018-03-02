@@ -1,13 +1,8 @@
-#parse("velocity/Layout.vm")
+#parse("../Layout.vm")
 #@mainLayout()
     <div class="listings">
-    #foreach($listing in $listings)
-        #parse("/velocity/fragments/listing.vm")
-    #end
-
-    <script>
-        $('body').find('.link').removeClass('active');
-        $('.home-link').addClass('active');
-    </script>
+        #foreach($listing in $listings)
+            #parse("../fragments/listing.vm")
+        #end
     </div>
 #end

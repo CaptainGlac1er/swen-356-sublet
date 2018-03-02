@@ -1,7 +1,6 @@
 package sublet.Commands.Listing;
 
 import spark.Request;
-import spark.Response;
 import sublet.Commands.Command;
 import sublet.controllers.Controller;
 import sublet.models.Listing;

@@ -1,11 +1,11 @@
 <div class="navBarContainer">
     <ul class="navbar">
         <li>
-            <a class="link home-link" href="${links.get("INDEX")}">Home</a>
+            <a class="link home-link" href="/">Home</a>
         </li>
         #if($loggedin)
             <li>
-                <a class="link listings-new-link" href="${links.get("NEWLISTING")}">New Post</a>
+                <a class="link listings-new-link" href="/listing/create">New Post</a>
             </li>
         #end
 

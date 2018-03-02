@@ -18,6 +18,11 @@
                 grid-column-align: center;
                 padding: 20px;
             }
+            .content{
+                width: 50%;
+                margin: 0 auto;
+
+            }
                 .listing{
                     /*-webkit-box-shadow: 11px 15px 98px -24px rgba(0,0,0,0.7);*/
                     /*-moz-box-shadow: 11px 15px 98px -24px rgba(0,0,0,0.7);*/
@@ -37,11 +42,6 @@
                     padding: 20px;
                 }
                 .listings{
-                    margin-top: 50px;
-                    width: 50%;
-                    margin: 0 auto;
-                    padding: 10px;
-                    background-color: white;
                 }
                 .listing-body{
                     width:70%;
@@ -83,13 +83,6 @@
                     display: block;
                     color: #999999;
 
-                }
-                .form-container{
-                    margin-top: 25px;
-                    margin-left: 100px;
-                    display: grid;
-                    grid-template-rows: 1fr 9fr;
-                    margin-bottom: 30px;
                 }
                 .form-group{
                     margin-bottom: 15px;

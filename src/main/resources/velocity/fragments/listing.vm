@@ -16,12 +16,9 @@
     </div>
     <div class="listing-controls">
         #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
-                <form action="/listing/remove" method="post">
-                <button type="submit" name="lid" value="$listing.getLID()">Remove</button>
-                </form>
-                <form action="/listing/edit" method="post">
-                <button type="submit" name="lid" value="$listing.getLID()">Edit</button>
-                </form>
+                <a href="/listing/$listing.getLID()/remove">Remove</a>
+
+                <a href="/listing/$listing.getLID()/edit">Edit</a>
         #end
     </div>
     ##<h3 class="listing-text rent-text">$listing.getGender()</h3>

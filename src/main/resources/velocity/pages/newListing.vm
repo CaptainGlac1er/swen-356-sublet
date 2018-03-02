@@ -1,13 +1,11 @@
-#parse("velocity/Layout.vm")
+#parse("../Layout.vm")
 #if($listing)
-    #set($submit = ${links.get("MODIFYLISTING")})
     #set($address = $listing.getAddress())
     #set($rent = $listing.getRent())
     #set($desc = $listing.getDesc())
     #set($payments = $listing.getPayment_frequency().getTo_str())
     #set($lid = $listing.getLID())
 #else
-    #set($submit = ${links.get("NEWLISTING")})
     #set($address = "")
     #set($rent = "")
     #set($desc = "")
@@ -15,7 +13,6 @@
     #set($lid = "")
 #end
 #@mainLayout()
-<div class="form-container">
     <script type="application/javascript">
         $( function(){
             $('.datepicker').datepicker();
@@ -23,7 +20,7 @@
         });
     </script>
     <h3 class="form-title">Create a new Listing</h3>
-    <form class="listing-form" action='$submit' method="post">
+    <form class="listing-form" action='' method="post">
 
         <div class="form-group">
             <select class="form-input" name="housing" id="housing">
@@ -76,7 +73,4 @@
         <input type="hidden" name="lid" value="$lid"/>
         <button type="submit" class="btn">Submit</button>
     </form>
-
-</div>
-
 #end

@@ -8,13 +8,10 @@ public class Path {
         public static final String ABOUT = "/about";
         public static final String USER = "/user";
         public static final String LISTING = "/listing";
-        public static final String NEWLISTING = LISTING + "/newListing";
-        public static final String EDITLISTING = LISTING + "/edit";
-        public static final String MODIFYLISTING = LISTING + "/modify";
-        public static final String REMOVELISTING = LISTING + "/remove";
+        public static final String NEWLISTING = LISTING + "/create";
         public static final String LOGIN = USER + "/login";
         public static final String LOGOUT = USER + "/logout";
-        public static final String NEWUSER = USER + "/newUser";
+        public static final String NEWUSER = USER + "/register";
 
 
     }
