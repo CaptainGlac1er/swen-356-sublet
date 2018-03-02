@@ -12,7 +12,10 @@ public class LogOutUser implements Command {
     @Override
     public void Execute(Controller controller) {
         Request request = controller.getCurrentRequest();
+        System.out.println(request.cookie("session"));
+        request.session(false);
         CurrentUser.logoutUser(Long.parseLong(request.cookie("session")));
-        controller.updateUserStatus(new GuestUser());
+        controller.removeSession(Long.parseLong(request.cookie("session")));
+        controller.addRedirect("/");
     }
 }

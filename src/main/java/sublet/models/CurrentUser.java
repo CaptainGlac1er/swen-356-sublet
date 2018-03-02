@@ -31,8 +31,14 @@ public class CurrentUser {
     public static void logoutUser(long sid){
         currentUsers.remove(sid);
     }
-    public static void registerUser(StandardUser user){
+    public static long registerUser(StandardUser user){
+        long newSession = (new Random()).nextLong();
         userDataBase.put(user.getUID(),user);
+        currentUsers.put(newSession,user.getUID());
+        return newSession;
+    }
+    public static User getCurrentUserUID(long UID){
+        return userDataBase.get(UID);
     }
     public static User getCurrentUser(Request request){
         //System.out.println(userDataBase.toString());
@@ -59,7 +65,7 @@ public class CurrentUser {
         return currentUser;
     }
     public static User getCurrentUser(long sid){
-        return userDataBase.get(currentUsers.get(sid));
+        return getCurrentUserUID(currentUsers.get(sid));
     }
 
     private static String getRandomString(){

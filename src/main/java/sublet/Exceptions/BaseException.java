@@ -1,11 +1,13 @@
 package sublet.Exceptions;
 
-public class BaseException extends Exception {
+public abstract class BaseException extends Exception {
     private String message;
-    BaseException(String message){
+    private String type;
+    BaseException(String message, String type){
         this.message = message;
+        this.type = type;
     }
     public String getMessage() {
-        return message;
+        return String.format("%s\r\n%s","Login Exception", message);
     }
 }

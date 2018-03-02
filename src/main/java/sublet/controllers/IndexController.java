@@ -25,10 +25,6 @@ public class IndexController extends Controller {
     public void Execute() {
     }
 
-    @Override
-    public void Execute(Command command) {
-
-    }
 
     public ArrayList<Listing> getListings(){
         return Listings.GetListings();

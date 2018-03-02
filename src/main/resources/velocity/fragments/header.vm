@@ -1,6 +1,10 @@
 <div class="header">
     <h1>Tiger Tenant</h1>
     #if($loggedin)
-    <h3>Hi <a href="${links.get("USER")}">$currentuser.getFname()</a><a href="${links.get("LOGOUT")}">(Logout)</a></h3>
+        <h3>Hi <a href="${links.get("USER")}">$currentuser.getFname()</a><a href="${links.get("LOGOUT")}">(Logout)</a></h3>
+    #else
+        <h3><a class="link" href="${links.get("LOGIN")}">Login</a>
+        -
+        <a class="link" href="${links.get("NEWUSER")}">Register Account</a></h3>
     #end
 </div>
