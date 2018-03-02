@@ -37,6 +37,9 @@ public class CurrentUser {
         currentUsers.put(newSession,user.getUID());
         return newSession;
     }
+    public static User getCurrentUserUID(long UID){
+        return userDataBase.get(UID);
+    }
     public static User getCurrentUser(Request request){
         //System.out.println(userDataBase.toString());
         //System.out.println(currentUsers.toString());
@@ -62,7 +65,7 @@ public class CurrentUser {
         return currentUser;
     }
     public static User getCurrentUser(long sid){
-        return userDataBase.get(currentUsers.get(sid));
+        return getCurrentUserUID(currentUsers.get(sid));
     }
 
     private static String getRandomString(){

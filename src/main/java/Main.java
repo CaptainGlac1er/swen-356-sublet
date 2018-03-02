@@ -22,32 +22,32 @@ public class Main {
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty("runtime.references.strict", true);
         ve.init();
-        StandardUser user = new StandardUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+        StandardUser user = new StandardUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
         CurrentUser.registerUser(user);
-        user = new StandardUser(12345, "Bill", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(3456));
+        user = new StandardUser(12345, "Bill", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
         CurrentUser.registerUser(user);
 
 
         port(4000);
         String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
 
-        Listing listing = new Listing((new Random()).nextLong(),new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), desc, "$500/month",
+        Listing listing = new Listing((new Random()).nextLong(), CurrentUser.getCurrentUserUID(1234), desc, "$500/month",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), desc, "$500/month",
+        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "$500/month",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), desc, "$500/month",
+        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "$500/month",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), desc, "$500/month",
+        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "$500/month",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), desc, "$500/month",
+        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "$500/month",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
         Listings.AddListing(listing);
