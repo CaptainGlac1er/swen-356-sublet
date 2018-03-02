@@ -25,7 +25,7 @@
                     /*padding-left: 15px;*/
                     border-radius: 20px;
                     margin: 5px;
-                    background-color: rgb(255, 190, 118);
+                    background-color: #f36e21;
                     /*border: 5px solid rgb(255, 190, 118);*/
                     width: 100%;
                     overflow: auto;
@@ -45,13 +45,16 @@
                 }
                 .listing-body{
                     width:70%;
-                    float:right;
-                    padding: 10px;
+                    background-color: #eaeaea;
                     box-sizing: border-box;
+                }
+                .listing-header{
+                    background-color: #666666;
+                    padding: 10px;
+                    font-size: 25px;
                 }
                 .listing-side{
                     width:30%;
-                    float:left;
                     padding: 10px;
                     box-sizing: border-box;
                 }
@@ -59,17 +62,18 @@
                     width:30%;
                     float:left;
                 }
-
+                .listing-content{
+                    display:flex;
+                }
                 .listing-controls{
                     display: flex;
                     clear: both;
-                    background-color: grey;
+                    background-color: #666666;
                 }
                 .listing-controls form{
                     margin: 10px;
                 }
                 .description-text{
-                    background-color: white;
                     padding: 10px;
                 }
                 .rent-text{

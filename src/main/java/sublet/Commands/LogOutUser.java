@@ -16,5 +16,6 @@ public class LogOutUser implements Command {
         request.session(false);
         CurrentUser.logoutUser(Long.parseLong(request.cookie("session")));
         controller.removeSession(Long.parseLong(request.cookie("session")));
+        controller.addRedirect("/");
     }
 }

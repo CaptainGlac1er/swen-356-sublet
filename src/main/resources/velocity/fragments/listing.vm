@@ -1,16 +1,18 @@
 <div class="listing">
-    <h2 class="listing-text">$!listing.getUser().getFname()</h2>
-    <div class="listing-body">
-        <div class="description-text">
-            $!listing.getDesc()
+    <div class="listing-header">$!listing.getUser().getFname()</div>
+    <div class="listing-content">
+        <div class="listing-side">
+            <h3 class="listing-text">$!listing.getRent()</h3>
+            <h3 class="listing-text">$!listing.getGender()</h3>
+            <h3 class="listing-text">$!listing.getPayment_frequency()</h3>
+            <h3 class="listing-text">$!listing.getHousingType()</h3>
+            <h3 class="listing-text">$!listing.getIsFurnished()</h3>
         </div>
-    </div>
-    <div class="listing-side">
-        <h3 class="listing-text">$!listing.getRent()</h3>
-        <h3 class="listing-text">$!listing.getGender()</h3>
-        <h3 class="listing-text">$!listing.getPayment_frequency()</h3>
-        <h3 class="listing-text">$!listing.getHousingType()</h3>
-        <h3 class="listing-text">$!listing.getIsFurnished()</h3>
+        <div class="listing-body">
+            <div class="description-text">
+                $!listing.getDesc()
+            </div>
+        </div>
     </div>
     <div class="listing-controls">
         #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
