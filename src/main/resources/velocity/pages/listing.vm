@@ -1,3 +1,4 @@
+#* @vtlvariable name="tags" type="java.util.HashMap" *#
 #parse("../Layout.vm")
 #if($listing)
     #set($address = $listing.getAddress())
@@ -72,18 +73,7 @@
             <div class="form-group">
                 <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
             </div>
-            <div class="form-group">
-                Utilies Included:<input name="utilies" type="checkbox"
-                #if($!listing && $listing.hasTag("utilies"))
-                    checked
-                #end
-                />
-                Parking Permit Needed:<input name="parking" type="checkbox"
-                #if($!listing && $listing.hasTag("parking"))
-                                             checked
-                #end
-                />
-            </div>
+
             <input type="hidden" name="lid" value="$lid"/>
             <button type="submit" class="btn">Submit</button>
         </form>

@@ -89,7 +89,6 @@ public class Listing {
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
     private ParkingOption parking_type;
-    private HashMap<String, Tag> properties;
 
     public Listing(User user,
                     String desc,
@@ -109,7 +108,6 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
         this.parking_type = parking_type;
-        this.properties = new HashMap<>();
     }
     public Listing(long lid,
                    User user,
@@ -132,7 +130,6 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
         this.parking_type = parking_type;
-        this.properties = new HashMap<>();
     }
 
 
@@ -192,21 +189,6 @@ public class Listing {
 
     public void setAddress(String address){this.address = address;}
 
-    public void addTag(Tag property){
-        this.properties.put(property.getName(), property);
-    }
-    public void removeTag(String propertyName){
-        this.properties.remove(propertyName);
-    }
-    public Tag getTag(String property){
-        return this.properties.get(property);
-    }
-    public boolean hasTag(String property){
-        return this.properties.containsKey(property);
-    }
-    public ArrayList<Tag> getTags(){
-        return new ArrayList<Tag>(this.properties.values());
-    }
 
 
 

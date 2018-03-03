@@ -3,6 +3,7 @@ package sublet.controllers;
 import spark.Request;
 import spark.Response;
 import sublet.models.Listing;
+import sublet.models.Listings;
 
 import java.util.Map;
 
