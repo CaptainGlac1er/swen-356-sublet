@@ -1,5 +1,7 @@
 package sublet.models;
 
+import sublet.Exceptions.PermissionException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,9 +35,11 @@ public class Listings {
     public static Listing GetListing(long lid, User user){
         return Listings.get(lid);
     }
-    public static void RemoveListing(long lid, User user){
+    public static void RemoveListing(long lid, User user) throws PermissionException {
         if(user instanceof StandardUser && ((StandardUser)Listings.get(lid).getUser()).checkIfSameUser((StandardUser)user)) {
             Listings.remove(lid);
+        }else{
+            throw new PermissionException("You can not delete this listing");
         }
     }
 }

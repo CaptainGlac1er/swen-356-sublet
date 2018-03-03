@@ -4,6 +4,7 @@ import spark.Request;
 import spark.Response;
 import sublet.Commands.Command;
 import sublet.Exceptions.BaseException;
+import sublet.Exceptions.NotLoggedInException;
 import sublet.models.CurrentUser;
 import sublet.models.GuestUser;
 import sublet.models.StandardUser;
@@ -26,20 +27,28 @@ public abstract class Controller {
     }
 
     /**
-     * Handles custom things (probably shouldn't ever be used)
-     */
-    public abstract void Execute();
-
-    /**
      * Handles commands that the controller needs to run
      * @param command
      */
     public void Execute(Command command){
         try {
+            if(hasException())
+                this.addToModel("error", getLatestException());
             command.Execute(this);
+        }catch (NotLoggedInException nlie){
+            this.currentRequest.session().attribute("error", nlie);
+            this.addRedirect("/");
         }catch (BaseException be){
             this.addToModel("error", be.getMessage());
         }
+    }
+    private boolean hasException(){
+        return this.currentRequest.session().attribute("error") != null;
+    }
+    private BaseException getLatestException(){
+        BaseException exception = this.currentRequest.session().attribute("error");
+        this.currentRequest.session().removeAttribute("error");
+        return exception;
     }
 
     //TODO Improve this

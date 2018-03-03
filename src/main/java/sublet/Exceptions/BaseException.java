@@ -8,6 +8,6 @@ public abstract class BaseException extends Exception {
         this.type = type;
     }
     public String getMessage() {
-        return String.format("%s\r\n%s","Login Exception", message);
+        return String.format("%s\r\n%s","Login Exception:", message);
     }
 }

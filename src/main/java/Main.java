@@ -88,7 +88,7 @@ public class Main {
             });
             path("/listing", ()->{
                 path("/create", ()->{
-                    get("",ListingService.listingsForumPage);
+                    get("",ListingService.formListing);
                     post("",ListingService.addListing);
                 });
                 path("/:lid",()->{

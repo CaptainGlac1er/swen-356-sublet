@@ -1,7 +1,7 @@
 package sublet.Exceptions;
 
 public class NotLoggedInException extends BaseException {
-    public NotLoggedInException(String message) {
-        super(message, "User Exception");
+    public NotLoggedInException() {
+        super("Not Logged in, please login again", "User Exception");
     }
 }

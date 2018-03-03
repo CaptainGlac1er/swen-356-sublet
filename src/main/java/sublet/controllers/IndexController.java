@@ -13,10 +13,6 @@ public class IndexController extends Controller {
         super(request, response);
     }
 
-    @Override
-    public void Execute() {
-    }
-
 
     public ArrayList<Listing> getListings(){
         return Listings.GetListings();

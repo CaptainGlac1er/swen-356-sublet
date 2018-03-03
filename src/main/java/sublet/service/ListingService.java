@@ -2,19 +2,15 @@ package sublet.service;
 
 import spark.Route;
 import sublet.Commands.Listing.*;
+import sublet.Commands.LoggedInCommand;
 import sublet.controllers.ListingController;
 import sublet.util.PageRender;
 import sublet.util.Path;
 
 public class ListingService {
-    public static Route listingsForumPage = (request, response) -> {
+    public static Route formListing = (request, response) -> {
         ListingController controller = new ListingController(request, response);
-        controller.Execute();
-        return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
-    };
-    public static Route listingsPost = (request, response) -> {
-        ListingController controller = new ListingController(request, response);
-        controller.Execute();
+        controller.Execute(new LoggedInCommand());
         return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
     };
     public static Route addListing = (request, response) -> {

@@ -2,6 +2,8 @@ package sublet.Commands.Listing;
 
 import spark.Request;
 import sublet.Commands.Command;
+import sublet.Commands.LoggedInCommand;
+import sublet.Exceptions.PermissionException;
 import sublet.controllers.Controller;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -9,10 +11,11 @@ import sublet.util.Path;
 
 import java.util.Random;
 
-public class AddListing implements Command {
+public class AddListing extends LoggedInCommand{
+
 
     @Override
-    public void Execute(Controller controller) {
+    public void ProtectedExecute(Controller controller) {
         Request request = controller.getCurrentRequest();
         if(controller.isLoggedIn()) {
             Listing L = new Listing((new Random()).nextLong(), controller.getSessionUser(),

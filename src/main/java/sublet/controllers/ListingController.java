@@ -12,10 +12,6 @@ public class ListingController extends Controller {
         super(request, response);
     }
 
-    @Override
-    public void Execute() {
-
-    }
     public Map<String, Object> getModel(){
         model.put("gender",Listing.genderList);
         model.put("payment",Listing.paymentList);

@@ -1,14 +1,14 @@
 package sublet.Commands;
 
 import spark.Request;
+import sublet.Exceptions.PermissionException;
 import sublet.controllers.Controller;
 import sublet.models.CurrentUser;
 
-public class LogOutUser implements Command {
-    public LogOutUser(){
-    }
+public class LogOutUser extends LoggedInCommand {
+
     @Override
-    public void Execute(Controller controller) {
+    public void ProtectedExecute(Controller controller) throws PermissionException {
         Request request = controller.getCurrentRequest();
         System.out.println(request.cookie("session"));
         request.session(false);
