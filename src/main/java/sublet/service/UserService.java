@@ -26,20 +26,20 @@ public class UserService {
         Controller controller = new UserController(request, response);
         controller.Execute(new LogInUser());
         return PageRender.render(request,controller.getModel(), Path.Template.LOGIN);
-    };;
+    };
     public static Route serveLogout = (Request request, Response response) -> { //get
         Controller controller = new UserController(request, response);
         controller.Execute(new LogOutUser());
         return PageRender.render(request,controller.getModel(), Path.Template.LOGIN);
-    };;
+    };
     public static Route serveCreateUser = (Request request, Response response) -> { //get
         Controller controller = new UserController(request, response);
         controller.Execute();
         return PageRender.render(request,controller.getModel(),Path.Template.NEWUSER);
-    };;
+    };
     public static Route serveUser = (Request request, Response response) -> { //post
         Controller controller = new UserController(request, response);
         controller.Execute(new AddUser());
         return PageRender.render(request,controller.getModel(),Path.Template.NEWUSER);
-    };;
+    };
 }

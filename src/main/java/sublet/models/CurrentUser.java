@@ -39,10 +39,7 @@ public class CurrentUser {
         return userDataBase.get(UID);
     }
     public static User getCurrentUser(Request request){
-        //System.out.println(userDataBase.toString());
-        //System.out.println(currentUsers.toString());
         request.session(true);
-        //System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
             return new GuestUser();
         }

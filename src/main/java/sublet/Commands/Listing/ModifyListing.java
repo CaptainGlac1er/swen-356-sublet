@@ -13,7 +13,6 @@ public class ModifyListing implements Command {
     public void Execute(Controller controller) throws PermissionException {
         Request request = controller.getCurrentRequest();
         Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")),controller.getSessionUser());
-        System.out.println((listing != null) ? listing.getDesc() : "NULL");
         if(listing != null){
             listing.setDesc(request.queryParams("dis"));
             listing.setRent(request.queryParams("rent"));
