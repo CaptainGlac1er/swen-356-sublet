@@ -1,5 +1,5 @@
 <div class="listing" >
-    <a href="/listing/$listing.getLID()/view">
+    <a href="/listing/$listing.getLID()">
     <div class="listing-header">$!listing.getUser().getFname()</div>
     <div class="listing-content">
         <div class="listing-side">

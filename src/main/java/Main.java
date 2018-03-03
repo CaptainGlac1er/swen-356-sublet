@@ -92,7 +92,7 @@ public class Main {
                     post("",ListingService.addListing);
                 });
                 path("/:lid",()->{
-                    get("/view",ListingService.viewListing);
+                    get("",ListingService.viewListing);
                     get("/edit",ListingService.editListing);
                     post("/edit",ListingService.modifyListing);
                     get("/remove",ListingService.removeListing);
