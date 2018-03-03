@@ -17,6 +17,7 @@ public class ListingController extends Controller {
         model.put("payment",Listing.paymentList);
         model.put("house",Listing.housingList);
         model.put("furn",Listing.furnishedList);
+        model.put("parking",Listing.parkingList);
         return model;
     }
 }

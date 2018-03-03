@@ -69,6 +69,15 @@ public class Listing {
             return to_str;
         }
     }
+
+    public enum ParkingOption{
+        ON_STR ("On Street Parking"), PVT_GARAGE("Private Garage"), PUB_GARAGE("Public Garage"),
+        DRIVE("Driveway"), PUB_LOT("Public Parking Lot"),PVT_LOT ("Private Parking Lot"), OTHER("Other");
+        private String to_str;
+        ParkingOption(String str){this.to_str = to_str;}
+        public String getTo_str(){return to_str;}
+    }
+
     private long lid;
     private User user;
     private String desc;
@@ -78,6 +87,7 @@ public class Listing {
     private GenderOptions gender;
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
+    private ParkingOption parking_type;
 
     public Listing(User user,
                     String desc,
@@ -86,7 +96,7 @@ public class Listing {
                     PaymentFrequencyOptions payment_frequency,
                     GenderOptions gender,
                     HousingTypeOptions housing_type,
-                    IsFurnishedOptions is_furnished
+                    IsFurnishedOptions is_furnished, ParkingOption parking_type
     ){
         this.user = user;
         this.desc = desc;
@@ -96,6 +106,7 @@ public class Listing {
         this.gender = gender;
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
+        this.parking_type = parking_type;
     }
     public Listing(long lid,
                    User user,
@@ -105,7 +116,8 @@ public class Listing {
                    PaymentFrequencyOptions payment_frequency,
                    GenderOptions gender,
                    HousingTypeOptions housing_type,
-                   IsFurnishedOptions is_furnished
+                   IsFurnishedOptions is_furnished,
+                   ParkingOption parking_type
     ){
         this.lid = lid;
         this.user = user;
@@ -116,11 +128,13 @@ public class Listing {
         this.gender = gender;
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
+        this.parking_type = parking_type;
     }
     public static ArrayList<GenderOptions> genderList = new ArrayList<>(Arrays.asList(GenderOptions.values()));
     public static ArrayList<HousingTypeOptions> housingList = new ArrayList<>(Arrays.asList(HousingTypeOptions.values()));
     public static ArrayList<IsFurnishedOptions> furnishedList = new ArrayList<>(Arrays.asList(IsFurnishedOptions.values()));
     public static ArrayList<PaymentFrequencyOptions> paymentList = new ArrayList<>(Arrays.asList(PaymentFrequencyOptions.values()));
+    public static ArrayList<ParkingOption> parkingList = new ArrayList<>(Arrays.asList(ParkingOption.values()));
 
     public long getLID(){return this.lid;}
     public User getUser(){
@@ -176,4 +190,5 @@ public class Listing {
     public static HousingTypeOptions getHousing_type(String option){return HousingTypeOptions.valueOf(option);}
     public static IsFurnishedOptions getIs_furnished(String option){return IsFurnishedOptions.valueOf(option);}
     public static PaymentFrequencyOptions getPaymentValue(String option){return PaymentFrequencyOptions.valueOf(option);}
+    public static ParkingOption getParkingValue(String option){return ParkingOption.valueOf(option);}
 }

@@ -9,6 +9,7 @@ import sublet.service.UserService;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import static spark.Spark.*;
@@ -41,23 +42,23 @@ public class Main {
 
         Listing listing = new Listing((new Random()).nextLong(), CurrentUser.getCurrentUserUID(1234), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR);
         Listings.AddListing(listing);
         listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(12345), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR);
         Listings.AddListing(listing);
         listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR);
         Listings.AddListing(listing);
         listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(12345), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR);
         Listings.AddListing(listing);
         listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR);
         Listings.AddListing(listing);
 
     }
