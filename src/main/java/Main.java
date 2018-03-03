@@ -5,7 +5,6 @@ import sublet.models.StandardUser;
 import sublet.service.IndexService;
 import sublet.service.ListingService;
 import sublet.service.UserService;
-import sublet.util.Path;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -88,14 +87,12 @@ public class Main {
                 });
             });
             path("/listing", ()->{
-                path("", ()->{
-
-                });
                 path("/create", ()->{
                     get("",ListingService.listingsForumPage);
                     post("",ListingService.addListing);
                 });
                 path("/:lid",()->{
+                    get("/view",ListingService.viewListing);
                     get("/edit",ListingService.editListing);
                     post("/edit",ListingService.modifyListing);
                     get("/remove",ListingService.removeListing);

@@ -31,10 +31,7 @@ public class Listings {
         }
     }
     public static Listing GetListing(long lid, User user){
-        if(user instanceof StandardUser && ((StandardUser)Listings.get(lid).getUser()).checkIfSameUser((StandardUser)user)) {
-            return Listings.get(lid);
-        }
-        return null;
+        return Listings.get(lid);
     }
     public static void RemoveListing(long lid, User user){
         if(user instanceof StandardUser && ((StandardUser)Listings.get(lid).getUser()).checkIfSameUser((StandardUser)user)) {

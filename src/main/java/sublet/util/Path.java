@@ -19,7 +19,6 @@ public class Path {
         private static final String PAGELOC = "/velocity/pages/";
         public static final String INDEX = PAGELOC + "index.vm";
         public static final String ABOUT = PAGELOC + "about.vm";
-        public static final String NEWLISTING = PAGELOC + "newListing.vm";
         public static final String USER = PAGELOC + "user.vm";
         public static final String LISTING = PAGELOC + "listing.vm";
         public static final String LOGIN = PAGELOC + "login.vm";

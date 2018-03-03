@@ -1,4 +1,5 @@
-<div class="listing">
+<div class="listing" >
+    <a href="/listing/$listing.getLID()/view">
     <div class="listing-header">$!listing.getUser().getFname()</div>
     <div class="listing-content">
         <div class="listing-side">
@@ -14,6 +15,7 @@
             </div>
         </div>
     </div>
+    </a>
     <div class="listing-controls">
         #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
                 <a href="/listing/$listing.getLID()/remove">Remove</a>
