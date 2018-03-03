@@ -48,10 +48,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <input class="form-input datepicker form-control" placeholder="1/1/1990" name="startdate" type="text" value="">
+                <input class="form-input datepicker form-control" placeholder="Start Date: 1/1/1990" name="startdate" type="text" value="">
             </div>
             <div class="form-group">
-                <input class="form-input datepicker form-control" placeholder="1/1/1990" name="enddate" type="text" value="">
+                <input class="form-input datepicker form-control" placeholder="End Date: 1/1/1990" name="enddate" type="text" value="">
             </div>
             <div class="form-group">
 
