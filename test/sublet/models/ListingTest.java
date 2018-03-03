@@ -13,9 +13,9 @@ public class ListingTest {
 
     @BeforeEach
     void init() {
-        listing = new Listing(1234,new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), "nerd", "$500/month",
+        listing = new Listing((new Random()).nextLong(), new StandardUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", new Date(12345), new Date(3456)), "hi", "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED);
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR);
     }
 
     @Test

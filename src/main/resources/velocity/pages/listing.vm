@@ -3,7 +3,7 @@
     #set($address = $listing.getAddress())
     #set($rent = $listing.getRent())
     #set($desc = $listing.getDesc())
-    #set($payments = $listing.getPayment_frequency().getTo_str())
+    #set($payments = $listing.getPayment_frequency().toString())
     #set($lid = $listing.getLID())
 #else
     #set($address = "")
@@ -26,7 +26,7 @@
             <div class="form-group">
                 <select class="form-input" name="housing" id="housing">
                     #foreach($h in $house)
-                        <option value=$h>$h.getTo_str()</option>
+                        <option value="$h.name()">$h.toString()</option>
                     #end
                 </select>
             </div>
@@ -39,11 +39,11 @@
             <div class="form-group">
                 <select class="form-input" name="payment" id="payment" type="text">
                     #foreach($pay in $payment)
-                        <option value=$pay
-                            #if($pay.getTo_str().equals($payments))
+                        <option value="$pay.name()"
+                            #if($pay.toString().equals($payments))
                                     selected
                             #end
-                        >$pay.getTo_str()</option>
+                        >$pay.toString()</option>
                     #end
                 </select>
             </div>
@@ -57,7 +57,7 @@
 
                 <select class="form-input" name="gender" id="gender">
                     #foreach($gend in $gender)
-                        <option value="$gend">$gend.getTo_str()</option>
+                        <option value="$gend.name()">$gend.toString()</option>
                     #end
                 </select>
             </div>
@@ -65,12 +65,24 @@
             <div class="form-group">
                 <select class="form-input" name="furn" id="furn">
                     #foreach($f in $furn)
-                        <option value=$f>$f.getTo_str()</option>
+                        <option value="$f.name()">$f.toString()</option>
                     #end
                 </select>
             </div>
             <div class="form-group">
                 <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
+            </div>
+            <div class="form-group">
+                Utilies Included:<input name="utilies" type="checkbox"
+                #if($!listing && $listing.hasTag("utilies"))
+                    checked
+                #end
+                />
+                Parking Permit Needed:<input name="parking" type="checkbox"
+                #if($!listing && $listing.hasTag("parking"))
+                                             checked
+                #end
+                />
             </div>
             <input type="hidden" name="lid" value="$lid"/>
             <button type="submit" class="btn">Submit</button>

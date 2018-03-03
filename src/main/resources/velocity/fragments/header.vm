@@ -1,10 +1,12 @@
 <div class="header">
-    <h1>Tiger Tenant</h1>
-    #if($loggedin)
-        <h3>Hi <a href="/user">$currentuser.getFname()</a><a href="/user/logout">(Logout)</a></h3>
-    #else
-        <h3><a class="link" href="/user/login">Login</a>
-        -
-        <a class="link" href="/user/register">Register Account</a></h3>
-    #end
+    <div class="title"><h1>Tiger Tenant</h1></div>
+    <div class="user">
+        #if($loggedin)
+            <h3>Hi <a href="/user">$currentuser.getFname()</a><a href="/user/logout">(Logout)</a></h3>
+        #else
+            <h3><a class="link" href="/user/login">Login</a>
+            -
+            <a class="link" href="/user/register">Register Account</a></h3>
+        #end
+    </div>
 </div>

@@ -4,23 +4,33 @@
     <div class="listing-content">
         <div class="listing-side">
             <h3 class="listing-text">$$!listing.getRent()</h3>
-            <h3 class="listing-text">$!listing.getPayment_frequency().getTo_str()</h3>
-            <h3 class="listing-text">$!listing.getGender().getTo_str()</h3>
-            <h3 class="listing-text">$!listing.getHousingType().getTo_str()</h3>
-            <h3 class="listing-text">$!listing.getIsFurnished().getTo_str()</h3>
+            <h3 class="listing-text">$!listing.getPayment_frequency().toString()</h3>
+            <h3 class="listing-text">$!listing.getGender().toString()</h3>
+            <h3 class="listing-text">$!listing.getHousingType().toString()</h3>
+            <h3 class="listing-text">$!listing.getIsFurnished().toString()</h3>
         </div>
         <div class="listing-body">
             <div class="description-text">
                 $!listing.getDesc()
             </div>
+            #if($viewonly && $listing)
+                <div>
+                    #foreach($tag in $!listing.getTags())
+                        <div>
+                            $tag.getName()
+                        </div>
+                    #end
+                </div>
+            #end
         </div>
     </div>
     </a>
     <div class="listing-controls">
         #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
-                <a href="/listing/$listing.getLID()/remove">Remove</a>
-
-                <a href="/listing/$listing.getLID()/edit">Edit</a>
+            <a href="/listing/$listing.getLID()/remove">Remove</a>
+            <a href="/listing/$listing.getLID()/edit">Edit</a>
+        #else
+            <a href="">Interested</a>
         #end
     </div>
     ##<h3 class="listing-text rent-text">$listing.getGender()</h3>

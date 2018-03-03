@@ -43,6 +43,7 @@ public abstract class Controller {
             this.addToModel("error", be);
         }
     }
+
     private boolean hasException(){
         return this.currentRequest.session().attribute("error") != null;
     }

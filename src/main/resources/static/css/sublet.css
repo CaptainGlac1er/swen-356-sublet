@@ -6,21 +6,34 @@
             body{
                 grid-auto-columns: 1fr;
                 grid-template-rows: 1fr 8fr;
+                background: url("/img/brickbackground.jpg") no-repeat fixed top center;
+                background-size: cover;
             }
             .header{
                 z-index: 1000;
-                height: 50px;
                 width: 100%;
-
-                background-color: rgba(255,255,255,.5);
-                display: grid;
-                grid-template-columns: 2fr 3fr 1fr 2fr;
-                grid-column-align: center;
+                box-sizing: border-box;
+                background-color: rgba(255,255,255,.9);
                 padding: 20px;
+                overflow: auto;
+            }
+            .header .title{
+                float: left;
+                width: 200px;
+            }
+            .header .user{
+                float: right;
+                width: 300px;
             }
             .content{
                 width: 50%;
                 margin: 0 auto;
+                padding: 10px;
+                min-width: 500px;
+                background-color: rgba(150,150,150,.9);
+                -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+                box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 
             }
                 .listing{
@@ -32,7 +45,7 @@
                     border-radius: 20px;
                     margin: 5px;
                     background-color: #f36e21;
-                    width: 100%;
+                    width: auto;
                     overflow: auto;
 
                 }
@@ -141,7 +154,7 @@
             }
 
             .navBarContainer{
-                justify-self: end;
+                background-color: rgba(200,200,200,.7);
             }
             .navbar{
                 display: inline;
