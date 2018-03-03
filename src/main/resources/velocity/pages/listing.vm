@@ -6,12 +6,14 @@
     #set($desc = $listing.getDesc())
     #set($payments = $listing.getPayment_frequency().toString())
     #set($lid = $listing.getLID())
+    #set($utilincluded = $listing.getUtilIncluded())
 #else
     #set($address = "")
     #set($rent = "")
     #set($desc = "")
     #set($payments = "")
     #set($lid = "")
+    #set($utilincluded = false)
 #end
 #@mainLayout()
     #if(!$viewonly && $loggedin && (!$listing || $listing.getUser().checkIfSameUser($currentuser)))
@@ -72,6 +74,16 @@
             </div>
             <div class="form-group">
                 <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
+            </div>
+            <div class="form-group">
+                <div class="form-input">
+                    Price Includes Utilities:
+                    <input name="utilincluded" type="checkbox"
+                    #if($utilincluded)
+                        checked
+                    #end
+                    >
+                </div>
             </div>
 
             <input type="hidden" name="lid" value="$lid"/>

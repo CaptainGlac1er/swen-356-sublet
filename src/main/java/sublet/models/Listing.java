@@ -89,6 +89,7 @@ public class Listing {
     private HousingTypeOptions housing_type;
     private PaymentFrequencyOptions payment_frequency;
     private ParkingOption parking_type;
+    private boolean utilIncluded;
 
     public Listing(User user,
                     String desc,
@@ -97,7 +98,9 @@ public class Listing {
                     PaymentFrequencyOptions payment_frequency,
                     GenderOptions gender,
                     HousingTypeOptions housing_type,
-                    IsFurnishedOptions is_furnished, ParkingOption parking_type
+                    IsFurnishedOptions is_furnished,
+                   ParkingOption parking_type,
+                   boolean utilIncluded
     ){
         this.user = user;
         this.desc = desc;
@@ -108,6 +111,7 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
         this.parking_type = parking_type;
+        this.utilIncluded = utilIncluded;
     }
     public Listing(long lid,
                    User user,
@@ -118,7 +122,8 @@ public class Listing {
                    GenderOptions gender,
                    HousingTypeOptions housing_type,
                    IsFurnishedOptions is_furnished,
-                   ParkingOption parking_type
+                   ParkingOption parking_type,
+                   boolean utilIncluded
     ){
         this.lid = lid;
         this.user = user;
@@ -130,6 +135,7 @@ public class Listing {
         this.housing_type = housing_type;
         this.is_furnished = is_furnished;
         this.parking_type = parking_type;
+        this.utilIncluded = utilIncluded;
     }
 
 
@@ -188,6 +194,13 @@ public class Listing {
     }
 
     public void setAddress(String address){this.address = address;}
+
+    public boolean getUtilIncluded(){
+        return this.utilIncluded;
+    }
+    public void setUtilIncluded(boolean val){
+        this.utilIncluded = val;
+    }
 
 
 

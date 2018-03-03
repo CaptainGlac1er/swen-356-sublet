@@ -16,7 +16,7 @@ public class ModifyListing extends LoggedInCommand{
         if(listing != null){
             listing.setDesc(request.queryParams("dis"));
             listing.setRent(request.queryParams("rent"));
-
+            listing.setUtilIncluded(request.queryParams().contains("utilincluded"));
             Listings.UpdateListing(listing, controller.getSessionUser());
         }else{
             throw new PermissionException("You can't edit this post");
