@@ -1,5 +1,5 @@
 package sublet.Exceptions;
-
+import org.apache.commons.lang.StringUtils;
 public abstract class BaseException extends Exception {
     private String message;
     private String type;
@@ -8,6 +8,9 @@ public abstract class BaseException extends Exception {
         this.type = type;
     }
     public String getMessage() {
-        return String.format("%s\r\n%s","Login Exception:", message);
+        return message;
+    }
+    public String getTitle(){
+        return type;
     }
 }

@@ -1,5 +1,17 @@
 #if($error)
-<div>
-    $error.getMessage()
+<div id="error" title="${error.getTitle()}">
+    ${error.getMessage()}
+    <script type="application/javascript">
+        $(function () {
+            $("#error").dialog({
+                modal: true,
+                buttons: {
+                    Ok: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            })
+        });
+    </script>
 </div>
 #end
