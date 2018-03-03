@@ -3,11 +3,11 @@
     <div class="listing-header">$!listing.getUser().getFname()</div>
     <div class="listing-content">
         <div class="listing-side">
-            <h3 class="listing-text">$!listing.getRent()</h3>
-            <h3 class="listing-text">$!listing.getGender()</h3>
-            <h3 class="listing-text">$!listing.getPayment_frequency()</h3>
-            <h3 class="listing-text">$!listing.getHousingType()</h3>
-            <h3 class="listing-text">$!listing.getIsFurnished()</h3>
+            <h3 class="listing-text">$$!listing.getRent()</h3>
+            <h3 class="listing-text">$!listing.getPayment_frequency().getTo_str()</h3>
+            <h3 class="listing-text">$!listing.getGender().getTo_str()</h3>
+            <h3 class="listing-text">$!listing.getHousingType().getTo_str()</h3>
+            <h3 class="listing-text">$!listing.getIsFurnished().getTo_str()</h3>
         </div>
         <div class="listing-body">
             <div class="description-text">
