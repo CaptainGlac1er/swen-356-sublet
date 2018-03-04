@@ -27,7 +27,7 @@ public class AddListing extends LoggedInCommand{
                     Listing.getGenderValue(request.queryParams("gender")),
                     Listing.getHousing_type(request.queryParams("housing")),
                     Listing.getIs_furnished(request.queryParams("furn")),
-                    Listing.ParkingOption.ON_STR, request.queryParams().contains("utilincluded"));
+                    Listing.getParkingValue(request.queryParams("parking")), request.queryParams().contains("utilincluded"));
 
             Listings.AddListing(L);
             controller.addRedirect(Path.Web.LISTING + "/" + L.getLID());

@@ -4,13 +4,15 @@
     <div class="listing-content">
         <div class="listing-side">
             <h3 class="listing-text">$$!listing.getRent()</h3>
+            #if($listing && $listing.getUtilIncluded())
+                <h3 class="listing-text">Includes Utilities</h3>
+            #end
             <h3 class="listing-text">$!listing.getPayment_frequency().toString()</h3>
             <h3 class="listing-text">$!listing.getGender().toString()</h3>
             <h3 class="listing-text">$!listing.getHousingType().toString()</h3>
             <h3 class="listing-text">$!listing.getIsFurnished().toString()</h3>
-            #if($listing && $listing.getUtilIncluded())
-                <h3 class="listing-text">Price Includes Utilities</h3>
-            #end
+            <h3 class="listing-text">$!listing.getParking_type().toString()</h3>
+
         </div>
         <div class="listing-body">
             <div class="description-text">

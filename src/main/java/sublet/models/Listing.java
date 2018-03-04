@@ -75,7 +75,7 @@ public class Listing {
         ON_STR ("On Street Parking"), PVT_GARAGE("Private Garage"), PUB_GARAGE("Public Garage"),
         DRIVE("Driveway"), PUB_LOT("Public Parking Lot"),PVT_LOT ("Private Parking Lot"), OTHER("Other");
         private String to_str;
-        ParkingOption(String str){this.to_str = to_str;}
+        ParkingOption(String str){this.to_str = str;}
         public String toString(){return to_str;}
     }
 
@@ -168,6 +168,10 @@ public class Listing {
         return this.is_furnished;
     }
     public String getAddress(){return this.address;}
+
+    public ParkingOption getParking_type() {
+        return parking_type;
+    }
 
     public void setDesc(String desc) {
         this.desc = desc;

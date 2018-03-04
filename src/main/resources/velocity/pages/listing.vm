@@ -40,6 +40,16 @@
                 <input class="form-input" placeholder="Rent" id="rent" name="rent" class="form-control" type="text" value="$rent">
             </div>
             <div class="form-group">
+                <div class="form-input">
+                    Price Includes Utilities:
+                    <input name="utilincluded" type="checkbox"
+                        #if($utilincluded)
+                           checked
+                        #end
+                    >
+                </div>
+            </div>
+            <div class="form-group">
                 <select class="form-input" name="payment" id="payment" type="text">
                     #foreach($pay in $payment)
                         <option value="$pay.name()"
@@ -73,18 +83,16 @@
                 </select>
             </div>
             <div class="form-group">
-                <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
+                <select class="form-input" name="parking" id="parking">
+                    #foreach($p in $parking)
+                        <option value="$p.name()">$p.toString()</option>
+                    #end
+                </select>
             </div>
             <div class="form-group">
-                <div class="form-input">
-                    Price Includes Utilities:
-                    <input name="utilincluded" type="checkbox"
-                    #if($utilincluded)
-                        checked
-                    #end
-                    >
-                </div>
+                <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
             </div>
+
 
             <input type="hidden" name="lid" value="$lid"/>
             <button type="submit" class="btn">Submit</button>
