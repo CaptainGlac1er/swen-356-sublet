@@ -1,3 +1,4 @@
+import org.h2.tools.RunScript;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -6,8 +7,12 @@ import sublet.service.IndexService;
 import sublet.service.ListingService;
 import sublet.service.UserService;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -18,19 +23,20 @@ public class Main {
     public static void main(String[] args) throws Exception {
         staticFiles.location("/static");
         port(4000);
-
-
-        initTestData();
-        setupRouting();
-
-
-
         Class.forName("org.h2.Driver");
         Connection conn = DriverManager.getConnection("jdbc:h2:~/TigerTenant", "sa", "");
+        initTestData();
+        setupRouting();
         // add application code here
         conn.close();
         awaitInitialization();
     }
+
+//    private void buildTables() throws SQLException{
+//        InputStream in = getClass().getResourceAsStream("tables.sql");
+//        BufferedReader reader =  new BufferedReader(new InputStreamReader(in));
+//        RunScript.execute(conn, reader);
+//    }
 
     static void initTestData(){
         StandardUser user = new StandardUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
