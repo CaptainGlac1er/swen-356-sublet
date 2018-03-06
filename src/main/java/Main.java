@@ -1,4 +1,5 @@
 import org.h2.tools.RunScript;
+import org.h2.tools.Server;
 import sublet.models.CurrentUser;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -8,14 +9,12 @@ import sublet.service.ListingService;
 import sublet.service.UserService;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 import static spark.Spark.*;
 
@@ -24,7 +23,22 @@ public class Main {
         staticFiles.location("/static");
         port(4000);
         Class.forName("org.h2.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:h2:~/TigerTenant", "sa", "");
+        Properties prop = new Properties();
+        InputStream configStream = Main.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            prop.load(configStream);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+
+        Connection conn = DriverManager.getConnection(prop.getProperty("database"), prop.getProperty("readuser"), prop.getProperty("readpass"));
+        Statement test = conn.createStatement();
+        ResultSet res = test.executeQuery("select * from userdb;");
+        while(res.next())
+            System.out.println(res.getString("email"));
+
         initTestData();
         setupRouting();
         // add application code here
