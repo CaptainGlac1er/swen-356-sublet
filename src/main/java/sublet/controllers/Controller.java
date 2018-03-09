@@ -12,6 +12,7 @@ import sublet.models.StandardUser;
 import sublet.models.User;
 import sublet.util.Path;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public abstract class Controller {
      * Handles commands that the controller needs to run
      * @param command
      */
-    public void Execute(Command command){
+    public void Execute(Command command) throws ParseException {
         try {
             if(hasException())
                 this.addToModel("error", getLatestException());

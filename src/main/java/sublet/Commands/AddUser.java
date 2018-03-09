@@ -8,15 +8,20 @@ import sublet.models.StandardUser;
 import sublet.util.Path;
 import java.util.ArrayList;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class AddUser implements Command {
 
     @Override
-    public void Execute(Controller controller) throws RegisterException {
+    public void Execute(Controller controller) throws RegisterException, ParseException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
+            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
                     request.queryParams("confirmpassword"),
                     request.queryParams("email"));
@@ -28,7 +33,8 @@ public class AddUser implements Command {
                             request.queryParams("username"),
                             request.queryParams("password"),
                             request.queryParams("email"),
-                            new Date(12345), new Date(3456));
+                            format.parse(request.queryParams("birthday")),
+                            format.parse(request.queryParams("gradyear")));
                     long session = CurrentUser.registerUser(user);
                     controller.createSession(session);
                     controller.addRedirect(Path.Web.USER);
@@ -51,11 +57,12 @@ public class AddUser implements Command {
     public ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email){
         ArrayList<String> exceptions = new ArrayList<>();
         if(!password.equals(confirmPassword)){
-            exceptions.add("Passwords didn't match.");
+            exceptions.add("Passwords didn't match. ");
         }
 
         if(!isRITEmail(email)){
-            exceptions.add("You must use your RIT email.");
+            String sentenceStart = exceptions.size()!=0?"Also, y" : "Y";
+            exceptions.add(sentenceStart + "ou must use your RIT email.");
         }
         return exceptions;
     }
