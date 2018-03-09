@@ -6,6 +6,7 @@ import sublet.controllers.Controller;
 import sublet.models.CurrentUser;
 import sublet.models.StandardUser;
 import sublet.util.Path;
+import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.Random;
@@ -16,8 +17,11 @@ public class AddUser implements Command {
     public void Execute(Controller controller) throws RegisterException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
-            if(request.queryParams("password").equals(request.queryParams("confirmpassword"))){
-                if(isRITEmail(request.queryParams("email"))) {
+            ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
+                    request.queryParams("confirmpassword"),
+                    request.queryParams("email"));
+
+            if(exceptions.size() == 0){
                     StandardUser user = new StandardUser(new Random().nextLong(),
                             request.queryParams("fname"),
                             request.queryParams("lname"),
@@ -28,11 +32,12 @@ public class AddUser implements Command {
                     long session = CurrentUser.registerUser(user);
                     controller.createSession(session);
                     controller.addRedirect(Path.Web.USER);
-                }else{
-                    throw new RegisterException("You must use your RIT email");
-                }
             }else{
-                throw new RegisterException("Passwords didn't match");
+                String exceptionString = "";
+               for(String re : exceptions){
+                   exceptionString += re;
+               }
+               throw new RegisterException(exceptionString);
             }
 
         }
@@ -41,5 +46,17 @@ public class AddUser implements Command {
     public boolean isRITEmail(String email){
         String regex = "\\w+@(g\\.|mail\\.)?rit\\.edu";
         return email.matches(regex);
+    }
+
+    public ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email){
+        ArrayList<String> exceptions = new ArrayList<>();
+        if(!password.equals(confirmPassword)){
+            exceptions.add("Passwords didn't match.");
+        }
+
+        if(!isRITEmail(email)){
+            exceptions.add("You must use your RIT email.");
+        }
+        return exceptions;
     }
 }
