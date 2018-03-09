@@ -17,20 +17,29 @@ public class AddUser implements Command {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
             if(request.queryParams("password").equals(request.queryParams("confirmpassword"))){
-                StandardUser user = new StandardUser(new Random().nextLong(),
-                        request.queryParams("fname"),
-                        request.queryParams("lname"),
-                        request.queryParams("username"),
-                        request.queryParams("password"),
-                        request.queryParams("email"),
-                        new Date(12345), new Date(3456));
-                long session = CurrentUser.registerUser(user);
-                controller.createSession(session);
-                controller.addRedirect(Path.Web.USER);
+                if(isRITEmail(request.queryParams("email"))) {
+                    StandardUser user = new StandardUser(new Random().nextLong(),
+                            request.queryParams("fname"),
+                            request.queryParams("lname"),
+                            request.queryParams("username"),
+                            request.queryParams("password"),
+                            request.queryParams("email"),
+                            new Date(12345), new Date(3456));
+                    long session = CurrentUser.registerUser(user);
+                    controller.createSession(session);
+                    controller.addRedirect(Path.Web.USER);
+                }else{
+                    throw new RegisterException("You must use your RIT email");
+                }
             }else{
                 throw new RegisterException("Passwords didn't match");
             }
 
         }
+    }
+
+    public boolean isRITEmail(String email){
+        String regex = "\\w+@(g\\.|mail\\.)?rit\\.edu";
+        return email.matches(regex);
     }
 }
