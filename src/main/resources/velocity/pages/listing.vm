@@ -16,7 +16,7 @@
     #set($utilincluded = false)
 #end
 #@mainLayout()
-    #if(!$viewonly && $loggedin && (!$listing || $listing.getUser().checkIfSameUser($currentuser)))
+    #if(!$viewonly && $loggedin && (!$listing || $listing.getUser().checkIfSameUser($currentuser) || $!listingmod))
         <script type="application/javascript">
             $( function(){
                 $('.datepicker').datepicker();

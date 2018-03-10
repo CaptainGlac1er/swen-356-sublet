@@ -3,7 +3,7 @@ package sublet.controllers;
 import spark.Request;
 import spark.Response;
 import sublet.models.Listing;
-import sublet.models.Listings;
+import sublet.models.Roles;
 
 import java.util.Map;
 
@@ -19,6 +19,7 @@ public class ListingController extends Controller {
         model.put("house",Listing.housingList);
         model.put("furn",Listing.furnishedList);
         model.put("parking",Listing.parkingList);
+        model.put("listingmod", Roles.CanModListings(sessionUser.getUserRoles()));
         return model;
     }
 }

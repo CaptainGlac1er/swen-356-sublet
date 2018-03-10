@@ -3,6 +3,7 @@ package sublet.Commands;
 import sublet.Exceptions.BaseException;
 import sublet.Exceptions.NotLoggedInException;
 import sublet.Exceptions.PermissionException;
+import sublet.Exceptions.SubletException;
 import sublet.controllers.Controller;
 import sublet.models.Roles;
 
@@ -16,7 +17,8 @@ public class LoggedInCommand implements Command {
         checkLogin(controller);
         ProtectedExecute(controller);
     }
-    public void ProtectedExecute(Controller controller) throws PermissionException{
+
+    public void ProtectedExecute(Controller controller) throws PermissionException, SubletException {
 
     }
 

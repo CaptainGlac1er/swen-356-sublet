@@ -2,8 +2,8 @@ package sublet.models;
 
 import sublet.util.Security;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class User {
     private long UID;
@@ -59,19 +59,19 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
-    public Date getGradYear() {
+    public LocalDate getGradYear() {
         return gradYear;
     }
 
-    public void setGradYear(Date gradYear) {
+    public void setGradYear(LocalDate gradYear) {
         this.gradYear = gradYear;
     }
 
@@ -83,10 +83,11 @@ public class User {
         this.userRoles = userRoles;
     }
 
+
     private String password;
     private String email;
-    private Date birthday;
-    private Date gradYear;
+    private LocalDate birthday;
+    private LocalDate gradYear;
     private ArrayList<Role> userRoles;
 
     public boolean checkPass(String pw) {

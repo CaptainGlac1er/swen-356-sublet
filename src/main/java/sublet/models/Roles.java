@@ -1,5 +1,6 @@
 package sublet.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Roles {
@@ -23,5 +24,14 @@ public class Roles {
         newRole.setSeePosts(true);
         newRole.setMakePost(true);
         newRole.setManagePosts(true);
+        CurrentRoles.put(newRole.getName(), newRole);
+    }
+
+    public static boolean CanModListings(ArrayList<Role> userRoles) {
+        boolean checkIfMod = false;
+        for (Role r : userRoles)
+            if (checkIfMod = r.isManagePosts())
+                break;
+        return checkIfMod;
     }
 }

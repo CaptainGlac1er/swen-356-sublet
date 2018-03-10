@@ -11,7 +11,7 @@ public class ViewListing  implements Command {
     @Override
     public void Execute(Controller controller) throws BaseException {
         Request request = controller.getCurrentRequest();
-        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")),controller.getSessionUser());
+        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
         if(listing != null){
             controller.addToModel("listing", listing);
             controller.addToModel("viewonly", true);

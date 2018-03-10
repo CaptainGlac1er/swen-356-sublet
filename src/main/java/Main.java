@@ -4,11 +4,7 @@ import sublet.service.ListingService;
 import sublet.service.UserService;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Properties;
 import java.util.Random;
 
@@ -27,19 +23,14 @@ public class Main {
             System.out.println(e);
         }
 
+        DatabaseConnection.read = new DatabaseConnection(prop.getProperty("database"), prop.getProperty("readuser"), prop.getProperty("readpass"));
+        DatabaseConnection.write = new DatabaseConnection(prop.getProperty("database"), prop.getProperty("defaultuser"), prop.getProperty("defaultpass"));
 
-
-        Connection conn = DriverManager.getConnection(prop.getProperty("database"), prop.getProperty("readuser"), prop.getProperty("readpass"));
-        Statement test = conn.createStatement();
-        ResultSet res = test.executeQuery("select * from userdb;");
-        while(res.next())
-            System.out.println(res.getString("email"));
 
         setupDefaultRoles();
         initTestData();
         setupRouting();
         // add application code here
-        conn.close();
         awaitInitialization();
     }
 
@@ -50,9 +41,12 @@ public class Main {
 //    }
 
     static void initTestData(){
-        User user = Users.newUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
+        User user = Users.newUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", LocalDate.now(), LocalDate.now());
         Users.registerUser(user);
-        user = Users.newUser(12345, "Bill", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
+        user = Users.newUser(243, "Tom", "Name", "user1", "qwerty", "td1@rit.edu", LocalDate.now(), LocalDate.now());
+        Users.registerUser(user);
+        user = Users.newUser(12345, "Bill", "Name", "user2", "qwerty", "td2@rit.edu", LocalDate.now(), LocalDate.now());
+        user.getUserRoles().add(Roles.CurrentRoles.get("Mod"));
         Users.registerUser(user);
 
         String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";

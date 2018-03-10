@@ -7,9 +7,9 @@ import sublet.models.User;
 import sublet.models.Users;
 import sublet.util.Path;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
@@ -20,20 +20,21 @@ public class AddUser implements Command {
     public void Execute(Controller controller) throws RegisterException, ParseException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
-            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+            //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
                     request.queryParams("confirmpassword"),
                     request.queryParams("email"));
 
             if(exceptions.size() == 0){
                 User user = Users.newUser(new Random().nextLong(),
-                            request.queryParams("fname"),
-                            request.queryParams("lname"),
-                            request.queryParams("username"),
-                            request.queryParams("password"),
-                            request.queryParams("email"),
-                            format.parse(request.queryParams("birthday")),
-                            format.parse(request.queryParams("gradyear")));
+                        request.queryParams("fname"),
+                        request.queryParams("lname"),
+                        request.queryParams("username"),
+                        request.queryParams("password"),
+                        request.queryParams("email"),
+                        LocalDate.parse(request.queryParams("birthday"), dtf),
+                        LocalDate.parse(request.queryParams("gradyear"), dtf));
                 long session = Users.registerUser(user);
                     controller.createSession(session);
                     controller.addRedirect(Path.Web.USER);

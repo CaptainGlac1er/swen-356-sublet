@@ -22,7 +22,7 @@
     </div>
     </a>
     <div class="listing-controls">
-        #if($!loggedin && $!listing.getUser().checkIfSameUser($currentuser))
+        #if($!loggedin && ($!listing.getUser().checkIfSameUser($currentuser) || $!listingmod))
             <a href="/listing/$listing.getLID()/remove">Remove</a>
             <a href="/listing/$listing.getLID()/edit">Edit</a>
         #else

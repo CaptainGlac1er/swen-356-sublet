@@ -16,7 +16,7 @@ public class UserController extends Controller {
 
 
     public ArrayList<Listing> getListings(){
-        return Listings.GetListings(sessionUser);
+        return Listings.GetUserListings(sessionUser);
     }
     public Map<String, Object> getModel(){
         model.put("listings",getListings());

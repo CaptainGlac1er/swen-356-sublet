@@ -12,7 +12,7 @@ public class ModifyListing extends LoggedInCommand{
     @Override
     public void ProtectedExecute(Controller controller) throws PermissionException {
         Request request = controller.getCurrentRequest();
-        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")),controller.getSessionUser());
+        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
         if(listing != null){
             listing.setDesc(request.queryParams("dis"));
             listing.setRent(request.queryParams("rent"));
