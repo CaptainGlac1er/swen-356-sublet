@@ -4,7 +4,7 @@ import spark.Request;
 import spark.Response;
 import sublet.Exceptions.LoginException;
 import sublet.controllers.Controller;
-import sublet.models.CurrentUser;
+import sublet.models.Users;
 import sublet.util.Path;
 
 public class LogInUser implements Command {
@@ -12,7 +12,7 @@ public class LogInUser implements Command {
     public void Execute(Controller controller) throws LoginException {
         Request request = controller.getCurrentRequest();
         Response response = controller.getCurrentResponse();
-        long session = CurrentUser.loginUser(request.queryParams("username"), request.queryParams("password"));
+        long session = Users.loginUser(request.queryParams("username"), request.queryParams("password"));
         controller.createSession(session);
         controller.addRedirect(Path.Web.USER);
     }

@@ -6,10 +6,9 @@ import sublet.Commands.Command;
 import sublet.Exceptions.BaseException;
 import sublet.Exceptions.NotLoggedInException;
 import sublet.Exceptions.PermissionException;
-import sublet.models.CurrentUser;
-import sublet.models.GuestUser;
-import sublet.models.StandardUser;
+import sublet.models.Roles;
 import sublet.models.User;
+import sublet.models.Users;
 import sublet.util.Path;
 
 import java.text.ParseException;
@@ -24,7 +23,7 @@ public abstract class Controller {
     public Controller(Request request, Response response){
         currentRequest = request;
         currentResponse = response;
-        updateUserStatus(CurrentUser.getCurrentUser(request));
+        updateUserStatus(Users.getCurrentUser(request));
         addToModel("links", Path.Web.class);
     }
 
@@ -62,11 +61,11 @@ public abstract class Controller {
     public void updateUserStatus(User user){
         sessionUser =  user;
         model.put("currentuser", sessionUser);
-        if(sessionUser instanceof GuestUser){
-            model.put("loggedin", false);
-        }
-        if(sessionUser instanceof StandardUser) {
+        if (isLoggedIn()) {
             model.put("loggedin", true);
+        } else {
+            model.put("loggedin", false);
+
         }
 
     }
@@ -85,7 +84,7 @@ public abstract class Controller {
      * @return returns true if logged in
      */
     public boolean isLoggedIn(){
-        return sessionUser instanceof StandardUser;
+        return sessionUser.getUserRoles().contains(Roles.CurrentRoles.get("User"));
     }
 
     /**
@@ -107,7 +106,7 @@ public abstract class Controller {
      * @param session session id of client
      */
     public void createSession(long session){
-        this.updateUserStatus(CurrentUser.getCurrentUser(session));
+        this.updateUserStatus(Users.getCurrentUser(session));
         this.currentResponse.cookie("/", "session", Long.toString(session), 600000, false);
     }
 
@@ -116,7 +115,7 @@ public abstract class Controller {
      * @param session session id of client
      */
     public void removeSession(long session){
-        this.updateUserStatus(new GuestUser());
+        this.updateUserStatus(Users.newGuest());
         this.currentResponse.removeCookie("session");
     }
 

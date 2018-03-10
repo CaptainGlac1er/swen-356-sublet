@@ -1,20 +1,16 @@
-import org.h2.tools.RunScript;
-import org.h2.tools.Server;
-import sublet.models.CurrentUser;
-import sublet.models.Listing;
-import sublet.models.Listings;
-import sublet.models.StandardUser;
+import sublet.models.*;
 import sublet.service.IndexService;
 import sublet.service.ListingService;
 import sublet.service.UserService;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
+import java.util.Properties;
+import java.util.Random;
 
 import static spark.Spark.*;
 
@@ -39,6 +35,7 @@ public class Main {
         while(res.next())
             System.out.println(res.getString("email"));
 
+        setupDefaultRoles();
         initTestData();
         setupRouting();
         // add application code here
@@ -53,34 +50,38 @@ public class Main {
 //    }
 
     static void initTestData(){
-        StandardUser user = new StandardUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
-        CurrentUser.registerUser(user);
-        user = new StandardUser(12345, "Bill", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
-        CurrentUser.registerUser(user);
+        User user = Users.newUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
+        Users.registerUser(user);
+        user = Users.newUser(12345, "Bill", "Name", "user2", "qwerty", "td@rit.edu", new Date(12345), new Date(734324));
+        Users.registerUser(user);
 
         String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
 
-        Listing listing = new Listing((new Random()).nextLong(), CurrentUser.getCurrentUserUID(1234), desc, "500",
+        Listing listing = new Listing((new Random()).nextLong(), Users.getCurrentUserUID(1234), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(12345), desc, "500",
+        listing = new Listing((new Random()).nextLong(), Users.getCurrentUserUID(12345), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "500",
+        listing = new Listing((new Random()).nextLong(), Users.getCurrentUserUID(1234), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(12345), desc, "500",
+        listing = new Listing((new Random()).nextLong(), Users.getCurrentUserUID(12345), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
         Listings.AddListing(listing);
-        listing = new Listing((new Random()).nextLong(),CurrentUser.getCurrentUserUID(1234), desc, "500",
+        listing = new Listing((new Random()).nextLong(), Users.getCurrentUserUID(1234), desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
         Listings.AddListing(listing);
 
+    }
+
+    static void setupDefaultRoles() {
+        Roles.MakeStandardRoles();
     }
     static void setupRouting(){
         path("/", ()->{

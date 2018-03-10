@@ -4,11 +4,11 @@ import sublet.Exceptions.BaseException;
 import sublet.Exceptions.NotLoggedInException;
 import sublet.Exceptions.PermissionException;
 import sublet.controllers.Controller;
-import sublet.models.GuestUser;
+import sublet.models.Roles;
 
 public class LoggedInCommand implements Command {
-    void checkLogin(Controller controller) throws NotLoggedInException {
-        if(controller.getSessionUser() instanceof GuestUser)
+    private void checkLogin(Controller controller) throws NotLoggedInException {
+        if (controller.getSessionUser().getUserRoles().contains(Roles.CurrentRoles.get("Guest")))
             throw new NotLoggedInException();
 
     }

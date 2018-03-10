@@ -2,25 +2,28 @@ package sublet.models;
 
 import spark.Request;
 import sublet.Exceptions.LoginException;
+import sublet.util.Security;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class CurrentUser {
-    private static Map<Long,StandardUser> userDataBase = new HashMap<>();
+public class Users {
+    private static Map<Long, User> userDataBase = new HashMap<>();
     private static Map<Long,Long> currentUsers = new HashMap<>();
 
     public static long loginUser(String user, String password) throws LoginException {
         long newSession;
-        StandardUser currentUser;
-        for (StandardUser u:
+        User currentUser;
+        for (User u :
              userDataBase.values()) {
-                System.out.println(u.getUsername() + " " + u.getPassword() + " == " + user + " " + password.hashCode());
-                if(u.getUsername().equals(user) &&u.checkPass(password)){
+            System.out.println(u.getUsername() + " " + u.getPassword() + " == " + user + " " + Security.getSHA256Hash(password));
+            if (u.getUsername().equals(user) && u.checkPass(password)) {
                     newSession = (new Random()).nextLong();
                     currentUser = u;
                     currentUsers.put(newSession,currentUser.getUID());
+                System.out.println(u.getUsername() + " has been logged in");
                     return newSession;
                 }
         }
@@ -29,7 +32,8 @@ public class CurrentUser {
     public static void logoutUser(long sid){
         currentUsers.remove(sid);
     }
-    public static long registerUser(StandardUser user){
+
+    public static long registerUser(User user) {
         long newSession = (new Random()).nextLong();
         userDataBase.put(user.getUID(),user);
         currentUsers.put(newSession,user.getUID());
@@ -41,7 +45,7 @@ public class CurrentUser {
     public static User getCurrentUser(Request request){
         request.session(true);
         if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
-            return new GuestUser();
+            return newGuest();
         }
         User currentUser;
         if(request.session().attribute("session") == null){
@@ -49,10 +53,10 @@ public class CurrentUser {
             if(request.cookie("session") != null && currentUsers.containsKey(newSession = Long.parseLong(request.cookie("session")))){
                 currentUser = userDataBase.get(currentUsers.get(newSession));
             }else {
-                return new GuestUser();
+                return newGuest();
             }
             if(currentUser != null) {
-                currentUsers.put(newSession, ((StandardUser)currentUser).getUID());
+                currentUsers.put(newSession, currentUser.getUID());
             }
         }else{
             currentUser = userDataBase.get(currentUsers.get(request.session().attribute("session")));
@@ -69,4 +73,28 @@ public class CurrentUser {
             out.append((char)((new Random()).nextDouble() * ('Z' - 'A') + 'A'));
         return out.toString();
     }
+
+    public static User newUser(long UID, String fname, String lname, String username, String pass, String email, Date birthday, Date gradYear) {
+        User user = new User();
+        user.setUID(UID);
+        user.setFname(fname);
+        user.setLname(lname);
+        user.setUsername(username);
+        user.setPassword(pass);
+        user.setEmail(email);
+        user.setBirthday(birthday);
+        user.setGradYear(gradYear);
+        user.getUserRoles().add(Roles.CurrentRoles.get("User"));
+        return user;
+    }
+
+    public static User newGuest() {
+        User user = new User();
+        for (String key : Roles.CurrentRoles.keySet()) {
+            System.out.println(key + " " + Roles.CurrentRoles.get(key).toString());
+        }
+        user.getUserRoles().add(Roles.CurrentRoles.get("Guest"));
+        return user;
+    }
+
 }

@@ -3,15 +3,14 @@ package sublet.Commands;
 import spark.Request;
 import sublet.Exceptions.RegisterException;
 import sublet.controllers.Controller;
-import sublet.models.CurrentUser;
-import sublet.models.StandardUser;
+import sublet.models.User;
+import sublet.models.Users;
 import sublet.util.Path;
-import java.util.ArrayList;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
@@ -27,7 +26,7 @@ public class AddUser implements Command {
                     request.queryParams("email"));
 
             if(exceptions.size() == 0){
-                    StandardUser user = new StandardUser(new Random().nextLong(),
+                User user = Users.newUser(new Random().nextLong(),
                             request.queryParams("fname"),
                             request.queryParams("lname"),
                             request.queryParams("username"),
@@ -35,7 +34,7 @@ public class AddUser implements Command {
                             request.queryParams("email"),
                             format.parse(request.queryParams("birthday")),
                             format.parse(request.queryParams("gradyear")));
-                    long session = CurrentUser.registerUser(user);
+                long session = Users.registerUser(user);
                     controller.createSession(session);
                     controller.addRedirect(Path.Web.USER);
             }else{
