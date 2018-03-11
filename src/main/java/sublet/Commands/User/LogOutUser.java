@@ -1,6 +1,7 @@
-package sublet.Commands;
+package sublet.Commands.User;
 
 import spark.Request;
+import sublet.Commands.LoggedInCommand;
 import sublet.Exceptions.PermissionException;
 import sublet.controllers.Controller;
 import sublet.models.Users;
