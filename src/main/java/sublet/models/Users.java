@@ -14,13 +14,14 @@ import java.util.Random;
 
 public class Users {
     //private static Map<Long, User> userDataBase = new HashMap<>();
-    private static Map<Long,Long> currentUsers = new HashMap<>();
+    private static Map<String, Long> currentUsers = new HashMap<>();
 
-    public static long loginUser(String user, String password) throws LoginException {
-        long newSession;
+    public static String loginUser(String user, String password) throws LoginException {
+        String newSession;
         if (CheckLogin(user, Security.getSHA256Hash(password))) {
-            newSession = (new Random()).nextLong();
             User u = GetUser(user);
+            newSession = GetRandomSession(u);
+            System.out.println(u.toString());
             currentUsers.put(newSession, u.getUID());
             System.out.println(u.getUsername() + " has been logged in");
             return newSession;
@@ -44,12 +45,13 @@ public class Users {
         }
         throw new LoginException("Incorrect Login Information");*/
     }
-    public static void logoutUser(long sid){
+
+    public static void logoutUser(String sid) {
         currentUsers.remove(sid);
     }
 
-    public static long registerUser(User user) {
-        long newSession = (new Random()).nextLong();
+    public static String registerUser(User user) {
+        String newSession = GetRandomSession(user);
         AddUser(user);
         //userDataBase.put(user.getUID(),user);
         currentUsers.put(newSession,user.getUID());
@@ -60,14 +62,13 @@ public class Users {
     }
     public static User getCurrentUser(Request request){
         request.session(true);
-        if(request.cookie("session") != null && Long.parseLong(request.cookie("session")) == 1){
-            return newGuest();
-        }
         User currentUser;
+        System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         if(request.session().attribute("session") == null){
-            long newSession;
-            if(request.cookie("session") != null && currentUsers.containsKey(newSession = Long.parseLong(request.cookie("session")))){
-                currentUser = getCurrentUserUID(currentUsers.get(newSession));
+            String newSession;
+            if (request.cookie("session") != null && currentUsers.containsKey(newSession = request.cookie("session"))) {
+                currentUser = getCurrentUser(newSession);
+                request.session().attribute("session", newSession);
             }else {
                 return newGuest();
             }
@@ -79,20 +80,13 @@ public class Users {
         }
         return currentUser;
     }
-    public static User getCurrentUser(long sid){
+
+    public static User getCurrentUser(String sid) {
         return getCurrentUserUID(currentUsers.get(sid));
     }
 
-    private static String getRandomString(){
-        StringBuilder out = new StringBuilder("");
-        for(int i = 0; i < 10; i++)
-            out.append((char)((new Random()).nextDouble() * ('Z' - 'A') + 'A'));
-        return out.toString();
-    }
-
-    public static User newUser(long UID, String fname, String lname, String username, String pass, String email, LocalDate birthday, LocalDate gradYear) {
+    public static User newUser(String fname, String lname, String username, String pass, String email, LocalDate birthday, LocalDate gradYear) {
         User user = new User();
-        user.setUID(UID);
         user.setFname(fname);
         user.setLname(lname);
         user.setUsername(username);
@@ -101,6 +95,12 @@ public class Users {
         user.setBirthday(birthday);
         user.setGradYear(gradYear);
         user.getUserRoles().add(Roles.CurrentRoles.get("User"));
+        return user;
+    }
+
+    private static User newUser(long UID, String fname, String lname, String username, String pass, String email, LocalDate birthday, LocalDate gradYear) {
+        User user = newUser(fname, lname, username, pass, email, birthday, gradYear);
+        user.setUID(UID);
         return user;
     }
 
@@ -115,16 +115,15 @@ public class Users {
 
     private static void AddUser(User user) {
         try {
-            PreparedStatement addUserPS = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO userdb (uid, fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            addUserPS.setLong(1, user.getUID());
-            addUserPS.setString(2, user.getFname());
-            addUserPS.setString(3, user.getLname());
-            addUserPS.setString(4, user.getUsername());
-            addUserPS.setString(5, user.getEmail());
-            addUserPS.setString(6, user.getPassword());
-            addUserPS.setDate(7, java.sql.Date.valueOf(user.getBirthday()));
-            addUserPS.setDate(8, java.sql.Date.valueOf(user.getGradYear()));
-            addUserPS.execute();
+            PreparedStatement addUserPS = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            addUserPS.setString(1, user.getFname());
+            addUserPS.setString(2, user.getLname());
+            addUserPS.setString(3, user.getUsername());
+            addUserPS.setString(4, user.getEmail());
+            addUserPS.setString(5, user.getPassword());
+            addUserPS.setDate(6, java.sql.Date.valueOf(user.getBirthday()));
+            addUserPS.setDate(7, java.sql.Date.valueOf(user.getGradYear()));
+            user.setUID(addUserPS.executeUpdate());
         } catch (SQLException e) {
             System.out.println(e.toString());
 
@@ -177,5 +176,9 @@ public class Users {
 
         }
         return ret;
+    }
+
+    private static String GetRandomSession(User user) {
+        return Security.getSHA256Hash(String.format("%d%d", user.hashCode(), (new Random()).nextLong()));
     }
 }

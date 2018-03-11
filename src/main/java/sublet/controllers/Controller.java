@@ -53,7 +53,6 @@ public abstract class Controller {
         return exception;
     }
 
-    //TODO Improve this
     /**
      * Updates the user status
      * @param user
@@ -65,7 +64,6 @@ public abstract class Controller {
             model.put("loggedin", true);
         } else {
             model.put("loggedin", false);
-
         }
 
     }
@@ -84,7 +82,7 @@ public abstract class Controller {
      * @return returns true if logged in
      */
     public boolean isLoggedIn(){
-        return sessionUser.getUserRoles().contains(Roles.CurrentRoles.get("User"));
+        return !sessionUser.getUserRoles().contains(Roles.CurrentRoles.get("Guest"));
     }
 
     /**
@@ -105,18 +103,18 @@ public abstract class Controller {
      * Creates session in controller and tells the client to add a cookie with the session id.
      * @param session session id of client
      */
-    public void createSession(long session){
+    public void createSession(String session) {
         this.updateUserStatus(Users.getCurrentUser(session));
-        this.currentResponse.cookie("/", "session", Long.toString(session), 600000, false);
+        this.currentResponse.cookie("/", "session", session, 600000, false);
     }
 
     /**
      * Removes session from controller and tells the client browser to clear the cookie
-     * @param session session id of client
      */
-    public void removeSession(long session){
+    public void removeSession() {
         this.updateUserStatus(Users.newGuest());
-        this.currentResponse.removeCookie("session");
+        this.currentResponse.removeCookie("/", "session");
+        this.currentRequest.session().removeAttribute("session");
     }
 
     /**

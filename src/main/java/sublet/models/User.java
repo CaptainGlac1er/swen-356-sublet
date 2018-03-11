@@ -4,6 +4,7 @@ import sublet.util.Security;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class User {
     private long UID;
@@ -102,4 +103,8 @@ public class User {
         userRoles = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %s", Long.toString(UID), username, email, Arrays.toString(getUserRoles().toArray()));
+    }
 }

@@ -79,7 +79,7 @@ public class Listing {
     }
 
     private long lid;
-    private User user;
+    private long user;
     private String desc;
     private String rent;
 
@@ -88,7 +88,7 @@ public class Listing {
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.user = user.getUID();
     }
 
     private String address;
@@ -116,31 +116,7 @@ public class Listing {
                    ParkingOption parking_type,
                    boolean utilIncluded
     ){
-        this.user = user;
-        this.desc = desc;
-        this.rent = rent;
-        this.address = address;
-        this.payment_frequency = payment_frequency;
-        this.gender = gender;
-        this.housing_type = housing_type;
-        this.is_furnished = is_furnished;
-        this.parking_type = parking_type;
-        this.utilIncluded = utilIncluded;
-    }
-    public Listing(long lid,
-                   User user,
-                   String desc,
-                   String rent,
-                   String address,
-                   PaymentFrequencyOptions payment_frequency,
-                   GenderOptions gender,
-                   HousingTypeOptions housing_type,
-                   IsFurnishedOptions is_furnished,
-                   ParkingOption parking_type,
-                   boolean utilIncluded
-    ){
-        this.lid = lid;
-        this.user = user;
+        this.user = user.getUID();
         this.desc = desc;
         this.rent = rent;
         this.address = address;
@@ -161,7 +137,7 @@ public class Listing {
 
     public long getLID(){return this.lid;}
     public User getUser(){
-        return this.user;
+        return Users.getCurrentUserUID(this.user);
     }
     public String getDesc(){
         return this.desc;

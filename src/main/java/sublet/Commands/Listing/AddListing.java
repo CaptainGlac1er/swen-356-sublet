@@ -7,8 +7,6 @@ import sublet.models.Listing;
 import sublet.models.Listings;
 import sublet.util.Path;
 
-import java.util.Random;
-
 public class AddListing extends LoggedInCommand{
 
 
@@ -19,7 +17,7 @@ public class AddListing extends LoggedInCommand{
             for (String s:request.queryParams()) {
                 System.out.println(s + " " + request.queryParams(s));
             }
-            Listing L = new Listing((new Random()).nextLong(), controller.getSessionUser(),
+            Listing L = new Listing(controller.getSessionUser(),
                     request.queryParams("dis"),
                     request.queryParams("rent"),
                     request.queryParams("address"),

@@ -1,10 +1,10 @@
-import sublet.models.*;
+import sublet.models.DatabaseConnection;
+import sublet.models.Roles;
 import sublet.service.IndexService;
 import sublet.service.ListingService;
 import sublet.service.UserService;
 
 import java.io.InputStream;
-import java.time.LocalDate;
 import java.util.Properties;
 
 import static spark.Spark.*;
@@ -27,7 +27,7 @@ public class Main {
 
 
         setupDefaultRoles();
-        initTestData();
+        //initTestData();
         setupRouting();
         // add application code here
         awaitInitialization();
@@ -39,39 +39,46 @@ public class Main {
 //        RunScript.execute(conn, reader);
 //    }
 
-    static void initTestData(){
-        User user = Users.newUser(1234, "Bob", "Name", "user", "qwerty", "td@rit.edu", LocalDate.now(), LocalDate.now());
-        Users.registerUser(user);
-        user = Users.newUser(243, "Tom", "Name", "user1", "qwerty", "td1@rit.edu", LocalDate.now(), LocalDate.now());
-        Users.registerUser(user);
-        user = Users.newUser(12345, "Bill", "Name", "user2", "qwerty", "td2@rit.edu", LocalDate.now(), LocalDate.now());
-        user.getUserRoles().add(Roles.CurrentRoles.get("Mod"));
-        Users.registerUser(user);
-
+    /*static void initTestData(){
         String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
 
-        Listing listing = new Listing(1, Users.getCurrentUserUID(1234), desc, "500",
+        User user = Users.newUser("Bob", "Name", "user", "qwerty", "td@rit.edu", LocalDate.now(), LocalDate.now());
+        Users.registerUser(user);
+        Listing listing = new Listing(user, desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
         Listings.AddListing(listing);
-        listing = new Listing(2, Users.getCurrentUserUID(12345), desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
-        Listings.AddListing(listing);
-        listing = new Listing(3, Users.getCurrentUserUID(1234), desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
-        Listings.AddListing(listing);
-        listing = new Listing(4, Users.getCurrentUserUID(12345), desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
-        Listings.AddListing(listing);
-        listing = new Listing(5, Users.getCurrentUserUID(1234), desc, "500",
+        listing = new Listing(user, desc, "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
         Listings.AddListing(listing);
 
-    }
+
+        user = Users.newUser("Tom", "Name", "user1", "qwerty", "td1@rit.edu", LocalDate.now(), LocalDate.now());
+        Users.registerUser(user);
+        listing = new Listing(user, desc, "500",
+                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
+        Listings.AddListing(listing);
+        listing = new Listing(user, desc, "500",
+                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
+        Listings.AddListing(listing);
+
+
+        user = Users.newUser("Bill", "Name", "user2", "qwerty", "td2@rit.edu", LocalDate.now(), LocalDate.now());
+        user.getUserRoles().add(Roles.CurrentRoles.get("Mod"));
+        Users.registerUser(user);
+        listing = new Listing(user, desc, "500",
+                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
+                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
+        Listings.AddListing(listing);
+
+
+
+
+
+    }*/
 
     static void setupDefaultRoles() {
         Roles.MakeStandardRoles();

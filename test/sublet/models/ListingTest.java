@@ -3,7 +3,6 @@ package sublet.models;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
-import java.util.Random;
 
 public class ListingTest {
     public Listing listing;
@@ -13,7 +12,7 @@ public class ListingTest {
 
     @BeforeEach
     void init() {
-        listing = new Listing((new Random()).nextLong(), Users.newUser(1234, "Test", "Name", "TU", "qwerty", "td@rit.edu", LocalDate.now(), LocalDate.now()), "hi", "500",
+        listing = new Listing(Users.newUser("Test", "Name", "TU", "qwerty", "td@rit.edu", LocalDate.now(), LocalDate.now()), "hi", "500",
                 "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
                 Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
     }

@@ -55,19 +55,18 @@ public class Listings {
 
     private static void AddListingDB(Listing listing) {
         try {
-            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO `listingdb` (lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            addListing.setLong(1, listing.getLID());
-            addListing.setLong(2, listing.getUser().getUID());
-            addListing.setString(3, listing.getDesc());
-            addListing.setString(4, listing.getRent());
-            addListing.setString(5, listing.getAddress());
-            addListing.setString(6, listing.getIsFurnished().name());
-            addListing.setString(7, listing.getGender().name());
-            addListing.setString(8, listing.getHousingType().name());
-            addListing.setString(9, listing.getPayment_frequency().name());
-            addListing.setString(10, listing.getParking_type().name());
-            addListing.setBoolean(11, listing.getUtilIncluded());
-            addListing.execute();
+            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO `listingdb` (uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            addListing.setLong(1, listing.getUser().getUID());
+            addListing.setString(2, listing.getDesc());
+            addListing.setString(3, listing.getRent());
+            addListing.setString(4, listing.getAddress());
+            addListing.setString(5, listing.getIsFurnished().name());
+            addListing.setString(6, listing.getGender().name());
+            addListing.setString(7, listing.getHousingType().name());
+            addListing.setString(8, listing.getPayment_frequency().name());
+            addListing.setString(9, listing.getParking_type().name());
+            addListing.setBoolean(10, listing.getUtilIncluded());
+            listing.setLid(addListing.executeUpdate());
         } catch (SQLException e) {
             System.out.println(e.toString());
         }

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Random;
 
 public class AddUser implements Command {
 
@@ -27,15 +26,14 @@ public class AddUser implements Command {
                     request.queryParams("email"));
 
             if(exceptions.size() == 0){
-                User user = Users.newUser(new Random().nextLong(),
-                        request.queryParams("fname"),
+                User user = Users.newUser(request.queryParams("fname"),
                         request.queryParams("lname"),
                         request.queryParams("username"),
                         request.queryParams("password"),
                         request.queryParams("email"),
                         LocalDate.parse(request.queryParams("birthday"), dtf),
                         LocalDate.parse(request.queryParams("gradyear"), dtf));
-                long session = Users.registerUser(user);
+                String session = Users.registerUser(user);
                     controller.createSession(session);
                     controller.addRedirect(Path.Web.USER);
             }else{

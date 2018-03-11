@@ -12,8 +12,8 @@ public class LogOutUser extends LoggedInCommand {
         Request request = controller.getCurrentRequest();
         System.out.println(request.cookie("session"));
         request.session(false);
-        Users.logoutUser(Long.parseLong(request.cookie("session")));
-        controller.removeSession(Long.parseLong(request.cookie("session")));
+        controller.removeSession();
+        Users.logoutUser(request.cookie("session"));
         controller.addRedirect("/");
     }
 }

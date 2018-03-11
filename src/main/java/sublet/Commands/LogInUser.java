@@ -12,7 +12,7 @@ public class LogInUser implements Command {
     public void Execute(Controller controller) throws LoginException {
         Request request = controller.getCurrentRequest();
         Response response = controller.getCurrentResponse();
-        long session = Users.loginUser(request.queryParams("username"), request.queryParams("password"));
+        String session = Users.loginUser(request.queryParams("username"), request.queryParams("password"));
         controller.createSession(session);
         controller.addRedirect(Path.Web.USER);
     }
