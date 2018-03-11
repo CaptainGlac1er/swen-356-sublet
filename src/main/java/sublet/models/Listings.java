@@ -5,6 +5,7 @@ import sublet.Exceptions.PermissionException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Listings {
@@ -55,7 +56,7 @@ public class Listings {
 
     private static void AddListingDB(Listing listing) {
         try {
-            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO `listingdb` (uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO `listingdb` (uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             addListing.setLong(1, listing.getUser().getUID());
             addListing.setString(2, listing.getDesc());
             addListing.setString(3, listing.getRent());
@@ -66,7 +67,10 @@ public class Listings {
             addListing.setString(8, listing.getPayment_frequency().name());
             addListing.setString(9, listing.getParking_type().name());
             addListing.setBoolean(10, listing.getUtilIncluded());
-            listing.setLid(addListing.executeUpdate());
+            addListing.executeUpdate();
+            ResultSet rs = addListing.getGeneratedKeys();
+            if (rs.next())
+                listing.setLid(rs.getLong(1));
         } catch (SQLException e) {
             System.out.println(e.toString());
         }

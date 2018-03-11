@@ -7,7 +7,6 @@ import sublet.models.User;
 import sublet.models.Users;
 import sublet.util.Path;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,10 +15,10 @@ import java.util.Locale;
 public class AddUser implements Command {
 
     @Override
-    public void Execute(Controller controller) throws RegisterException, ParseException {
+    public void Execute(Controller controller) throws RegisterException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
             //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
                     request.queryParams("confirmpassword"),
@@ -37,22 +36,22 @@ public class AddUser implements Command {
                     controller.createSession(session);
                     controller.addRedirect(Path.Web.USER);
             }else{
-                String exceptionString = "";
+                StringBuilder exceptionString = new StringBuilder("");
                for(String re : exceptions){
-                   exceptionString += re;
+                   exceptionString.append(re);
                }
-               throw new RegisterException(exceptionString);
+                throw new RegisterException(exceptionString.toString());
             }
 
         }
     }
 
-    public boolean isRITEmail(String email){
+    private boolean isRITEmail(String email) {
         String regex = "\\w+@(g\\.|mail\\.)?rit\\.edu";
         return email.matches(regex);
     }
 
-    public ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email){
+    private ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email) {
         ArrayList<String> exceptions = new ArrayList<>();
         if(!password.equals(confirmPassword)){
             exceptions.add("Passwords didn't match. ");

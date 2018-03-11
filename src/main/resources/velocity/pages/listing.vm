@@ -17,12 +17,6 @@
 #end
 #@mainLayout()
     #if(!$viewonly && $loggedin && (!$listing || $listing.getUser().checkIfSameUser($currentuser) || $!listingmod))
-        <script type="application/javascript">
-            $( function(){
-                $('.datepicker').datepicker();
-                $('.datepicker').datepicker();
-            });
-        </script>
         <h3 class="form-title">Create a new Listing</h3>
         <form class="listing-form" action='' method="post">
 

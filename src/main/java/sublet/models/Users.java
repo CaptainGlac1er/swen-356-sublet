@@ -7,6 +7,7 @@ import sublet.util.Security;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -115,7 +116,7 @@ public class Users {
 
     private static void AddUser(User user) {
         try {
-            PreparedStatement addUserPS = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement addUserPS = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             addUserPS.setString(1, user.getFname());
             addUserPS.setString(2, user.getLname());
             addUserPS.setString(3, user.getUsername());
@@ -123,7 +124,10 @@ public class Users {
             addUserPS.setString(5, user.getPassword());
             addUserPS.setDate(6, java.sql.Date.valueOf(user.getBirthday()));
             addUserPS.setDate(7, java.sql.Date.valueOf(user.getGradYear()));
-            user.setUID(addUserPS.executeUpdate());
+            addUserPS.executeUpdate();
+            ResultSet rs = addUserPS.getGeneratedKeys();
+            if (rs.next())
+                user.setUID(rs.getLong(1));
         } catch (SQLException e) {
             System.out.println(e.toString());
 
