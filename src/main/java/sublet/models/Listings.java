@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Listings {
-    //private static HashMap<Long,Listing> Listings = new HashMap<>();
     public static void AddListing(Listing listing){
         AddListingDB(listing);
     }
@@ -17,7 +16,6 @@ public class Listings {
     }
 
     public static ArrayList<Listing> GetUserListings(User user) {
-        //would be a sql statement in the future
         return GetUserListingsDB(user);
     }
 
@@ -42,6 +40,11 @@ public class Listings {
         }
     }
 
+    /**
+     * Removes a listing from the database with lid
+     *
+     * @param lid listing id of listing to remove
+     */
     private static void RemoveListingDB(long lid) {
         try {
             PreparedStatement removeListing = DatabaseConnection.write.getConnection().prepareStatement("DELETE FROM `listingdb` WHERE `lid` = ?");
@@ -50,9 +53,12 @@ public class Listings {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //Listings.remove(lid);
     }
 
+    /**
+     * Add a listing to the database
+     * @param listing listing object that you want to be saved in the database
+     */
     private static void AddListingDB(Listing listing) {
         try {
             PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT addListing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS lid");
@@ -72,9 +78,14 @@ public class Listings {
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        //Listings.put(listing.getLID(), listing);
     }
+    //TODO handle exceptions better
+    //TODO will need limits as database grows add in paging
 
+    /**
+     * Gets all the listings that all users have posted
+     * @return an ArrayList of all the Listings objects
+     */
     private static ArrayList<Listing> GetListingsDB() {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings";
         ArrayList<Listing> ret = new ArrayList<>();
@@ -90,9 +101,13 @@ public class Listings {
 
         }
         return ret;
-        //return new ArrayList<Listing>(Listings.values());
     }
 
+    /**
+     * Gets the listing with the listing ID number
+     * @param lid listing id that it was given at creation
+     * @return listing object with that listing ID number
+     */
     private static Listing GetListingDB(long lid) {
         Listing ret = null;
         try {
@@ -108,9 +123,13 @@ public class Listings {
 
         }
         return ret;
-        //return Listings.get(lid);
     }
 
+    /**
+     * Gets all of the listings of the user
+     * @param user the user of the listings
+     * @return All of the listings that the user made
+     */
     private static ArrayList<Listing> GetUserListingsDB(User user) {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE uid = ?";
         ArrayList<Listing> ret = new ArrayList<>();
@@ -127,22 +146,14 @@ public class Listings {
 
         }
         return ret;
-        /*ArrayList<Listing> userListings = new ArrayList<>();
-        for (Listing l:
-                Listings.values()) {
-            if (l.getUser().checkIfSameUser(user)) {
-                boolean hasRole = false;
-                for (Role role : user.getUserRoles())
-                    if (hasRole = role.isSeePosts())
-                        break;
-                if (hasRole) {
-                    userListings.add(l);
-                }
-            }
-        }
-        return userListings;*/
     }
 
+    /**
+     * Helper function to create the listings object from the sql select row
+     * @param rs result set from the sql query
+     * @return the Listing object
+     * @throws SQLException Throws an exception when a field was not found
+     */
     private static Listing createListingFromSQL(ResultSet rs) throws SQLException {
         Listing ret = new Listing();
         ret.setLid(rs.getLong("lid"));

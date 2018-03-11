@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class Users {
-    //private static Map<Long, User> userDataBase = new HashMap<>();
+    //TODO think about moving this to database
     private static Map<String, Long> currentUsers = new HashMap<>();
 
     public static String loginUser(String user, String password) throws LoginException {
@@ -28,23 +28,6 @@ public class Users {
             return newSession;
         }
         throw new LoginException("Incorrect Login Information");
-
-
-
-        /*long newSession;
-        User currentUser;
-        for (User u :
-             userDataBase.values()) {
-            System.out.println(u.getUsername() + " " + u.getPassword() + " == " + user + " " + Security.getSHA256Hash(password));
-            if (u.getUsername().equals(user) && u.checkPass(password)) {
-                    newSession = (new Random()).nextLong();
-                    currentUser = u;
-                    currentUsers.put(newSession,currentUser.getUID());
-                System.out.println(u.getUsername() + " has been logged in");
-                    return newSession;
-                }
-        }
-        throw new LoginException("Incorrect Login Information");*/
     }
 
     public static void logoutUser(String sid) {
@@ -54,7 +37,6 @@ public class Users {
     public static String registerUser(User user) {
         String newSession = GetRandomSession(user);
         AddUser(user);
-        //userDataBase.put(user.getUID(),user);
         currentUsers.put(newSession,user.getUID());
         return newSession;
     }
@@ -77,7 +59,7 @@ public class Users {
                 currentUsers.put(newSession, currentUser.getUID());
             }
         }else{
-            currentUser = getCurrentUserUID(currentUsers.get(request.session().attribute("session")));
+            currentUser = getCurrentUserUID(currentUsers.get(request.session().attribute("session").toString()));
         }
         return currentUser;
     }
@@ -113,7 +95,13 @@ public class Users {
         user.getUserRoles().add(Roles.CurrentRoles.get("Guest"));
         return user;
     }
+    //TODO handle exceptions better
 
+    /**
+     * Add user to database
+     *
+     * @param user user object that you want to be added to the database
+     */
     private static void AddUser(User user) {
         try {
             PreparedStatement addUserPS = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -135,6 +123,12 @@ public class Users {
 
     }
 
+    /**
+     * Get user by uid
+     * @param uid uid of user
+     * @return an user object from the database with the uid
+     */
+
     private static User GetUser(long uid) {
         User user = null;
         try {
@@ -151,6 +145,11 @@ public class Users {
         return user;
     }
 
+    /**
+     * Gets an user from username
+     * @param username username of the user
+     * @return an user object from the database with the username
+     */
     private static User GetUser(String username) {
         User user = null;
         try {
@@ -166,6 +165,12 @@ public class Users {
         return user;
     }
 
+    /**
+     * Checks if a login is correct
+     * @param user username to check
+     * @param password hashed password to check
+     * @return true if correct login, false for not
+     */
     private static boolean CheckLogin(String user, String password) {
         boolean ret = false;
         try {
@@ -182,6 +187,11 @@ public class Users {
         return ret;
     }
 
+    /**
+     * Creates a random session id from the user hashcode and a random number
+     * @param user user that you want to get a hashcode from
+     * @return a random hash
+     */
     private static String GetRandomSession(User user) {
         return Security.getSHA256Hash(String.format("%d%d", user.hashCode(), (new Random()).nextLong()));
     }
