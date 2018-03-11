@@ -5,7 +5,6 @@ import sublet.Exceptions.PermissionException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Listings {
@@ -56,7 +55,7 @@ public class Listings {
 
     private static void AddListingDB(Listing listing) {
         try {
-            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO `listingdb` (uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT addListing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS lid");
             addListing.setLong(1, listing.getUser().getUID());
             addListing.setString(2, listing.getDesc());
             addListing.setString(3, listing.getRent());
@@ -67,10 +66,9 @@ public class Listings {
             addListing.setString(8, listing.getPayment_frequency().name());
             addListing.setString(9, listing.getParking_type().name());
             addListing.setBoolean(10, listing.getUtilIncluded());
-            addListing.executeUpdate();
-            ResultSet rs = addListing.getGeneratedKeys();
+            ResultSet rs = addListing.executeQuery();
             if (rs.next())
-                listing.setLid(rs.getLong(1));
+                listing.setLid(rs.getLong("lid"));
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
@@ -78,7 +76,7 @@ public class Listings {
     }
 
     private static ArrayList<Listing> GetListingsDB() {
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM listingdb";
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings";
         ArrayList<Listing> ret = new ArrayList<>();
         try {
             PreparedStatement getListing =
@@ -98,7 +96,7 @@ public class Listings {
     private static Listing GetListingDB(long lid) {
         Listing ret = null;
         try {
-            String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM listingdb WHERE lid = ?";
+            String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE lid = ?";
             PreparedStatement getListing =
                     DatabaseConnection.read.getConnection().prepareStatement(sql);
             getListing.setLong(1, lid);
@@ -114,7 +112,7 @@ public class Listings {
     }
 
     private static ArrayList<Listing> GetUserListingsDB(User user) {
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM listingdb WHERE uid = ?";
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE uid = ?";
         ArrayList<Listing> ret = new ArrayList<>();
         try {
             PreparedStatement getListing =
