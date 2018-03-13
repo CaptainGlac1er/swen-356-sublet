@@ -90,7 +90,10 @@ public class Main {
                 if(path.endsWith("/"))
                     res.redirect(path.substring(0, path.length() -1));
             });
-            path("",()-> get("",IndexService.serveIndexPage));
+            path("",()-> {
+                        get("", IndexService.serveIndexPage);
+                        post("", IndexService.filterListing);
+                    });
             path("/user", ()->{
                 path("",()->{
                     get("",UserService.serveIndexPage);

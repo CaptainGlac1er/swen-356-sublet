@@ -42,4 +42,6 @@ public class ListingService {
         return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
 
     };
+
+
 }

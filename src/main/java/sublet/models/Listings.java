@@ -1,5 +1,6 @@
 package sublet.models;
 
+import spark.Request;
 import sublet.Exceptions.PermissionException;
 
 import java.sql.PreparedStatement;
@@ -17,6 +18,9 @@ public class Listings {
 
     public static ArrayList<Listing> GetUserListings(User user) {
         return GetUserListingsDB(user);
+    }
+
+    public static ArrayList<Listing> FilterListing(Request request){return FilteredListingDB(request.queryParams("gender"));
     }
 
     public static void UpdateListing(Listing listing, User user) throws PermissionException {
@@ -103,6 +107,23 @@ public class Listings {
         return ret;
     }
 
+    private static ArrayList<Listing> FilteredListingDB(String gender){
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE gender = ?";
+        ArrayList<Listing> ret = new ArrayList<>();
+        try {
+            PreparedStatement getListing =
+                    DatabaseConnection.read.getConnection().prepareStatement(sql);
+            getListing.setString(1, gender);
+            ResultSet rs = getListing.executeQuery();
+            while (rs.next()) {
+                ret.add(createListingFromSQL(rs));
+            }
+
+        } catch (SQLException e) {
+
+        }
+        return ret;
+    }
     /**
      * Gets the listing with the listing ID number
      * @param lid listing id that it was given at creation

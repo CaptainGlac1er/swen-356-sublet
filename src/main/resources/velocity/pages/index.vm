@@ -1,5 +1,16 @@
 #parse("../Layout.vm")
 #@mainLayout()
+<form class="listing-form" action='' method="post">
+<div class="form-group">
+    <select class="form-input" name="gender" id="gender">
+        <option value = "">None</option>
+        #foreach($gend in $gender)
+            <option value="$gend.name()">$gend.toString()</option>
+        #end
+    </select>
+</div>
+<button type="submit" class="btn">Submit</button>
+</form>
     <div class="listings">
         #foreach($listing in $listings)
             #parse("../fragments/listing.vm")
