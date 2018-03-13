@@ -9,7 +9,7 @@ import sublet.models.Listings;
 import java.util.ArrayList;
 
 public class FilterListing implements Command{
-
+// well, all my changes are gone. lol...
     public void Execute(Controller controller) throws BaseException{
         Request request = controller.getCurrentRequest();
         if(!request.queryParams("gender").equals("")){
