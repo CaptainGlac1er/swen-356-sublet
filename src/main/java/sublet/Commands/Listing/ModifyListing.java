@@ -16,7 +16,13 @@ public class ModifyListing extends LoggedInCommand{
         if(listing != null){
             listing.setDesc(request.queryParams("dis"));
             listing.setRent(request.queryParams("rent"));
+            listing.setAddress(request.queryParams("address"));
+            listing.setPayment(Listing.getPaymentValue(request.queryParams("payment")));
+            listing.setGender(Listing.getGenderValue(request.queryParams("gender")));
+            listing.setHousingType(Listing.getHousing_type(request.queryParams("housing")));
+            listing.setFurnished(Listing.getIs_furnished(request.queryParams("furn")));
             listing.setUtilIncluded(request.queryParams().contains("utilincluded"));
+            listing.setParkingType(Listing.getParkingValue(request.queryParams("parking")));
             Listings.UpdateListing(listing, controller.getSessionUser());
         }else{
             throw new PermissionException("You can't edit this post");
