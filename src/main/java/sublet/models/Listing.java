@@ -31,6 +31,16 @@ public class Listing {
     private ParkingOption parking_type;
     private boolean utilIncluded;
 
+    private ListingVisibility listing_visibility;
+
+    public static ListingVisibility getVisibilityValue(String option) {
+        return ListingVisibility.valueOf(option);
+    }
+
+    public ListingVisibility getListingVisibility() {
+        return listing_visibility;
+    }
+
 
     public Listing() {
 
@@ -76,6 +86,10 @@ public class Listing {
 
     public static ParkingOption getParkingValue(String option) {
         return ParkingOption.valueOf(option);
+    }
+
+    public void setListingVisibility(ListingVisibility listing_visibility) {
+        this.listing_visibility = listing_visibility;
     }
 
     public void setLid(long lid) {
@@ -166,6 +180,10 @@ public class Listing {
         this.utilIncluded = val;
     }
 
+    public ListingVisibility[] getVisibiltyOptions() {
+        return ListingVisibility.values();
+    }
+
 
     /**
      * Enum used to represent payment frequency options
@@ -246,6 +264,19 @@ public class Listing {
 
         public String toString() {
             return to_str;
+        }
+    }
+
+    public enum ListingVisibility {
+        ACTIVE("Active"), ARCHIVE("Archive");
+        private String name;
+
+        ListingVisibility(String name) {
+            this.name = name;
+        }
+
+        public String toString() {
+            return name;
         }
     }
 }

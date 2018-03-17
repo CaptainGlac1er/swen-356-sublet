@@ -18,8 +18,19 @@ public class UserController extends Controller {
     public ArrayList<Listing> getListings(){
         return Listings.GetUserListings(sessionUser);
     }
+
+    private ArrayList<Listing> getActiveListing() {
+        return Listings.GetUserActiveListings(sessionUser);
+
+    }
+
+    private ArrayList<Listing> getArchiveListing() {
+        return Listings.GetUserArchiveListings(sessionUser);
+
+    }
     public Map<String, Object> getModel(){
-        model.put("listings",getListings());
+        model.put("activelistings", getActiveListing());
+        model.put("archivelistings", getArchiveListing());
         return model;
     }
 }

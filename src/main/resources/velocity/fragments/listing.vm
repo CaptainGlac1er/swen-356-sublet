@@ -25,6 +25,17 @@
         #if($!loggedin && ($!listing.getUser().checkIfSameUser($currentuser) || $!listingmod))
             <a href="/listing/$listing.getLID()/remove">Remove</a>
             <a href="/listing/$listing.getLID()/edit">Edit</a>
+            <form action="/listing/$listing.getLID()/visibility" method="post">
+                <select name="visibility" onchange="this.form.submit()">
+                    #foreach($vis in $listing.getVisibiltyOptions())
+                        <option value="$vis.name()"
+                            #if($vis.name().equals($listing.getListingVisibility().name()))
+                                selected
+                            #end
+                        >$vis.toString()</option>
+                    #end
+                </select>
+            </form>
         #else
             <a href="">Interested</a>
         #end

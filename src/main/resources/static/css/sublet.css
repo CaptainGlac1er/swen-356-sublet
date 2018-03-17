@@ -88,16 +88,14 @@
                     clear: both;
                     background-color: #666666;
                 }
-                .listing-controls > a{
+
+.listing-controls > a, .listing-controls > form > select {
                     color: black;
                     background-color: #eaeaea;
                     text-decoration: none;
                     padding: 5px;
                     margin: 10px;
                     border: #f36e21 solid 1px;
-                }
-                .listing-controls form{
-                    margin: 10px;
                 }
                 .description-text{
                     padding: 10px;

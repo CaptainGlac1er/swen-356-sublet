@@ -15,7 +15,7 @@ public class IndexController extends Controller {
 
 
     public ArrayList<Listing> getListings(){
-        return Listings.GetListings();
+        return Listings.GetActiveListings();
     }
     public Map<String, Object> getModel(){
         model.put("listings",getListings());

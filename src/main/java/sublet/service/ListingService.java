@@ -42,6 +42,12 @@ public class ListingService {
         return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
 
     };
+    public static Route changeVisibilityListing = (request, response) -> {
+        ListingController controller = new ListingController(request, response);
+        controller.Execute(new SetVisibilityListing());
+        return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
+
+    };
 
 
 }

@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Listings {
+
+
     public static void AddListing(Listing listing){
         AddListingDB(listing);
     }
@@ -16,8 +18,20 @@ public class Listings {
         return GetListingsDB();
     }
 
+    public static ArrayList<Listing> GetActiveListings() {
+        return GetActiveListingsDB();
+    }
+
     public static ArrayList<Listing> GetUserListings(User user) {
         return GetUserListingsDB(user);
+    }
+
+    public static ArrayList<Listing> GetUserArchiveListings(User user) {
+        return GetUserArchiveListingsDB(user);
+    }
+
+    public static ArrayList<Listing> GetUserActiveListings(User user) {
+        return GetUserActiveListingsDB(user);
     }
 
     public static ArrayList<Listing> FilterListing(Request request){return FilteredListingDB(request.queryParams("gender"));
@@ -39,6 +53,14 @@ public class Listings {
     public static void RemoveListing(long lid, User user) throws PermissionException {
         if (Roles.CanModListings(user.getUserRoles()) || GetListingDB(lid).getUser().checkIfSameUser(user)) {
             RemoveListingDB(lid);
+        } else {
+            throw new PermissionException("You can not delete this listing");
+        }
+    }
+
+    public static void UpdateListingVisibility(Listing listing, User user) throws PermissionException {
+        if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
+            UpdateListingVisibilityDB(listing);
         } else {
             throw new PermissionException("You can not delete this listing");
         }
@@ -83,6 +105,23 @@ public class Listings {
             System.out.println(e.toString());
         }
     }
+
+    private static void UpdateListingVisibilityDB(Listing listing) {
+        try {
+            PreparedStatement visListing = null;
+            if (listing.getListingVisibility() == Listing.ListingVisibility.ACTIVE)
+                visListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT activelisting(?)");
+            else if (listing.getListingVisibility() == Listing.ListingVisibility.ARCHIVE)
+                visListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT archivelisting(?)");
+            if (visListing != null) {
+                visListing.setLong(1, listing.getLID());
+                visListing.execute();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+
     //TODO handle exceptions better
     //TODO will need limits as database grows add in paging
 
@@ -91,8 +130,20 @@ public class Listings {
      * @return an ArrayList of all the Listings objects
      */
     private static ArrayList<Listing> GetListingsDB() {
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings";
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings";
         ArrayList<Listing> ret = new ArrayList<>();
+        getListingsProcessing(sql, ret);
+        return ret;
+    }
+
+    private static ArrayList<Listing> GetActiveListingsDB() {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getactivelistings";
+        ArrayList<Listing> ret = new ArrayList<>();
+        getListingsProcessing(sql, ret);
+        return ret;
+    }
+
+    private static void getListingsProcessing(String sql, ArrayList<Listing> ret) {
         try {
             PreparedStatement getListing =
                     DatabaseConnection.read.getConnection().prepareStatement(sql);
@@ -100,15 +151,13 @@ public class Listings {
             while (rs.next()) {
                 ret.add(createListingFromSQL(rs));
             }
-
         } catch (SQLException e) {
 
         }
-        return ret;
     }
 
     private static ArrayList<Listing> FilteredListingDB(String gender){
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE gender = ?";
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getactivelistings WHERE gender = ?";
         ArrayList<Listing> ret = new ArrayList<>();
         try {
             PreparedStatement getListing =
@@ -132,7 +181,7 @@ public class Listings {
     private static Listing GetListingDB(long lid) {
         Listing ret = null;
         try {
-            String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE lid = ?";
+            String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE lid = ?";
             PreparedStatement getListing =
                     DatabaseConnection.read.getConnection().prepareStatement(sql);
             getListing.setLong(1, lid);
@@ -152,11 +201,48 @@ public class Listings {
      * @return All of the listings that the user made
      */
     private static ArrayList<Listing> GetUserListingsDB(User user) {
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE uid = ?";
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE uid = ?";
+
         ArrayList<Listing> ret = new ArrayList<>();
+        getUserListingsProcessing(user, sql, ret);
+        return ret;
+    }
+
+    /**
+     * Gets all active listings of the user
+     *
+     * @param user the user of the listings
+     * @return Active listings that the user made
+     */
+    private static ArrayList<Listing> GetUserActiveListingsDB(User user) {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE uid = ? AND visibility = 'ACTIVE'";
+
+        ArrayList<Listing> ret = new ArrayList<>();
+        getUserListingsProcessing(user, sql, ret);
+        return ret;
+    }
+
+
+    /**
+     * Gets all archived listings of the user
+     *
+     * @param user the user of the listings
+     * @return Archived listings that the user made
+     */
+    private static ArrayList<Listing> GetUserArchiveListingsDB(User user) {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE uid = ? AND visibility = 'ARCHIVE'";
+
+        ArrayList<Listing> ret = new ArrayList<>();
+        getUserListingsProcessing(user, sql, ret);
+        return ret;
+    }
+
+
+    private static void getUserListingsProcessing(User user, String sql, ArrayList<Listing> ret) {
         try {
             PreparedStatement getListing =
                     DatabaseConnection.read.getConnection().prepareStatement(sql);
+            System.out.println(sql + " " + user.getUID());
             getListing.setLong(1, user.getUID());
             ResultSet rs = getListing.executeQuery();
             while (rs.next()) {
@@ -166,9 +252,7 @@ public class Listings {
         } catch (SQLException e) {
 
         }
-        return ret;
     }
-
     /**
      * Helper function to create the listings object from the sql select row
      * @param rs result set from the sql query
@@ -188,6 +272,8 @@ public class Listings {
         ret.setPayment(Listing.getPaymentValue(rs.getString("payment")));
         ret.setParkingType(Listing.getParkingValue(rs.getString("parking")));
         ret.setUtilIncluded(rs.getBoolean("utilities"));
+        ret.setListingVisibility(Listing.getVisibilityValue(rs.getString("visibility")));
         return ret;
     }
+
 }

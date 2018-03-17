@@ -6,8 +6,6 @@ import sublet.Exceptions.BaseException;
 import sublet.controllers.Controller;
 import sublet.models.Listings;
 
-import java.util.ArrayList;
-
 public class FilterListing implements Command{
 // well, all my changes are gone. lol...
     public void Execute(Controller controller) throws BaseException{
@@ -17,7 +15,7 @@ public class FilterListing implements Command{
 
         }
         else{
-            controller.addToModel("listings", Listings.GetListings());
+            controller.addToModel("listings", Listings.GetActiveListings());
         }
     }
 }
