@@ -34,6 +34,18 @@ public class Listings {
         return GetUserActiveListingsDB(user);
     }
 
+    public static ArrayList<Listing> GetUserFavoritedListings(User user) {
+        return getUserFavoritedListings(user);
+    }
+
+    public static void AddUserFavoriteListing(User user, Listing listing) {
+        addUserFavoriteListing(user, listing);
+    }
+
+    public static void RemoveUserFavoriteListing(User user, Listing listing) {
+        removeUserFavoriteListing(user, listing);
+    }
+
     public static ArrayList<Listing> FilterListing(Request request){return FilteredListingDB(request.queryParams("gender"));
     }
 
@@ -237,22 +249,54 @@ public class Listings {
         return ret;
     }
 
-
+    //TODO Add in favorite stuff
     private static void getUserListingsProcessing(User user, String sql, ArrayList<Listing> ret) {
         try {
             PreparedStatement getListing =
                     DatabaseConnection.read.getConnection().prepareStatement(sql);
-            System.out.println(sql + " " + user.getUID());
             getListing.setLong(1, user.getUID());
             ResultSet rs = getListing.executeQuery();
             while (rs.next()) {
-                ret.add(createListingFromSQL(rs));
+                Listing cur = createListingFromSQL(rs);
+                ret.add(cur);
             }
 
         } catch (SQLException e) {
 
         }
     }
+
+    private static ArrayList<Listing> getUserFavoritedListings(User user) {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM `swen-356-sublet`.`getfavlistings` WHERE fuid = ?";
+        ArrayList<Listing> ret = new ArrayList<>();
+        getUserListingsProcessing(user, sql, ret);
+        for (int i = 0; i < ret.size(); i++)
+            ret.get(i).setFavorited(true);
+        return ret;
+    }
+
+    private static void addUserFavoriteListing(User user, Listing listing) {
+        String sql = "SELECT favlisting(?,?)";
+        processFavoriteSQL(user, listing, sql);
+    }
+
+    private static void removeUserFavoriteListing(User user, Listing listing) {
+        String sql = "SELECT unfavlisting(?,?)";
+        processFavoriteSQL(user, listing, sql);
+    }
+
+    private static void processFavoriteSQL(User user, Listing listing, String sql) {
+        try {
+            PreparedStatement addFavorite = DatabaseConnection.write.getConnection().prepareStatement(sql);
+            addFavorite.setLong(1, user.getUID());
+            addFavorite.setLong(2, listing.getLID());
+            addFavorite.execute();
+        } catch (SQLException e) {
+
+        }
+    }
+
+
     /**
      * Helper function to create the listings object from the sql select row
      * @param rs result set from the sql query

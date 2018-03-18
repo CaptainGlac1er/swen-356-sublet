@@ -48,6 +48,18 @@ public class ListingService {
         return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
 
     };
+    public static Route addFavoriteListing = (request, response) -> {
+        ListingController controller = new ListingController(request, response);
+        controller.Execute(new FavoriteListing());
+        return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
+
+    };
+    public static Route removeFavoriteListing = (request, response) -> {
+        ListingController controller = new ListingController(request, response);
+        controller.Execute(new UnFavoriteListing());
+        return PageRender.render(request, controller.getModel(), Path.Template.LISTING);
+
+    };
 
 
 }

@@ -28,9 +28,14 @@ public class UserController extends Controller {
         return Listings.GetUserArchiveListings(sessionUser);
 
     }
+
+    private ArrayList<Listing> getFavoriteListing() {
+        return Listings.GetUserFavoritedListings(sessionUser);
+    }
     public Map<String, Object> getModel(){
         model.put("activelistings", getActiveListing());
         model.put("archivelistings", getArchiveListing());
+        model.put("favoritedlistings", getFavoriteListing());
         return model;
     }
 }

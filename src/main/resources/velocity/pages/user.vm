@@ -18,6 +18,9 @@
                 #end
             </div>
             <div id="tabs-2">
+                #foreach($listing in $favoritedlistings)
+                    #parse("../fragments/listing.vm")
+                #end
             </div>
             <div id="tabs-3">
                 #foreach($listing in $archivelistings)

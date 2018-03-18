@@ -37,6 +37,13 @@
                 </select>
             </form>
         #else
+            #if($!loggedin)
+                #if(!$listing.isFavorited())
+                    <a href="/listing/$listing.getLID()/fav">Favorite</a>
+                #else
+                    <a href="/listing/$listing.getLID()/unfav">Unfavorite</a>
+                #end
+            #end
             <a href="">Interested</a>
         #end
     </div>

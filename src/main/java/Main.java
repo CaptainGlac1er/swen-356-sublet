@@ -122,6 +122,8 @@ public class Main {
                     post("/edit",ListingService.modifyListing);
                     get("/remove",ListingService.removeListing);
                     post("/visibility", ListingService.changeVisibilityListing);
+                    get("/fav", ListingService.addFavoriteListing);
+                    get("/unfav", ListingService.removeFavoriteListing);
                 });
             });
 

@@ -31,6 +31,16 @@ public class Listing {
     private ParkingOption parking_type;
     private boolean utilIncluded;
 
+    private boolean isFavorited = false;
+
+    public boolean isFavorited() {
+        return isFavorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        isFavorited = favorited;
+    }
+
     private ListingVisibility listing_visibility;
 
     public static ListingVisibility getVisibilityValue(String option) {
