@@ -1,6 +1,12 @@
 <div class="listing" >
     <a href="/listing/$listing.getLID()">
-    <div class="listing-header">$!listing.getUser().getFname() - ($!listing.getUser().getEmail())</div>
+    <div class="listing-header">$!listing.getUser().getFname() - ($!listing.getUser().getEmail())
+        #if($!loggedin && ($!listing.getUser().checkIfSameUser($currentuser)))
+            #if($currentuser.getListingFavoriteCounts().containsKey($!listing.getLID()))
+                ★ $currentuser.getListingFavoriteCounts().get($!listing.getLID())
+            #end
+        #end
+    </div>
     <div class="listing-content">
         <div class="listing-side">
             <h3 class="listing-text">$$!listing.getRent()</h3>

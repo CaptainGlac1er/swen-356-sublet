@@ -108,6 +108,10 @@ public class User {
         return Users.GetUserFavoritedListings(this.UID);
     }
 
+    public HashMap<Long, Long> getListingFavoriteCounts() {
+        return Users.getListingFavoriteCount(this.UID);
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s %s", Long.toString(UID), username, email, Arrays.toString(getUserRoles().toArray()));

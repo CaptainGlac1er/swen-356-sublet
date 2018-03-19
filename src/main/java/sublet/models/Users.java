@@ -95,6 +95,23 @@ public class Users {
         user.getUserRoles().add(Roles.CurrentRoles.get("Guest"));
         return user;
     }
+
+    public static HashMap<Long, Long> getListingFavoriteCount(long uid) {
+        String sql = "select l.lid, count(*) from listingdb l join favdb f on l.lid = f.flid join userlisting ul on ul.lid = l.lid where ul.uid = ? group by l.lid";
+        HashMap<Long, Long> listingFavoriteCount = new HashMap<>();
+        try {
+            PreparedStatement getFavoriteCount = DatabaseConnection.read.getConnection().prepareStatement(sql);
+            getFavoriteCount.setLong(1, uid);
+            ResultSet rs = getFavoriteCount.executeQuery();
+            while (rs.next()) {
+                listingFavoriteCount.put(rs.getLong(1), rs.getLong(2));
+            }
+        } catch (SQLException e) {
+
+        }
+        return listingFavoriteCount;
+    }
+
     //TODO handle exceptions better
 
     /**
