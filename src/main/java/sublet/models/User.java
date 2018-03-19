@@ -5,6 +5,7 @@ import sublet.util.Security;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class User {
     private long UID;
@@ -101,6 +102,10 @@ public class User {
 
     public User() {
         userRoles = new ArrayList<>();
+    }
+
+    public HashMap<Long, Boolean> getFavoritedListingsLIDS() {
+        return Users.GetUserFavoritedListings(this.UID);
     }
 
     @Override

@@ -123,12 +123,30 @@ public class Users {
 
     }
 
+
+    public static HashMap<Long, Boolean> GetUserFavoritedListings(long uid) {
+        String sql = "SELECT lid FROM `swen-356-sublet`.`getfavlistings` WHERE fuid = ?";
+        HashMap<Long, Boolean> ret = new HashMap<>();
+        try {
+            PreparedStatement getUserPS = DatabaseConnection.read.getConnection().prepareStatement(sql);
+            getUserPS.setLong(1, uid);
+            ResultSet rs = getUserPS.executeQuery();
+            while (rs.next()) {
+                ret.put(rs.getLong(1), true);
+                System.out.println(rs.getLong(1));
+            }
+
+        } catch (SQLException e) {
+
+        }
+        return ret;
+    }
+
     /**
      * Get user by uid
      * @param uid uid of user
      * @return an user object from the database with the uid
      */
-
     private static User GetUser(long uid) {
         User user = null;
         try {
