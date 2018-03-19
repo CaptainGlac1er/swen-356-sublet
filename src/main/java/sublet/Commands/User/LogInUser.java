@@ -17,4 +17,10 @@ public class LogInUser implements Command {
         controller.createSession(session);
         controller.addRedirect(Path.Web.USER);
     }
+
+    private boolean isValidLoginInput(){
+        return false;
+    }
 }
+
+

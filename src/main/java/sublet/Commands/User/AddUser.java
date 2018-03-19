@@ -23,7 +23,10 @@ public class AddUser implements Command {
             //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
                     request.queryParams("confirmpassword"),
-                    request.queryParams("email"));
+                    request.queryParams("email"),
+                    request.queryParams("fname"),
+                    request.queryParams("lname")
+            );
 
             if(exceptions.size() == 0){
                 User user = Users.newUser(request.queryParams("fname"),
@@ -52,8 +55,15 @@ public class AddUser implements Command {
         return email.matches(regex);
     }
 
-    private ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email) {
+    private ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email,
+                                                String firstName, String lastName ) {
         ArrayList<String> exceptions = new ArrayList<>();
+        if(firstName.trim().equals("") | lastName.trim().equals("") | email.trim().equals("") |
+           email.trim().equals("") | password.trim().equals("") | confirmPassword.trim().equals("")){
+            exceptions.add("Required fields must be filled.");
+            return exceptions;
+        }
+
         if(!password.equals(confirmPassword)){
             exceptions.add("Passwords didn't match. ");
         }
@@ -62,6 +72,7 @@ public class AddUser implements Command {
             String sentenceStart = exceptions.size()!=0?"Also, y" : "Y";
             exceptions.add(sentenceStart + "ou must use your RIT email.");
         }
+
         return exceptions;
     }
 }

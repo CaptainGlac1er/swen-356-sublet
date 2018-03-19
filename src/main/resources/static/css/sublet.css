@@ -105,7 +105,8 @@
                 }
                 .form-title{
                     display: block;
-                    color: #999999;
+                    color: #222222;
+                    margin-bottom: 15px;
 
                 }
                 .form-group{
@@ -177,3 +178,4 @@
             .white{
                 color: white;
             }
+
