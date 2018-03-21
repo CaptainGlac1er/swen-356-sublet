@@ -33,7 +33,10 @@ public class UserController extends Controller {
         return Listings.GetUserFavoritedListings(sessionUser);
     }
     public Map<String, Object> getModel(){
-        model.put("activelistings", getActiveListing());
+
+        ArrayList<Listing> listings = getActiveListing();
+        listings.addAll(Listings.GetUserRitListings(sessionUser));
+        model.put("activelistings", listings);
         model.put("archivelistings", getArchiveListing());
         model.put("favoritedlistings", getFavoriteListing());
         return model;

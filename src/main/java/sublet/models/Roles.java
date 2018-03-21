@@ -25,6 +25,8 @@ public class Roles {
         newRole.setMakePost(true);
         newRole.setManagePosts(true);
         CurrentRoles.put(newRole.getName(), newRole);
+        newRole = new Role("RIT");
+        CurrentRoles.put(newRole.getName(), newRole);
     }
 
     public static boolean CanModListings(ArrayList<Role> userRoles) {

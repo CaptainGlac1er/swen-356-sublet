@@ -23,9 +23,18 @@ public class Listings {
             return GetActiveListingsDB();
     }
 
+    public static ArrayList<Listing> GetRitListings() {
+        return GetRitListingsDB();
+    }
+
     public static ArrayList<Listing> GetUserListings(User user) {
         return GetUserListingsDB(user);
     }
+
+    public static ArrayList<Listing> GetUserRitListings(User user) {
+        return GetUserRitListingsDB(user);
+    }
+
 
     public static ArrayList<Listing> GetUserArchiveListings(User user) {
         return GetUserArchiveListingsDB(user);
@@ -180,6 +189,8 @@ public class Listings {
                 visListing = con.prepareStatement("SELECT activelisting(?)");
             else if (listing.getListingVisibility() == Listing.ListingVisibility.ARCHIVE)
                 visListing = con.prepareStatement("SELECT archivelisting(?)");
+            else if (listing.getListingVisibility() == Listing.ListingVisibility.RIT)
+                visListing = con.prepareStatement("UPDATE `swen-356-sublet`.`listingdb` SET `visibility`=2 WHERE `lid`=?");
             if (visListing != null) {
                 visListing.setLong(1, listing.getLID());
                 visListing.execute();
@@ -208,6 +219,14 @@ public class Listings {
         ArrayList<Listing> ret = new ArrayList<>();
         getListingsProcessing(sql, ret);
         return ret;
+    }
+
+    private static ArrayList<Listing> GetRitListingsDB() {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getritlistings";
+        ArrayList<Listing> ret = new ArrayList<>();
+        getListingsProcessing(sql, ret);
+        return ret;
+
     }
 
     private static void getListingsProcessing(String sql, ArrayList<Listing> ret) {
@@ -284,6 +303,15 @@ public class Listings {
         } catch (SQLException e) {
 
         }
+        return ret;
+    }
+
+
+    private static ArrayList<Listing> GetUserRitListingsDB(User user) {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getritlistings WHERE uid = ?";
+
+        ArrayList<Listing> ret = new ArrayList<>();
+        getUserListingsProcessing(user, sql, ret);
         return ret;
     }
 
