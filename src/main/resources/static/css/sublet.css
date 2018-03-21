@@ -179,3 +179,14 @@
                 color: white;
             }
 
+            .req-string{
+                margin-bottom: 15px;
+            }
+
+            .star{
+                display: inline;
+                color: rgb(255, 190, 118);
+                margin-right: 5px;
+                margin-left: 5px;
+            }
+

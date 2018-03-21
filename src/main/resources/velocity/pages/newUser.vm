@@ -41,10 +41,11 @@
         <input class="form-input form-control datepicker" placeholder="Graduation Year" name="gradyear" type="text">
     </div>
     <input type="hidden" name="lid" value="$lid"/>
+    <h3 class="req-string"><strong><h3 class="star"><strong>*</strong></h3>Required</strong></h3>
     <button type="submit" class="btn">Submit</button>
 
     <script>
-        $('.required').before(' * ');
+        $('.required').after('<h3 class="star"><strong>*</strong></h3>');
     </script>
 </form>
 #end
