@@ -25,12 +25,12 @@ public class Main {
         DatabaseConnection.read = new DatabaseConnection(prop.getProperty("database"), prop.getProperty("readuser"), prop.getProperty("readpass"));
         DatabaseConnection.write = new DatabaseConnection(prop.getProperty("database"), prop.getProperty("defaultuser"), prop.getProperty("defaultpass"));
 
-
         setupDefaultRoles();
         //initTestData();
         setupRouting();
         // add application code here
         awaitInitialization();
+        init();
     }
 
 //    private void buildTables() throws SQLException{

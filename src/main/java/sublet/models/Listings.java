@@ -88,8 +88,23 @@ public class Listings {
 
     public static void UpdateListing(Listing listing, User user) throws PermissionException {
         if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
-            RemoveListingDB(listing.getLID());
-            AddListingDB(listing);
+            String sql = "UPDATE listingdb SET `desc`=?, rent=?, address=?, furnished=?, gender=?, housing=?, payment=?, parking=?, utilities=? WHERE lid=?";
+            try {
+                PreparedStatement updateListing = DatabaseConnection.write.getConnection().prepareStatement(sql);
+                int i = 1;
+                updateListing.setString(i++, listing.getDesc());
+                updateListing.setString(i++, listing.getRent());
+                updateListing.setString(i++, listing.getAddress());
+                updateListing.setString(i++, listing.getIsFurnished().name());
+                updateListing.setString(i++, listing.getGender().name());
+                updateListing.setString(i++, listing.getHousingType().name());
+                updateListing.setString(i++, listing.getPayment_frequency().name());
+                updateListing.setString(i++, listing.getParking_type().name());
+                updateListing.setBoolean(i++, listing.getUtilIncluded());
+                updateListing.setLong(i, listing.getLID());
+                updateListing.execute();
+            } catch (SQLException e) {
+            }
         } else {
             throw new PermissionException("Can't modify other posters listing");
         }
