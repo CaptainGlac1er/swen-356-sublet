@@ -6,16 +6,11 @@ import sublet.Exceptions.BaseException;
 import sublet.controllers.Controller;
 import sublet.models.Listings;
 
-public class FilterListing implements Command{
-// well, all my changes are gone. lol...
-    public void Execute(Controller controller) throws BaseException{
+public class FilterListing implements Command {
+    // well, all my changes are gone. lol...
+    public void Execute(Controller controller) throws BaseException {
         Request request = controller.getCurrentRequest();
-        if(!request.queryParams("gender").equals("")){
-            controller.addToModel("listings",Listings.FilterListing(request));
+        controller.addToModel("listings", Listings.FilterListing(request));
 
-        }
-        else{
-            controller.addToModel("listings", Listings.GetActiveListings());
-        }
     }
 }

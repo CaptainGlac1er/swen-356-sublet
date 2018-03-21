@@ -12,6 +12,7 @@ public class FilterController extends Controller {
     }
     public Map<String, Object> getModel(){
         model.put("gender", Listing.genderList);
+        model.put("housing", Listing.housingList);
         return model;
     }
 }

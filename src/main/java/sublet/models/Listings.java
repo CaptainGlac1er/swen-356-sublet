@@ -19,7 +19,7 @@ public class Listings {
     }
 
     public static ArrayList<Listing> GetActiveListings() {
-        return GetActiveListingsDB();
+            return GetActiveListingsDB();
     }
 
     public static ArrayList<Listing> GetUserListings(User user) {
@@ -46,8 +46,45 @@ public class Listings {
         removeUserFavoriteListing(user, listing);
     }
 
-    public static ArrayList<Listing> FilterListing(Request request){return FilteredListingDB(request.queryParams("gender"));
+    /**
+     * This method is used to manage how the filtering queries the database
+     * @param request The request object
+     * @return The list of listings that fit the query
+     */
+    public static ArrayList<Listing> FilterListing(Request request){
+        ArrayList<Long> gender_list = new ArrayList<>();
+        ArrayList<Long> housing_options_list = new ArrayList<>();
+        ArrayList<Listing> res = new ArrayList<>();
+        String gender = request.queryParams("gender");                      //Sets the gender query param
+        String housing = request.queryParams("housing_options");            //Sets the housing query param
+        if (gender.equals("") && housing.equals("")){                       //if neither are set, return active list
+            return GetActiveListings();
+        }
+
+        if (!gender.equals("") && !housing.equals("")){                     //if both are set get intersection
+            gender_list = GenderFilteredListingDB(gender);
+            housing_options_list = HousingOptionsFilteredListingDB(housing);
+            ArrayList<Long> filtered_list = gender_list;
+            filtered_list.retainAll(housing_options_list);
+            for(Long lid : filtered_list){
+                res.add(GetListingDB(lid));
+            }
+        }
+        else if((!gender.equals(""))){
+            gender_list = GenderFilteredListingDB(gender);
+            for(Long lid : gender_list){
+                res.add(GetListingDB(lid));
+            }
+        }
+        else if(!housing.equals("")){
+            housing_options_list = HousingOptionsFilteredListingDB(housing);
+            for(Long lid : housing_options_list){
+                res.add(GetListingDB(lid));
+            }
+        }
+        return res;
     }
+
 
     public static void UpdateListing(Listing listing, User user) throws PermissionException {
         if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
@@ -168,16 +205,43 @@ public class Listings {
         }
     }
 
-    private static ArrayList<Listing> FilteredListingDB(String gender){
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getactivelistings WHERE gender = ?";
-        ArrayList<Listing> ret = new ArrayList<>();
+    /**
+     * This is used to set up the prepared statement for querying based of just gender. This calls the common
+     * method getLIDDatabase which gets the listings ids for all listings that fit the filter
+     * @param gender   The stirng value for the filter: MALE, FEMALE. COED
+     * @return  The list of listing ids that fill the query
+     */
+    private static ArrayList<Long> GenderFilteredListingDB(String gender) {
+
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE gender = ?";
+        return getLIDDatabase(sql,gender);
+    }
+    /**
+     * This is used to set up the prepared statement for querying based of just housing. This calls the common
+     * method getLIDDatabase which gets the listings ids for all listings that fit the filter
+     * @param housing   The string value for the filter of housing
+     * @return  The list of listing ids that fill the query
+     */
+    private static ArrayList<Long> HousingOptionsFilteredListingDB(String housing){
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities " +
+                "FROM getlistings WHERE housing = ?";
+        return getLIDDatabase(sql,housing);
+    }
+
+    /**
+     * @param sql the prepared sql statement
+     * @param value The string enum we are querying
+     * @return The list of lids that fit the query
+     */
+    private static ArrayList<Long> getLIDDatabase(String sql,String value){
+        ArrayList<Long> ret = new ArrayList<>();
         try {
             PreparedStatement getListing =
                     DatabaseConnection.read.getConnection().prepareStatement(sql);
-            getListing.setString(1, gender);
+            getListing.setString(1, value);
             ResultSet rs = getListing.executeQuery();
             while (rs.next()) {
-                ret.add(createListingFromSQL(rs));
+                ret.add(rs.getLong(1));
             }
 
         } catch (SQLException e) {
@@ -185,6 +249,7 @@ public class Listings {
         }
         return ret;
     }
+
     /**
      * Gets the listing with the listing ID number
      * @param lid listing id that it was given at creation

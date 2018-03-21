@@ -8,10 +8,20 @@
             <option value="$gend.name()">$gend.toString()</option>
         #end
     </select>
+   <div class="form-group">
+    <select class="form-input" name="housing_options" id="housing_options">
+        <option value = "">None</option>
+        #foreach($house in $housing)
+            <option value="$house.name()">$house.toString()</option>
+        #end
+    </select>
 </div>
 <button type="submit" class="btn">Submit</button>
 </form>
     <div class="listings">
+        #if ($listings.size() == 0)
+            No listings were found for given query
+        #end
         #foreach($listing in $listings)
             #parse("../fragments/listing.vm")
         #end

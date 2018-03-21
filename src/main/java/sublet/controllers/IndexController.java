@@ -17,9 +17,11 @@ public class IndexController extends Controller {
     public ArrayList<Listing> getListings(){
         return Listings.GetActiveListings();
     }
+
     public Map<String, Object> getModel(){
         model.put("listings",getListings());
         model.put("gender",Listing.genderList);
+        model.put("housing", Listing.housingList);
         return model;
     }
 }
