@@ -1,22 +1,23 @@
 #parse("../Layout.vm")
 #@mainLayout()
 <form class="listing-form" action='' method="post">
-<div class="form-group">
-    <select class="form-input" name="gender" id="gender">
-        <option value = "">None</option>
-        #foreach($gend in $gender)
-            <option value="$gend.name()">$gend.toString()</option>
-        #end
-    </select>
-   <div class="form-group">
-    <select class="form-input" name="housing_options" id="housing_options">
-        <option value = "">None</option>
-        #foreach($house in $housing)
-            <option value="$house.name()">$house.toString()</option>
-        #end
-    </select>
-</div>
-<button type="submit" class="btn">Submit</button>
+    <div class="form-group">
+        <select class="form-input" name="gender" id="gender">
+            <option value="">None</option>
+            #foreach($gend in $gender)
+                <option value="$gend.name()">$gend.toString()</option>
+            #end
+        </select>
+    </div>
+    <div class="form-group">
+        <select class="form-input" name="housing_options" id="housing_options">
+            <option value="">None</option>
+            #foreach($house in $housing)
+                <option value="$house.name()">$house.toString()</option>
+            #end
+        </select>
+    </div>
+    <button type="submit" class="btn">Submit</button>
 </form>
     <div class="listings">
         #if ($listings.size() == 0)
