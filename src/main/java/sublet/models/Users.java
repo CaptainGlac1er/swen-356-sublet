@@ -4,10 +4,7 @@ import spark.Request;
 import sublet.Exceptions.LoginException;
 import sublet.util.Security;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,8 +96,8 @@ public class Users {
     public static HashMap<Long, Long> getListingFavoriteCount(long uid) {
         String sql = "select l.lid, count(*) from listingdb l join favdb f on l.lid = f.flid join userlisting ul on ul.lid = l.lid where ul.uid = ? group by l.lid";
         HashMap<Long, Long> listingFavoriteCount = new HashMap<>();
-        try {
-            PreparedStatement getFavoriteCount = DatabaseConnection.read.getConnection().prepareStatement(sql);
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getFavoriteCount = con.prepareStatement(sql);
             getFavoriteCount.setLong(1, uid);
             ResultSet rs = getFavoriteCount.executeQuery();
             while (rs.next()) {
@@ -120,8 +117,9 @@ public class Users {
      * @param user user object that you want to be added to the database
      */
     private static void AddUser(User user) {
-        try {
-            PreparedStatement addUserPS = DatabaseConnection.write.getConnection().prepareStatement("INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        String sql = "INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection con = DatabaseConnection.write.getConnection()) {
+            PreparedStatement addUserPS = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             addUserPS.setString(1, user.getFname());
             addUserPS.setString(2, user.getLname());
             addUserPS.setString(3, user.getUsername());
@@ -144,8 +142,8 @@ public class Users {
     public static HashMap<Long, Boolean> GetUserFavoritedListings(long uid) {
         String sql = "SELECT lid FROM `swen-356-sublet`.`getfavlistings` WHERE fuid = ?";
         HashMap<Long, Boolean> ret = new HashMap<>();
-        try {
-            PreparedStatement getUserPS = DatabaseConnection.read.getConnection().prepareStatement(sql);
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getUserPS = con.prepareStatement(sql);
             getUserPS.setLong(1, uid);
             ResultSet rs = getUserPS.executeQuery();
             while (rs.next()) {
@@ -166,8 +164,8 @@ public class Users {
      */
     private static User GetUser(long uid) {
         User user = null;
-        try {
-            PreparedStatement getUserPS = DatabaseConnection.read.getConnection().prepareStatement("SELECT uid, fname, lname, username, email, password, birthday, gradYear FROM userdb WHERE uid = ?");
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getUserPS = con.prepareStatement("SELECT uid, fname, lname, username, email, password, birthday, gradYear FROM userdb WHERE uid = ?");
             getUserPS.setLong(1, uid);
             ResultSet rs = getUserPS.executeQuery();
             if (rs.next()) {
@@ -187,8 +185,8 @@ public class Users {
      */
     private static User GetUser(String username) {
         User user = null;
-        try {
-            PreparedStatement getUserPS = DatabaseConnection.read.getConnection().prepareStatement("SELECT uid, fname, lname, username, email, password, birthday, gradYear FROM userdb WHERE username = ?");
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getUserPS = con.prepareStatement("SELECT uid, fname, lname, username, email, password, birthday, gradYear FROM userdb WHERE username = ?");
             getUserPS.setString(1, username);
             ResultSet rs = getUserPS.executeQuery();
             if (rs.next()) {
@@ -208,8 +206,8 @@ public class Users {
      */
     private static boolean CheckLogin(String user, String password) {
         boolean ret = false;
-        try {
-            PreparedStatement getUserPS = DatabaseConnection.read.getConnection().prepareStatement("SELECT EXISTS(SELECT 1 FROM userdb WHERE username = ? AND password = ?) AS 'result'");
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getUserPS = con.prepareStatement("SELECT EXISTS(SELECT 1 FROM userdb WHERE username = ? AND password = ?) AS 'result'");
             getUserPS.setString(1, user);
             getUserPS.setString(2, password);
             ResultSet rs = getUserPS.executeQuery();

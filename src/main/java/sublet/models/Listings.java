@@ -3,6 +3,7 @@ package sublet.models;
 import spark.Request;
 import sublet.Exceptions.PermissionException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -89,8 +90,8 @@ public class Listings {
     public static void UpdateListing(Listing listing, User user) throws PermissionException {
         if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
             String sql = "UPDATE listingdb SET `desc`=?, rent=?, address=?, furnished=?, gender=?, housing=?, payment=?, parking=?, utilities=? WHERE lid=?";
-            try {
-                PreparedStatement updateListing = DatabaseConnection.write.getConnection().prepareStatement(sql);
+            try (Connection con = DatabaseConnection.write.getConnection()) {
+                PreparedStatement updateListing = con.prepareStatement(sql);
                 int i = 1;
                 updateListing.setString(i++, listing.getDesc());
                 updateListing.setString(i++, listing.getRent());
@@ -136,8 +137,9 @@ public class Listings {
      * @param lid listing id of listing to remove
      */
     private static void RemoveListingDB(long lid) {
-        try {
-            PreparedStatement removeListing = DatabaseConnection.write.getConnection().prepareStatement("DELETE FROM `listingdb` WHERE `lid` = ?");
+        String sql = "DELETE FROM `listingdb` WHERE `lid` = ?";
+        try (Connection con = DatabaseConnection.write.getConnection()) {
+            PreparedStatement removeListing = con.prepareStatement(sql);
             removeListing.setLong(1, lid);
             removeListing.execute();
         } catch (SQLException e) {
@@ -150,8 +152,9 @@ public class Listings {
      * @param listing listing object that you want to be saved in the database
      */
     private static void AddListingDB(Listing listing) {
-        try {
-            PreparedStatement addListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT addListing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS lid");
+        String sql = "SELECT addListing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS lid";
+        try (Connection con = DatabaseConnection.write.getConnection()) {
+            PreparedStatement addListing = con.prepareStatement(sql);
             addListing.setLong(1, listing.getUser().getUID());
             addListing.setString(2, listing.getDesc());
             addListing.setString(3, listing.getRent());
@@ -171,12 +174,12 @@ public class Listings {
     }
 
     private static void UpdateListingVisibilityDB(Listing listing) {
-        try {
+        try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement visListing = null;
             if (listing.getListingVisibility() == Listing.ListingVisibility.ACTIVE)
-                visListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT activelisting(?)");
+                visListing = con.prepareStatement("SELECT activelisting(?)");
             else if (listing.getListingVisibility() == Listing.ListingVisibility.ARCHIVE)
-                visListing = DatabaseConnection.write.getConnection().prepareStatement("SELECT archivelisting(?)");
+                visListing = con.prepareStatement("SELECT archivelisting(?)");
             if (visListing != null) {
                 visListing.setLong(1, listing.getLID());
                 visListing.execute();
@@ -208,9 +211,8 @@ public class Listings {
     }
 
     private static void getListingsProcessing(String sql, ArrayList<Listing> ret) {
-        try {
-            PreparedStatement getListing =
-                    DatabaseConnection.read.getConnection().prepareStatement(sql);
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getListing = con.prepareStatement(sql);
             ResultSet rs = getListing.executeQuery();
             while (rs.next()) {
                 ret.add(createListingFromSQL(rs));
@@ -250,9 +252,8 @@ public class Listings {
      */
     private static ArrayList<Long> getLIDDatabase(String sql,String value){
         ArrayList<Long> ret = new ArrayList<>();
-        try {
-            PreparedStatement getListing =
-                    DatabaseConnection.read.getConnection().prepareStatement(sql);
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getListing = con.prepareStatement(sql);
             getListing.setString(1, value);
             ResultSet rs = getListing.executeQuery();
             while (rs.next()) {
@@ -272,10 +273,9 @@ public class Listings {
      */
     private static Listing GetListingDB(long lid) {
         Listing ret = null;
-        try {
-            String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE lid = ?";
-            PreparedStatement getListing =
-                    DatabaseConnection.read.getConnection().prepareStatement(sql);
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE lid = ?";
+        try (Connection con = DatabaseConnection.read.getConnection()) {
+            PreparedStatement getListing = con.prepareStatement(sql);
             getListing.setLong(1, lid);
             ResultSet rs = getListing.executeQuery();
             if (rs.next()) {
@@ -331,9 +331,9 @@ public class Listings {
 
     //TODO Add in favorite stuff
     private static void getUserListingsProcessing(User user, String sql, ArrayList<Listing> ret) {
-        try {
+        try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getListing =
-                    DatabaseConnection.read.getConnection().prepareStatement(sql);
+                    con.prepareStatement(sql);
             getListing.setLong(1, user.getUID());
             ResultSet rs = getListing.executeQuery();
             while (rs.next()) {

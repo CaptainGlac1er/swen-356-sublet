@@ -5,19 +5,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    public static DatabaseConnection read;
-    public static DatabaseConnection write;
+    public static DatabaseConnection read, write;
+    private String url, username, password;
     Connection conn;
 
     public DatabaseConnection(String url, String username, String password) {
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
 
     public Connection getConnection() {
-        return conn;
+        try {
+            return DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
