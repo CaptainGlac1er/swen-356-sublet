@@ -2,6 +2,7 @@ package sublet.Commands.Listing;
 
 import spark.Request;
 import sublet.Commands.LoggedInCommand;
+import sublet.Exceptions.DatabaseException;
 import sublet.Exceptions.PermissionException;
 import sublet.Exceptions.SubletException;
 import sublet.controllers.Controller;
@@ -12,7 +13,7 @@ import sublet.models.Roles;
 public class EditListing extends LoggedInCommand {
 
     @Override
-    public void ProtectedExecute(Controller controller) throws SubletException, PermissionException {
+    public void ProtectedExecute(Controller controller) throws SubletException, PermissionException, DatabaseException {
         Request request = controller.getCurrentRequest();
         Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
         if (listing != null && (controller.getSessionUser().checkIfSameUser(listing.getUser()) || Roles.CanModListings(controller.getSessionUser().getUserRoles()))) {

@@ -1,5 +1,6 @@
 package sublet.models;
 
+import sublet.Exceptions.DatabaseException;
 import sublet.util.Security;
 
 import java.time.LocalDate;
@@ -104,11 +105,11 @@ public class User {
         userRoles = new ArrayList<>();
     }
 
-    public HashMap<Long, Boolean> getFavoritedListingsLIDS() {
+    public HashMap<Long, Boolean> getFavoritedListingsLIDS() throws DatabaseException {
         return Users.GetUserFavoritedListings(this.UID);
     }
 
-    public HashMap<Long, Long> getListingFavoriteCounts() {
+    public HashMap<Long, Long> getListingFavoriteCounts() throws DatabaseException {
         return Users.getListingFavoriteCount(this.UID);
     }
 

@@ -1,6 +1,7 @@
 package sublet.models;
 
 import spark.Request;
+import sublet.Exceptions.DatabaseException;
 import sublet.Exceptions.PermissionException;
 
 import java.sql.Connection;
@@ -12,32 +13,6 @@ import java.util.ArrayList;
 public class Listings {
 
 
-    public static void AddListing(Listing listing){
-        AddListingDB(listing);
-    }
-    public static ArrayList<Listing> GetListings(){
-        return GetListingsDB();
-    }
-
-    public static ArrayList<Listing> GetActiveListings() {
-            return GetActiveListingsDB();
-    }
-
-    public static ArrayList<Listing> GetUserListings(User user) {
-        return GetUserListingsDB(user);
-    }
-
-    public static ArrayList<Listing> GetUserArchiveListings(User user) {
-        return GetUserArchiveListingsDB(user);
-    }
-
-    public static ArrayList<Listing> GetUserActiveListings(User user) {
-        return GetUserActiveListingsDB(user);
-    }
-
-    public static ArrayList<Listing> GetUserFavoritedListings(User user) {
-        return getUserFavoritedListings(user);
-    }
 
     public static void AddUserFavoriteListing(User user, Listing listing) {
         addUserFavoriteListing(user, listing);
@@ -52,7 +27,7 @@ public class Listings {
      * @param request The request object
      * @return The list of listings that fit the query
      */
-    public static ArrayList<Listing> FilterListing(Request request){
+    public static ArrayList<Listing> FilterListing(Request request) throws DatabaseException {
         ArrayList<Long> gender_list = new ArrayList<>();
         ArrayList<Long> housing_options_list = new ArrayList<>();
         ArrayList<Listing> res = new ArrayList<>();
@@ -63,31 +38,31 @@ public class Listings {
         }
 
         if (!gender.equals("") && !housing.equals("")){                     //if both are set get intersection
-            gender_list = GenderFilteredListingDB(gender);
-            housing_options_list = HousingOptionsFilteredListingDB(housing);
+            gender_list = GenderFilteredListing(gender);
+            housing_options_list = HousingOptionsFilteredListing(housing);
             ArrayList<Long> filtered_list = gender_list;
             filtered_list.retainAll(housing_options_list);
             for(Long lid : filtered_list){
-                res.add(GetListingDB(lid));
+                res.add(GetListing(lid));
             }
         }
         else if((!gender.equals(""))){
-            gender_list = GenderFilteredListingDB(gender);
+            gender_list = GenderFilteredListing(gender);
             for(Long lid : gender_list){
-                res.add(GetListingDB(lid));
+                res.add(GetListing(lid));
             }
         }
         else if(!housing.equals("")){
-            housing_options_list = HousingOptionsFilteredListingDB(housing);
+            housing_options_list = HousingOptionsFilteredListing(housing);
             for(Long lid : housing_options_list){
-                res.add(GetListingDB(lid));
+                res.add(GetListing(lid));
             }
         }
         return res;
     }
 
 
-    public static void UpdateListing(Listing listing, User user) throws PermissionException {
+    public static void UpdateListing(Listing listing, User user) throws PermissionException, DatabaseException {
         if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
             String sql = "UPDATE listingdb SET `desc`=?, rent=?, address=?, furnished=?, gender=?, housing=?, payment=?, parking=?, utilities=? WHERE lid=?";
             try (Connection con = DatabaseConnection.write.getConnection()) {
@@ -111,21 +86,18 @@ public class Listings {
         }
     }
 
-    public static Listing GetListing(long lid) {
-        return GetListingDB(lid);
-    }
 
-    public static void RemoveListing(long lid, User user) throws PermissionException {
-        if (Roles.CanModListings(user.getUserRoles()) || GetListingDB(lid).getUser().checkIfSameUser(user)) {
-            RemoveListingDB(lid);
+    public static void RemoveListing(long lid, User user) throws PermissionException, DatabaseException {
+        if (Roles.CanModListings(user.getUserRoles()) || GetListing(lid).getUser().checkIfSameUser(user)) {
+            RemoveListing(lid);
         } else {
             throw new PermissionException("You can not delete this listing");
         }
     }
 
-    public static void UpdateListingVisibility(Listing listing, User user) throws PermissionException {
+    public static void UpdateListingVisibility(Listing listing, User user) throws PermissionException, DatabaseException {
         if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
-            UpdateListingVisibilityDB(listing);
+            UpdateListingVisibility(listing);
         } else {
             throw new PermissionException("You can not delete this listing");
         }
@@ -136,7 +108,7 @@ public class Listings {
      *
      * @param lid listing id of listing to remove
      */
-    private static void RemoveListingDB(long lid) {
+    public static void RemoveListing(long lid) {
         String sql = "DELETE FROM `listingdb` WHERE `lid` = ?";
         try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement removeListing = con.prepareStatement(sql);
@@ -151,7 +123,7 @@ public class Listings {
      * Add a listing to the database
      * @param listing listing object that you want to be saved in the database
      */
-    private static void AddListingDB(Listing listing) {
+    public static void AddListing(Listing listing) throws DatabaseException {
         String sql = "SELECT addListing(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) AS lid";
         try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement addListing = con.prepareStatement(sql);
@@ -173,7 +145,7 @@ public class Listings {
         }
     }
 
-    private static void UpdateListingVisibilityDB(Listing listing) {
+    public static void UpdateListingVisibility(Listing listing) {
         try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement visListing = null;
             if (listing.getListingVisibility() == Listing.ListingVisibility.ACTIVE)
@@ -196,21 +168,21 @@ public class Listings {
      * Gets all the listings that all users have posted
      * @return an ArrayList of all the Listings objects
      */
-    private static ArrayList<Listing> GetListingsDB() {
+    public static ArrayList<Listing> GetListings() throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings";
         ArrayList<Listing> ret = new ArrayList<>();
         getListingsProcessing(sql, ret);
         return ret;
     }
 
-    private static ArrayList<Listing> GetActiveListingsDB() {
+    public static ArrayList<Listing> GetActiveListings() throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getactivelistings";
         ArrayList<Listing> ret = new ArrayList<>();
         getListingsProcessing(sql, ret);
         return ret;
     }
 
-    private static void getListingsProcessing(String sql, ArrayList<Listing> ret) {
+    private static void getListingsProcessing(String sql, ArrayList<Listing> ret) throws DatabaseException {
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getListing = con.prepareStatement(sql);
             ResultSet rs = getListing.executeQuery();
@@ -228,7 +200,7 @@ public class Listings {
      * @param gender   The stirng value for the filter: MALE, FEMALE. COED
      * @return  The list of listing ids that fill the query
      */
-    private static ArrayList<Long> GenderFilteredListingDB(String gender) {
+    public static ArrayList<Long> GenderFilteredListing(String gender) {
 
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE gender = ?";
         return getLIDDatabase(sql,gender);
@@ -239,7 +211,7 @@ public class Listings {
      * @param housing   The string value for the filter of housing
      * @return  The list of listing ids that fill the query
      */
-    private static ArrayList<Long> HousingOptionsFilteredListingDB(String housing){
+    public static ArrayList<Long> HousingOptionsFilteredListing(String housing) {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities " +
                 "FROM getlistings WHERE housing = ?";
         return getLIDDatabase(sql,housing);
@@ -271,7 +243,7 @@ public class Listings {
      * @param lid listing id that it was given at creation
      * @return listing object with that listing ID number
      */
-    private static Listing GetListingDB(long lid) {
+    public static Listing GetListing(long lid) throws DatabaseException {
         Listing ret = null;
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE lid = ?";
         try (Connection con = DatabaseConnection.read.getConnection()) {
@@ -292,7 +264,7 @@ public class Listings {
      * @param user the user of the listings
      * @return All of the listings that the user made
      */
-    private static ArrayList<Listing> GetUserListingsDB(User user) {
+    public static ArrayList<Listing> GetUserListings(User user) throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE uid = ?";
 
         ArrayList<Listing> ret = new ArrayList<>();
@@ -306,7 +278,7 @@ public class Listings {
      * @param user the user of the listings
      * @return Active listings that the user made
      */
-    private static ArrayList<Listing> GetUserActiveListingsDB(User user) {
+    public static ArrayList<Listing> GetUserActiveListings(User user) throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE uid = ? AND visibility = 'ACTIVE'";
 
         ArrayList<Listing> ret = new ArrayList<>();
@@ -321,7 +293,7 @@ public class Listings {
      * @param user the user of the listings
      * @return Archived listings that the user made
      */
-    private static ArrayList<Listing> GetUserArchiveListingsDB(User user) {
+    public static ArrayList<Listing> GetUserArchiveListings(User user) throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE uid = ? AND visibility = 'ARCHIVE'";
 
         ArrayList<Listing> ret = new ArrayList<>();
@@ -330,7 +302,7 @@ public class Listings {
     }
 
     //TODO Add in favorite stuff
-    private static void getUserListingsProcessing(User user, String sql, ArrayList<Listing> ret) {
+    private static void getUserListingsProcessing(User user, String sql, ArrayList<Listing> ret) throws DatabaseException {
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getListing =
                     con.prepareStatement(sql);
@@ -346,7 +318,7 @@ public class Listings {
         }
     }
 
-    private static ArrayList<Listing> getUserFavoritedListings(User user) {
+    public static ArrayList<Listing> GetUserFavoritedListings(User user) throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM `swen-356-sublet`.`getfavlistings` WHERE fuid = ?";
         ArrayList<Listing> ret = new ArrayList<>();
         getUserListingsProcessing(user, sql, ret);
@@ -383,7 +355,7 @@ public class Listings {
      * @return the Listing object
      * @throws SQLException Throws an exception when a field was not found
      */
-    private static Listing createListingFromSQL(ResultSet rs) throws SQLException {
+    private static Listing createListingFromSQL(ResultSet rs) throws SQLException, DatabaseException {
         Listing ret = new Listing();
         ret.setLid(rs.getLong("lid"));
         ret.setUser(Users.getCurrentUserUID(rs.getLong("uid")));

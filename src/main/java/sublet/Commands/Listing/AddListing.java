@@ -2,6 +2,7 @@ package sublet.Commands.Listing;
 
 import spark.Request;
 import sublet.Commands.LoggedInCommand;
+import sublet.Exceptions.DatabaseException;
 import sublet.controllers.Controller;
 import sublet.models.Listing;
 import sublet.models.Listings;
@@ -11,7 +12,7 @@ public class AddListing extends LoggedInCommand{
 
 
     @Override
-    public void ProtectedExecute(Controller controller) {
+    public void ProtectedExecute(Controller controller) throws DatabaseException {
         Request request = controller.getCurrentRequest();
         if(controller.isLoggedIn()) {
             for (String s:request.queryParams()) {

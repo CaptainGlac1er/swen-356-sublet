@@ -1,5 +1,7 @@
 package sublet.models;
 
+import sublet.Exceptions.DatabaseException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -110,7 +112,7 @@ public class Listing {
         return this.lid;
     }
 
-    public User getUser() {
+    public User getUser() throws DatabaseException {
         return Users.getCurrentUserUID(this.user);
     }
 

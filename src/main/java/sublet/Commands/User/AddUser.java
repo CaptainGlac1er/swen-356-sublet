@@ -2,6 +2,7 @@ package sublet.Commands.User;
 
 import spark.Request;
 import sublet.Commands.Command;
+import sublet.Exceptions.DatabaseException;
 import sublet.Exceptions.RegisterException;
 import sublet.controllers.Controller;
 import sublet.models.User;
@@ -16,7 +17,7 @@ import java.util.Locale;
 public class AddUser implements Command {
 
     @Override
-    public void Execute(Controller controller) throws RegisterException {
+    public void Execute(Controller controller) throws RegisterException, DatabaseException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);

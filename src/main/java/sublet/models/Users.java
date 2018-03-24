@@ -1,6 +1,7 @@
 package sublet.models;
 
 import spark.Request;
+import sublet.Exceptions.DatabaseException;
 import sublet.Exceptions.LoginException;
 import sublet.util.Security;
 
@@ -14,7 +15,7 @@ public class Users {
     //TODO think about moving this to database
     private static Map<String, Long> currentUsers = new HashMap<>();
 
-    public static String loginUser(String user, String password) throws LoginException {
+    public static String loginUser(String user, String password) throws LoginException, DatabaseException {
         String newSession;
         if (CheckLogin(user, Security.getSHA256Hash(password))) {
             User u = GetUser(user);
@@ -31,16 +32,18 @@ public class Users {
         currentUsers.remove(sid);
     }
 
-    public static String registerUser(User user) {
+    public static String registerUser(User user) throws DatabaseException {
         String newSession = GetRandomSession(user);
         AddUser(user);
         currentUsers.put(newSession,user.getUID());
         return newSession;
     }
-    public static User getCurrentUserUID(long UID){
+
+    public static User getCurrentUserUID(long UID) throws DatabaseException {
         return GetUser(UID);
     }
-    public static User getCurrentUser(Request request){
+
+    public static User getCurrentUser(Request request) throws DatabaseException {
         request.session(true);
         User currentUser;
         System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
@@ -61,7 +64,7 @@ public class Users {
         return currentUser;
     }
 
-    public static User getCurrentUser(String sid) {
+    public static User getCurrentUser(String sid) throws DatabaseException {
         return getCurrentUserUID(currentUsers.get(sid));
     }
 
@@ -93,7 +96,7 @@ public class Users {
         return user;
     }
 
-    public static HashMap<Long, Long> getListingFavoriteCount(long uid) {
+    public static HashMap<Long, Long> getListingFavoriteCount(long uid) throws DatabaseException {
         String sql = "select l.lid, count(*) from listingdb l join favdb f on l.lid = f.flid join userlisting ul on ul.lid = l.lid where ul.uid = ? group by l.lid";
         HashMap<Long, Long> listingFavoriteCount = new HashMap<>();
         try (Connection con = DatabaseConnection.read.getConnection()) {
@@ -104,6 +107,7 @@ public class Users {
                 listingFavoriteCount.put(rs.getLong(1), rs.getLong(2));
             }
         } catch (SQLException e) {
+            throw new DatabaseException("user database error");
 
         }
         return listingFavoriteCount;
@@ -116,7 +120,7 @@ public class Users {
      *
      * @param user user object that you want to be added to the database
      */
-    private static void AddUser(User user) {
+    private static void AddUser(User user) throws DatabaseException {
         String sql = "INSERT INTO userdb (fname, lname, username, email, password, birthday, gradYear) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement addUserPS = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -132,14 +136,14 @@ public class Users {
             if (rs.next())
                 user.setUID(rs.getLong(1));
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            throw new DatabaseException("user database error");
 
         }
 
     }
 
 
-    public static HashMap<Long, Boolean> GetUserFavoritedListings(long uid) {
+    public static HashMap<Long, Boolean> GetUserFavoritedListings(long uid) throws DatabaseException {
         String sql = "SELECT lid FROM `swen-356-sublet`.`getfavlistings` WHERE fuid = ?";
         HashMap<Long, Boolean> ret = new HashMap<>();
         try (Connection con = DatabaseConnection.read.getConnection()) {
@@ -152,6 +156,7 @@ public class Users {
             }
 
         } catch (SQLException e) {
+            throw new DatabaseException("user database error");
 
         }
         return ret;
@@ -162,7 +167,7 @@ public class Users {
      * @param uid uid of user
      * @return an user object from the database with the uid
      */
-    private static User GetUser(long uid) {
+    private static User GetUser(long uid) throws DatabaseException {
         User user = null;
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getUserPS = con.prepareStatement("SELECT uid, fname, lname, username, email, password, birthday, gradYear FROM userdb WHERE uid = ?");
@@ -173,7 +178,7 @@ public class Users {
             }
         } catch (SQLException e) {
 
-            System.out.println(e.toString());
+            throw new DatabaseException("user database error");
         }
         return user;
     }
@@ -183,7 +188,7 @@ public class Users {
      * @param username username of the user
      * @return an user object from the database with the username
      */
-    private static User GetUser(String username) {
+    private static User GetUser(String username) throws DatabaseException {
         User user = null;
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getUserPS = con.prepareStatement("SELECT uid, fname, lname, username, email, password, birthday, gradYear FROM userdb WHERE username = ?");
@@ -193,7 +198,7 @@ public class Users {
                 user = newUser(rs.getLong("uid"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getDate("birthday").toLocalDate(), rs.getDate("gradYear").toLocalDate());
             }
         } catch (SQLException e) {
-
+            throw new DatabaseException("user database error");
         }
         return user;
     }
@@ -204,7 +209,7 @@ public class Users {
      * @param password hashed password to check
      * @return true if correct login, false for not
      */
-    private static boolean CheckLogin(String user, String password) {
+    private static boolean CheckLogin(String user, String password) throws DatabaseException {
         boolean ret = false;
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getUserPS = con.prepareStatement("SELECT EXISTS(SELECT 1 FROM userdb WHERE username = ? AND password = ?) AS 'result'");
@@ -215,6 +220,7 @@ public class Users {
                 ret = rs.getInt("result") == 1;
             }
         } catch (SQLException e) {
+            throw new DatabaseException("user database error");
 
         }
         return ret;

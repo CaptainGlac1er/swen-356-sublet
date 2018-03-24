@@ -2,6 +2,7 @@ package sublet.controllers;
 
 import spark.Request;
 import spark.Response;
+import sublet.Exceptions.DatabaseException;
 import sublet.models.Listing;
 import sublet.models.Listings;
 
@@ -14,8 +15,13 @@ public class IndexController extends Controller {
     }
 
 
-    public ArrayList<Listing> getListings(){
-        return Listings.GetActiveListings();
+    public ArrayList<Listing> getListings() {
+        try {
+            return Listings.GetActiveListings();
+        } catch (DatabaseException e) {
+            this.addException(e);
+        }
+        return new ArrayList<>();
     }
 
     public Map<String, Object> getModel(){

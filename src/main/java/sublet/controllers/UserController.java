@@ -2,6 +2,7 @@ package sublet.controllers;
 
 import spark.Request;
 import spark.Response;
+import sublet.Exceptions.DatabaseException;
 import sublet.models.Listing;
 import sublet.models.Listings;
 
@@ -16,21 +17,40 @@ public class UserController extends Controller {
 
 
     public ArrayList<Listing> getListings(){
-        return Listings.GetUserListings(sessionUser);
+        try {
+            return Listings.GetUserListings(sessionUser);
+        } catch (DatabaseException e) {
+            this.addException(e);
+        }
+        return new ArrayList<>();
     }
 
     private ArrayList<Listing> getActiveListing() {
-        return Listings.GetUserActiveListings(sessionUser);
+        try {
+            return Listings.GetUserActiveListings(sessionUser);
+        } catch (DatabaseException e) {
+            this.addException(e);
+        }
+        return new ArrayList<>();
 
     }
 
     private ArrayList<Listing> getArchiveListing() {
-        return Listings.GetUserArchiveListings(sessionUser);
-
+        try {
+            return Listings.GetUserArchiveListings(sessionUser);
+        } catch (DatabaseException e) {
+            this.addException(e);
+        }
+        return new ArrayList<>();
     }
 
     private ArrayList<Listing> getFavoriteListing() {
-        return Listings.GetUserFavoritedListings(sessionUser);
+        try {
+            return Listings.GetUserFavoritedListings(sessionUser);
+        } catch (DatabaseException e) {
+            this.addException(e);
+        }
+        return new ArrayList<>();
     }
     public Map<String, Object> getModel(){
         model.put("activelistings", getActiveListing());

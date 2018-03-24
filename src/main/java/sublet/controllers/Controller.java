@@ -4,6 +4,7 @@ import spark.Request;
 import spark.Response;
 import sublet.Commands.Command;
 import sublet.Exceptions.BaseException;
+import sublet.Exceptions.DatabaseException;
 import sublet.Exceptions.NotLoggedInException;
 import sublet.Exceptions.PermissionException;
 import sublet.models.Roles;
@@ -23,7 +24,11 @@ public abstract class Controller {
     public Controller(Request request, Response response){
         currentRequest = request;
         currentResponse = response;
-        updateUserStatus(Users.getCurrentUser(request));
+        try {
+            updateUserStatus(Users.getCurrentUser(request));
+        } catch (DatabaseException exception) {
+            this.currentRequest.session().attribute("error", exception);
+        }
         addToModel("links", Path.Web.class);
     }
 
@@ -37,13 +42,17 @@ public abstract class Controller {
                 this.addToModel("error", getLatestException());
             command.Execute(this);
         }catch (NotLoggedInException | PermissionException exception){
-            this.currentRequest.session().attribute("error", exception);
+            this.addException(exception);
             this.addRedirect("/");
         } catch (BaseException be){
             this.addToModel("error", be);
         }
     }
 
+    protected void addException(Exception exception) {
+        this.currentRequest.session().attribute("error", exception);
+
+    }
     private boolean hasException(){
         return this.currentRequest.session().attribute("error") != null;
     }
@@ -104,7 +113,11 @@ public abstract class Controller {
      * @param session session id of client
      */
     public void createSession(String session) {
-        this.updateUserStatus(Users.getCurrentUser(session));
+        try {
+            this.updateUserStatus(Users.getCurrentUser(session));
+        } catch (DatabaseException exception) {
+            this.currentRequest.session().attribute("error", exception);
+        }
         this.currentResponse.cookie("/", "session", session, 600000, false);
     }
 
