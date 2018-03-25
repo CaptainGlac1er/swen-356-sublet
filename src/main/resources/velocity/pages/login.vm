@@ -1,7 +1,7 @@
 #parse("../Layout.vm")
 #@mainLayout()
     <h1 class="form-title white" style="margin-bottom: 20px">Login</h1>
-    <form action="" method="post">
+<form action="" method="post" class="data">
         <input class="form-input" style="margin-bottom: 20px;" type="text" name="username"/>
         <input class="form-input" style="margin-bottom: 20px;" type="password" name="password"/>
         <button class="btn" name="submit" value="login">Login</button>

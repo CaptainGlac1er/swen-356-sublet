@@ -109,7 +109,7 @@ public class Users {
                 listingFavoriteCount.put(rs.getLong(1), rs.getLong(2));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("user database error");
+            throw new DatabaseException("user database error", e);
 
         }
         return listingFavoriteCount;
@@ -138,7 +138,7 @@ public class Users {
             if (rs.next())
                 user.setUID(rs.getLong(1));
         } catch (SQLException e) {
-            throw new DatabaseException("user database error");
+            throw new DatabaseException("user database error", e);
 
         }
 
@@ -158,7 +158,7 @@ public class Users {
             }
 
         } catch (SQLException e) {
-            throw new DatabaseException("user database error");
+            throw new DatabaseException("user database error", e);
 
         }
         return ret;
@@ -180,7 +180,7 @@ public class Users {
             }
         } catch (SQLException e) {
 
-            throw new DatabaseException("user database error");
+            throw new DatabaseException("user database error", e);
         }
         return user;
     }
@@ -200,7 +200,7 @@ public class Users {
                 user = newUser(rs.getLong("uid"), rs.getString("fname"), rs.getString("lname"), rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getDate("birthday").toLocalDate(), rs.getDate("gradYear").toLocalDate());
             }
         } catch (SQLException e) {
-            throw new DatabaseException("user database error");
+            throw new DatabaseException("user database error", e);
         }
         return user;
     }
@@ -222,7 +222,7 @@ public class Users {
                 ret = rs.getInt("result") == 1;
             }
         } catch (SQLException e) {
-            throw new DatabaseException("user database error");
+            throw new DatabaseException("user database error", e);
 
         }
         return ret;

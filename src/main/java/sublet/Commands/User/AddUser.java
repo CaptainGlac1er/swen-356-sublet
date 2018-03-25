@@ -16,12 +16,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class AddUser implements Command {
-
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
     @Override
     public void Execute(Controller controller) throws RegisterException, DatabaseException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
             //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
                     request.queryParams("confirmpassword"),
@@ -79,13 +78,13 @@ public class AddUser implements Command {
         }
         try {
             if (birthdayString.length() > 0)
-                LocalDate.parse(birthdayString);
+                LocalDate.parse(birthdayString, dtf);
         } catch (DateTimeException dte) {
             exceptions.add("Incorrect birthday");
         }
         try {
             if (gradYearString.length() > 0)
-                LocalDate.parse(gradYearString);
+                LocalDate.parse(gradYearString, dtf);
         } catch (DateTimeException dte) {
             exceptions.add("Incorrect graduation year");
         }

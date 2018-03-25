@@ -1,23 +1,29 @@
 #parse("../Layout.vm")
 #@mainLayout()
-<form class="listing-form" action='' method="post">
+<form class="listing-form data" action='' method="post">
     <div class="form-group">
-        <select class="form-input" name="gender" id="gender">
+        <select class="form-input" name="gender_options" id="gender" onchange="this.form.submit()">
             <option value="">None</option>
             #foreach($gend in $gender)
-                <option value="$gend.name()">$gend.toString()</option>
+                <option value="$gend.name()"
+                    #if($gender_options && $gender_options == $gend.name())
+                        selected
+                    #end
+                >$gend.toString()</option>
             #end
         </select>
     </div>
     <div class="form-group">
-        <select class="form-input" name="housing_options" id="housing_options">
+        <select class="form-input" name="housing_options" id="housing_options" onchange="this.form.submit()">
             <option value="">None</option>
             #foreach($house in $housing)
-                <option value="$house.name()">$house.toString()</option>
+                <option value="$house.name()"
+                    #if($housing_options && $housing_options == $house.name())
+                        selected
+                    #end>$house.toString()</option>
             #end
         </select>
     </div>
-    <button type="submit" class="btn">Submit</button>
 </form>
     <div class="listings">
         #if ($listings.size() == 0)

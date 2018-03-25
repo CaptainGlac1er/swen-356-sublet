@@ -43,7 +43,7 @@ public class AddListing extends LoggedInCommand{
                 for (String re : exceptions) {
                     exceptionString.append(re);
                 }
-                throw new ListingException(exceptionString.toString());
+                throw new ListingException(exceptionString.toString(), null);
             }
         }
     }

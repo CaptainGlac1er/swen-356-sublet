@@ -1,6 +1,5 @@
 package sublet.models;
 
-import spark.Request;
 import sublet.Exceptions.DatabaseException;
 import sublet.Exceptions.PermissionException;
 
@@ -11,47 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Listings {
-
-
-    /**
-     * This method is used to manage how the filtering queries the database
-     * @param request The request object
-     * @return The list of listings that fit the query
-     */
-    public static ArrayList<Listing> FilterListing(Request request) throws DatabaseException {
-        ArrayList<Long> gender_list = new ArrayList<>();
-        ArrayList<Long> housing_options_list = new ArrayList<>();
-        ArrayList<Listing> res = new ArrayList<>();
-        String gender = request.queryParams("gender");                      //Sets the gender query param
-        String housing = request.queryParams("housing_options");            //Sets the housing query param
-        if (gender.equals("") && housing.equals("")){                       //if neither are set, return active list
-            return GetActiveListings();
-        }
-
-        if (!gender.equals("") && !housing.equals("")){                     //if both are set get intersection
-            gender_list = GenderFilteredListing(gender);
-            housing_options_list = HousingOptionsFilteredListing(housing);
-            ArrayList<Long> filtered_list = gender_list;
-            filtered_list.retainAll(housing_options_list);
-            for(Long lid : filtered_list){
-                res.add(GetListing(lid));
-            }
-        }
-        else if((!gender.equals(""))){
-            gender_list = GenderFilteredListing(gender);
-            for(Long lid : gender_list){
-                res.add(GetListing(lid));
-            }
-        }
-        else if(!housing.equals("")){
-            housing_options_list = HousingOptionsFilteredListing(housing);
-            for(Long lid : housing_options_list){
-                res.add(GetListing(lid));
-            }
-        }
-        return res;
-    }
-
 
     public static void UpdateListing(Listing listing, User user) throws PermissionException, DatabaseException {
         if (Roles.CanModListings(user.getUserRoles()) || listing.getUser().checkIfSameUser(user)) {
@@ -71,7 +29,7 @@ public class Listings {
                 updateListing.setLong(i, listing.getLID());
                 updateListing.execute();
             } catch (SQLException e) {
-                throw new DatabaseException("Listing database exception");
+                throw new DatabaseException("Listing database exception", e);
             }
         } else {
             throw new PermissionException("Can't modify other posters listing");
@@ -107,7 +65,7 @@ public class Listings {
             removeListing.setLong(1, lid);
             removeListing.execute();
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
     }
 
@@ -133,7 +91,7 @@ public class Listings {
             if (rs.next())
                 listing.setLid(rs.getLong("lid"));
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
     }
 
@@ -151,7 +109,7 @@ public class Listings {
                 visListing.execute();
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
     }
 
@@ -192,7 +150,7 @@ public class Listings {
                 ret.add(createListingFromSQL(rs));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
     }
 
@@ -256,7 +214,7 @@ public class Listings {
                 ret = createListingFromSQL(rs);
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
         return ret;
     }
@@ -325,7 +283,7 @@ public class Listings {
             }
 
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
     }
 
@@ -355,7 +313,7 @@ public class Listings {
             addFavorite.setLong(2, listing.getLID());
             addFavorite.execute();
         } catch (SQLException e) {
-            throw new DatabaseException("Listing database exception");
+            throw new DatabaseException("Listing database exception", e);
         }
     }
 

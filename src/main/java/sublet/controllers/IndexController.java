@@ -16,7 +16,7 @@ public class IndexController extends Controller {
     }
 
 
-    public ArrayList<Listing> getListings() {
+    ArrayList<Listing> getListings() {
         try {
             return Listings.GetActiveListings();
         } catch (DatabaseException e) {
@@ -25,7 +25,7 @@ public class IndexController extends Controller {
         return new ArrayList<>();
     }
 
-    private ArrayList<Listing> getRitListings() {
+    ArrayList<Listing> getRitListings() {
         try {
             return Listings.GetRitListings();
         } catch (DatabaseException e) {

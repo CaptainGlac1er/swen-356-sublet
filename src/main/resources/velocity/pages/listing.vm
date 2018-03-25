@@ -20,7 +20,7 @@
 #@mainLayout()
     #if(!$viewonly && $loggedin && (!$listing || $listing.getUser().checkIfSameUser($currentuser) || $!listingmod))
         <h3 class="form-title">Create a new Listing</h3>
-        <form class="listing-form" action='' method="post">
+    <form class="listing-form data" action='' method="post">
 
             <div class="form-group">
                 <select class="form-input" name="housing" id="housing">

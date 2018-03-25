@@ -4,13 +4,15 @@ import spark.Request;
 import sublet.Commands.Command;
 import sublet.Exceptions.BaseException;
 import sublet.controllers.Controller;
-import sublet.models.Listings;
 
 public class FilterListing implements Command {
-    // well, all my changes are gone. lol...
+
+
     public void Execute(Controller controller) throws BaseException {
         Request request = controller.getCurrentRequest();
-        controller.addToModel("listings", Listings.FilterListing(request));
-
+        String gender = request.queryParams("gender_options");                      //Sets the gender query param
+        String housing = request.queryParams("housing_options");            //Sets the housing query param
+        controller.addToModel("gender_options", gender);
+        controller.addToModel("housing_options", housing);
     }
 }

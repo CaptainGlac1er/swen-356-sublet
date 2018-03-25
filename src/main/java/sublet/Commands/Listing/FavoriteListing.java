@@ -15,7 +15,7 @@ public class FavoriteListing extends LoggedInCommand {
         if (controller.isLoggedIn()) {
             Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
             Listings.AddUserFavoriteListing(controller.getSessionUser(), listing);
-            controller.addRedirect(Path.Web.USER);
+            controller.addRedirect(Path.Web.INDEX);
         } else {
             controller.addRedirect(Path.Web.INDEX);
         }

@@ -21,7 +21,7 @@ public class DatabaseConnection {
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            throw new DatabaseException("Can't connect to Database");
+            throw new DatabaseException("Can't connect to Database", e);
         }
     }
 }
