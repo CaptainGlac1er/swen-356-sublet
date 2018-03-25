@@ -14,7 +14,7 @@
 #end
 #@mainLayout()
 
-<h3 class="form-title">Create a new User</h3>
+<h1 class="form-title">Create a new User</h1>
 <form class="listing-form data" action='' method="post">
     <div class="form-group">
         <input class="form-input form-control required" placeholder="First Name" name="fname" type="text">

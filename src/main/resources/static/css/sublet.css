@@ -7,7 +7,7 @@
 body {
     grid-auto-columns: 1fr;
     grid-template-rows: 1fr 8fr;
-    background: url("/img/brickbackground.jpg") no-repeat fixed top center;
+    background: url("/img/bricks.jpg") no-repeat fixed top center;
     background-size: cover;
 }
 
@@ -17,6 +17,7 @@ body {
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, .9);
     height: 75px;
+    padding-left: 25px;
 }
 
 .header .title {
@@ -145,6 +146,7 @@ form.data {
 .form-title {
     display: block;
     color: #222222;
+    margin-left: 25px;
     margin-bottom: 15px;
 
 }
@@ -202,12 +204,14 @@ form.data {
 
 .navbar {
     display: inline;
+    padding-left: 25px;
 }
 
 .navbar li {
     display: inline-block;
     padding-bottom: 5px;
     margin: 15px;
+    margin-left: 0;
 }
 
 .link {
