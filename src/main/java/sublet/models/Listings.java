@@ -202,7 +202,7 @@ public class Listings {
      * @param gender   The stirng value for the filter: MALE, FEMALE. COED
      * @return  The list of listing ids that fill the query
      */
-    public static ArrayList<Long> GenderFilteredListing(String gender) {
+    public static ArrayList<Long> GenderFilteredListing(String gender) throws DatabaseException {
 
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE gender = ?";
         return getLIDDatabase(sql,gender);
@@ -213,7 +213,7 @@ public class Listings {
      * @param housing   The string value for the filter of housing
      * @return  The list of listing ids that fill the query
      */
-    public static ArrayList<Long> HousingOptionsFilteredListing(String housing) {
+    public static ArrayList<Long> HousingOptionsFilteredListing(String housing) throws DatabaseException {
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities " +
                 "FROM getlistings WHERE housing = ?";
         return getLIDDatabase(sql,housing);
@@ -224,7 +224,7 @@ public class Listings {
      * @param value The string enum we are querying
      * @return The list of lids that fit the query
      */
-    private static ArrayList<Long> getLIDDatabase(String sql,String value){
+    private static ArrayList<Long> getLIDDatabase(String sql, String value) throws DatabaseException {
         ArrayList<Long> ret = new ArrayList<>();
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getListing = con.prepareStatement(sql);

@@ -1,5 +1,7 @@
 package sublet.models;
 
+import sublet.Exceptions.DatabaseException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,12 +17,11 @@ public class DatabaseConnection {
         this.password = password;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws DatabaseException {
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Can't connect to Database");
         }
-        return null;
     }
 }
