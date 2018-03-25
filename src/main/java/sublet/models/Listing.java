@@ -34,29 +34,12 @@ public class Listing {
     private boolean utilIncluded;
 
     private boolean isFavorited = false;
-
-    public boolean isFavorited() {
-        return isFavorited;
-    }
-
-    public void setFavorited(boolean favorited) {
-        isFavorited = favorited;
-    }
-
     private ListingVisibility listing_visibility;
-
-    public static ListingVisibility getVisibilityValue(String option) {
-        return ListingVisibility.valueOf(option);
-    }
-
-    public ListingVisibility getListingVisibility() {
-        return listing_visibility;
-    }
-
 
     public Listing() {
 
     }
+
     public Listing(User user,
                    String desc,
                    String rent,
@@ -80,6 +63,10 @@ public class Listing {
         this.utilIncluded = utilIncluded;
     }
 
+    public static ListingVisibility getVisibilityValue(String option) {
+        return ListingVisibility.valueOf(option);
+    }
+
     public static GenderOptions getGenderValue(String option) {
         return GenderOptions.valueOf(option);
     }
@@ -98,6 +85,18 @@ public class Listing {
 
     public static ParkingOption getParkingValue(String option) {
         return ParkingOption.valueOf(option);
+    }
+
+    public boolean isFavorited() {
+        return isFavorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        isFavorited = favorited;
+    }
+
+    public ListingVisibility getListingVisibility() {
+        return listing_visibility;
     }
 
     public void setListingVisibility(ListingVisibility listing_visibility) {
@@ -298,9 +297,6 @@ public class Listing {
             this.rolesRequired = new ArrayList<Role>();
             this.rolesRequired.add(role);
         }
-        public String toString() {
-            return name;
-        }
 
         public static ArrayList<ListingVisibility> getValidVisibility(User user) {
             ArrayList<ListingVisibility> ret = new ArrayList<>();
@@ -314,6 +310,10 @@ public class Listing {
                 }
             }
             return ret;
+        }
+
+        public String toString() {
+            return name;
         }
     }
 }

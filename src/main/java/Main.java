@@ -1,4 +1,5 @@
 import sublet.models.DatabaseConnection;
+import sublet.models.Logging;
 import sublet.models.Roles;
 import sublet.service.IndexService;
 import sublet.service.ListingService;
@@ -19,7 +20,7 @@ public class Main {
         try {
             prop.load(configStream);
         } catch (Exception e) {
-            System.out.println(e);
+            Logging.HandleException(e);
         }
 
         DatabaseConnection.read = new DatabaseConnection(prop.getProperty("database"), prop.getProperty("readuser"), prop.getProperty("readpass"));
@@ -33,94 +34,49 @@ public class Main {
         init();
     }
 
-//    private void buildTables() throws SQLException{
-//        InputStream in = getClass().getResourceAsStream("tables.sql");
-//        BufferedReader reader =  new BufferedReader(new InputStreamReader(in));
-//        RunScript.execute(conn, reader);
-//    }
-
-    /*static void initTestData(){
-        String desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus augue nec sollicitudin aliquam. Maecenas id viverra velit. Nam molestie finibus urna a iaculis. Sed non venenatis urna. Vestibulum vestibulum enim justo, quis dictum mauris mollis quis. Quisque malesuada nulla quis mollis mollis. Vivamus sed feugiat neque. Fusce vel leo vitae est laoreet venenatis. ";
-
-        User user = Users.newUser("Bob", "Name", "user", "qwerty", "td@rit.edu", LocalDate.now(), LocalDate.now());
-        Users.registerUser(user);
-        Listing listing = new Listing(user, desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
-        Listings.AddListing(listing);
-        listing = new Listing(user, desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
-        Listings.AddListing(listing);
-
-
-        user = Users.newUser("Tom", "Name", "user1", "qwerty", "td1@rit.edu", LocalDate.now(), LocalDate.now());
-        Users.registerUser(user);
-        listing = new Listing(user, desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
-        Listings.AddListing(listing);
-        listing = new Listing(user, desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, false);
-        Listings.AddListing(listing);
-
-
-        user = Users.newUser("Bill", "Name", "user2", "qwerty", "td2@rit.edu", LocalDate.now(), LocalDate.now());
-        user.getUserRoles().add(Roles.CurrentRoles.get("Mod"));
-        Users.registerUser(user);
-        listing = new Listing(user, desc, "500",
-                "55 Ocean Street",Listing.PaymentFrequencyOptions.MONTHLY, Listing.GenderOptions.MALE,
-                Listing.HousingTypeOptions.PARKPOINT, Listing.IsFurnishedOptions.FURNISHED, Listing.ParkingOption.ON_STR, true);
-        Listings.AddListing(listing);
-
-
-
-
-
-    }*/
 
     static void setupDefaultRoles() {
         Roles.MakeStandardRoles();
     }
-    static void setupRouting(){
-        path("/", ()->{
-            before((req, res)->{
+
+    static void setupRouting() {
+        path("/", () -> {
+            before((req, res) -> {
                 String path = req.pathInfo();
-                if(path.endsWith("/"))
-                    res.redirect(path.substring(0, path.length() -1));
+                if (path.endsWith("/"))
+                    res.redirect(path.substring(0, path.length() - 1));
             });
-            path("",()-> {
-                        get("", IndexService.serveIndexPage);
-                        post("", IndexService.filterListing);
-                    });
-            path("/user", ()->{
-                path("",()->{
-                    get("",UserService.serveIndexPage);
+            path("", () -> {
+                get("", IndexService.serveIndexPage);
+                post("", IndexService.filterListing);
+            });
+            path("/user", () -> {
+                path("", () -> {
+                    get("", UserService.serveIndexPage);
                 });
-                path("/login", ()->{
-                    get("",UserService.serveLoginPage);
-                    post("",UserService.serveLogin);
+                path("/login", () -> {
+                    get("", UserService.serveLoginPage);
+                    post("", UserService.serveLogin);
                 });
-                path("/logout", ()->{
-                    get("",UserService.serveLogout);
+                path("/logout", () -> {
+                    get("", UserService.serveLogout);
                     //post("",UserService.serveLogout);
                 });
-                path("/register", ()->{
-                    get("",UserService.serveCreateUser);
-                    post("",UserService.serveUser);
+                path("/register", () -> {
+                    get("", UserService.serveCreateUser);
+                    post("", UserService.serveUser);
                 });
             });
-            path("/listing", ()->{
-                path("/create", ()->{
-                    get("",ListingService.formListing);
-                    post("",ListingService.addListing);
+            path("/listing", () -> {
+                path("/create", () -> {
+                    get("", ListingService.formListing);
+                    post("", ListingService.addListing);
                 });
-                path("/:lid",()->{
-                    get("",ListingService.viewListing);
-                    get("/edit",ListingService.editListing);
-                    post("/edit",ListingService.modifyListing);
-                    get("/remove",ListingService.removeListing);
+                path("/:lid", () -> {
+                    get("", ListingService.viewListing);
+                    get("/edit", ListingService.editListing);
+                    post("/edit", ListingService.modifyListing);
+                    get("/remove", ListingService.removeListing);
                     post("/visibility", ListingService.changeVisibilityListing);
                     get("/fav", ListingService.addFavoriteListing);
                     get("/unfav", ListingService.removeFavoriteListing);

@@ -10,6 +10,7 @@ public class LoggedInCommand implements Command {
             throw new NotLoggedInException();
 
     }
+
     public void Execute(Controller controller) throws BaseException {
         checkLogin(controller);
         ProtectedExecute(controller);

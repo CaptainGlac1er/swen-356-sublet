@@ -11,14 +11,14 @@ import sublet.util.Path;
 
 import java.util.ArrayList;
 
-public class AddListing extends LoggedInCommand{
+public class AddListing extends LoggedInCommand {
 
 
     @Override
     public void ProtectedExecute(Controller controller) throws DatabaseException, ListingException {
         Request request = controller.getCurrentRequest();
-        if(controller.isLoggedIn()) {
-            for (String s:request.queryParams()) {
+        if (controller.isLoggedIn()) {
+            for (String s : request.queryParams()) {
                 System.out.println(s + " " + request.queryParams(s));
             }
 

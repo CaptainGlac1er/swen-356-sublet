@@ -9,12 +9,12 @@ import sublet.models.Listing;
 import sublet.models.Listings;
 import sublet.util.Path;
 
-public class ModifyListing extends LoggedInCommand{
+public class ModifyListing extends LoggedInCommand {
     @Override
     public void ProtectedExecute(Controller controller) throws PermissionException, DatabaseException {
         Request request = controller.getCurrentRequest();
         Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
-        if(listing != null){
+        if (listing != null) {
             listing.setDesc(request.queryParams("dis"));
             listing.setRent(request.queryParams("rent"));
             listing.setAddress(request.queryParams("address"));
@@ -25,7 +25,7 @@ public class ModifyListing extends LoggedInCommand{
             listing.setUtilIncluded(request.queryParams().contains("utilincluded"));
             listing.setParkingType(Listing.getParkingValue(request.queryParams("parking")));
             Listings.UpdateListing(listing, controller.getSessionUser());
-        }else{
+        } else {
             throw new PermissionException("You can't edit this post");
         }
         controller.addRedirect(Path.Web.USER);

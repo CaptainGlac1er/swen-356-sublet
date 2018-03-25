@@ -71,6 +71,7 @@ public class Listings {
 
     /**
      * Add a listing to the database
+     *
      * @param listing listing object that you want to be saved in the database
      */
     public static void AddListing(Listing listing) throws DatabaseException {
@@ -113,11 +114,11 @@ public class Listings {
         }
     }
 
-    //TODO handle exceptions better
     //TODO will need limits as database grows add in paging
 
     /**
      * Gets all the listings that all users have posted
+     *
      * @return an ArrayList of all the Listings objects
      */
     public static ArrayList<Listing> GetListings() throws DatabaseException {
@@ -155,30 +156,7 @@ public class Listings {
     }
 
     /**
-     * This is used to set up the prepared statement for querying based of just gender. This calls the common
-     * method getLIDDatabase which gets the listings ids for all listings that fit the filter
-     * @param gender   The stirng value for the filter: MALE, FEMALE. COED
-     * @return  The list of listing ids that fill the query
-     */
-    public static ArrayList<Long> GenderFilteredListing(String gender) throws DatabaseException {
-
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities FROM getlistings WHERE gender = ?";
-        return getLIDDatabase(sql,gender);
-    }
-    /**
-     * This is used to set up the prepared statement for querying based of just housing. This calls the common
-     * method getLIDDatabase which gets the listings ids for all listings that fit the filter
-     * @param housing   The string value for the filter of housing
-     * @return  The list of listing ids that fill the query
-     */
-    public static ArrayList<Long> HousingOptionsFilteredListing(String housing) throws DatabaseException {
-        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities " +
-                "FROM getlistings WHERE housing = ?";
-        return getLIDDatabase(sql,housing);
-    }
-
-    /**
-     * @param sql the prepared sql statement
+     * @param sql   the prepared sql statement
      * @param value The string enum we are querying
      * @return The list of lids that fit the query
      */
@@ -200,6 +178,7 @@ public class Listings {
 
     /**
      * Gets the listing with the listing ID number
+     *
      * @param lid listing id that it was given at creation
      * @return listing object with that listing ID number
      */
@@ -230,6 +209,7 @@ public class Listings {
 
     /**
      * Gets all of the listings of the user
+     *
      * @param user the user of the listings
      * @return All of the listings that the user made
      */
@@ -270,7 +250,6 @@ public class Listings {
         return ret;
     }
 
-    //TODO Add in favorite stuff
     private static void getUserListingsProcessing(User user, String sql, ArrayList<Listing> ret) throws DatabaseException {
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getListing =
@@ -320,6 +299,7 @@ public class Listings {
 
     /**
      * Helper function to create the listings object from the sql select row
+     *
      * @param rs result set from the sql query
      * @return the Listing object
      * @throws SQLException Throws an exception when a field was not found

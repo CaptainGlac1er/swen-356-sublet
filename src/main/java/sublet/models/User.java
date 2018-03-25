@@ -13,6 +13,15 @@ public class User {
     private String fname;
     private String lname;
     private String username;
+    private String password;
+    private String email;
+    private LocalDate birthday;
+    private LocalDate gradYear;
+    private ArrayList<Role> userRoles;
+
+    public User() {
+        userRoles = new ArrayList<>();
+    }
 
     public long getUID() {
         return UID;
@@ -86,23 +95,12 @@ public class User {
         this.userRoles = userRoles;
     }
 
-
-    private String password;
-    private String email;
-    private LocalDate birthday;
-    private LocalDate gradYear;
-    private ArrayList<Role> userRoles;
-
     public boolean checkPass(String pw) {
         return this.password.equals(Security.getSHA256Hash(pw));
     }
 
     public boolean checkIfSameUser(User user) {
         return user.UID == this.UID;
-    }
-
-    public User() {
-        userRoles = new ArrayList<>();
     }
 
     public HashMap<Long, Boolean> getFavoritedListingsLIDS() throws DatabaseException {

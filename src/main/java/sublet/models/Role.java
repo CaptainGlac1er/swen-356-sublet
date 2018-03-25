@@ -2,6 +2,11 @@ package sublet.models;
 
 public class Role {
     private String name;
+    private boolean seePosts = false;
+    private boolean makePost = false;
+    private boolean adminSite = false;
+    private boolean manageRoles = false;
+    private boolean managePosts = false;
 
     public Role(String name) {
         this.name = name;
@@ -32,7 +37,7 @@ public class Role {
     }
 
     public boolean isAdminSite() {
-        return adminSite || adminSite;
+        return adminSite;
     }
 
     public void setAdminSite(boolean adminSite) {
@@ -54,11 +59,5 @@ public class Role {
     public void setManagePosts(boolean managePosts) {
         this.managePosts = managePosts;
     }
-
-    private boolean seePosts = false;
-    private boolean makePost = false;
-    private boolean adminSite = false;
-    private boolean manageRoles = false;
-    private boolean managePosts = false;
 
 }

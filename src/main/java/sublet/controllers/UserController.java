@@ -15,8 +15,7 @@ public class UserController extends Controller {
     }
 
 
-
-    public ArrayList<Listing> getListings(){
+    public ArrayList<Listing> getListings() {
         try {
             return Listings.GetUserListings(sessionUser);
         } catch (DatabaseException e) {
@@ -61,7 +60,8 @@ public class UserController extends Controller {
         }
         return new ArrayList<>();
     }
-    public Map<String, Object> getModel(){
+
+    public Map<String, Object> getModel() {
 
         ArrayList<Listing> listings = getActiveListing();
         listings.addAll(getUserRitListings());

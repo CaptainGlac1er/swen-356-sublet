@@ -34,13 +34,13 @@ public class IndexController extends Controller {
         return new ArrayList<>();
     }
 
-    public Map<String, Object> getModel(){
+    public Map<String, Object> getModel() {
         ArrayList<Listing> listings = getListings();
         if (sessionUser.getUserRoles().contains(Roles.CurrentRoles.get("RIT"))) {
             listings.addAll(getRitListings());
         }
         model.put("listings", listings);
-        model.put("gender",Listing.genderList);
+        model.put("gender", Listing.genderList);
         model.put("housing", Listing.housingList);
         return model;
     }

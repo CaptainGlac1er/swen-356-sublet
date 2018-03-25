@@ -17,6 +17,7 @@ import java.util.Locale;
 
 public class AddUser implements Command {
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
+
     @Override
     public void Execute(Controller controller) throws RegisterException, DatabaseException {
         Request request = controller.getCurrentRequest();
@@ -31,7 +32,7 @@ public class AddUser implements Command {
                     request.queryParams("gradyear")
             );
 
-            if(exceptions.size() == 0){
+            if (exceptions.size() == 0) {
                 User user = Users.newUser(request.queryParams("fname"),
                         request.queryParams("lname"),
                         request.queryParams("username"),
@@ -40,13 +41,13 @@ public class AddUser implements Command {
                         LocalDate.parse(request.queryParams("birthday"), dtf),
                         LocalDate.parse(request.queryParams("gradyear"), dtf));
                 String session = Users.registerUser(user);
-                    controller.createSession(session);
-                    controller.addRedirect(Path.Web.USER);
-            }else{
+                controller.createSession(session);
+                controller.addRedirect(Path.Web.USER);
+            } else {
                 StringBuilder exceptionString = new StringBuilder("");
-               for(String re : exceptions){
-                   exceptionString.append(re + "<br />");
-               }
+                for (String re : exceptions) {
+                    exceptionString.append(re).append("<br />");
+                }
                 throw new RegisterException(exceptionString.toString());
             }
 
@@ -62,18 +63,18 @@ public class AddUser implements Command {
                                                 String firstName, String lastName, String birthdayString,
                                                 String gradYearString) {
         ArrayList<String> exceptions = new ArrayList<>();
-        if(firstName.trim().equals("") | lastName.trim().equals("") | email.trim().equals("") |
-           email.trim().equals("") | password.trim().equals("") | confirmPassword.trim().equals("")){
+        if (firstName.trim().equals("") | lastName.trim().equals("") | email.trim().equals("") |
+                email.trim().equals("") | password.trim().equals("") | confirmPassword.trim().equals("")) {
             exceptions.add("Required fields must be filled.");
             return exceptions;
         }
 
-        if(!password.equals(confirmPassword)){
+        if (!password.equals(confirmPassword)) {
             exceptions.add("Passwords didn't match. ");
         }
 
-        if(!isRITEmail(email)){
-            String sentenceStart = exceptions.size()!=0?"Also, y" : "Y";
+        if (!isRITEmail(email)) {
+            String sentenceStart = exceptions.size() != 0 ? "Also, y" : "Y";
             exceptions.add(sentenceStart + "ou must use your RIT email.");
         }
         try {

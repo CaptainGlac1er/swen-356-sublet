@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     public static DatabaseConnection read, write;
-    private String url, username, password;
     Connection conn;
+    private String url, username, password;
 
     public DatabaseConnection(String url, String username, String password) {
         this.url = url;

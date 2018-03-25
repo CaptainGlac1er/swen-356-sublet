@@ -13,6 +13,7 @@ public abstract class BaseException extends Exception {
         this.exception = exception;
         Logging.HandleException(this);
     }
+
     public String getMessage() {
         return message;
     }
@@ -20,7 +21,8 @@ public abstract class BaseException extends Exception {
     public Exception getStartingException() {
         return exception;
     }
-    public String getTitle(){
+
+    public String getTitle() {
         return type;
     }
 }

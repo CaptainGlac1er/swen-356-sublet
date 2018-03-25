@@ -13,12 +13,12 @@ public class ListingController extends Controller {
         super(request, response);
     }
 
-    public Map<String, Object> getModel(){
-        model.put("gender",Listing.genderList);
-        model.put("payment",Listing.paymentList);
-        model.put("house",Listing.housingList);
-        model.put("furn",Listing.furnishedList);
-        model.put("parking",Listing.parkingList);
+    public Map<String, Object> getModel() {
+        model.put("gender", Listing.genderList);
+        model.put("payment", Listing.paymentList);
+        model.put("house", Listing.housingList);
+        model.put("furn", Listing.furnishedList);
+        model.put("parking", Listing.parkingList);
         model.put("listingmod", Roles.CanModListings(sessionUser.getUserRoles()));
         return model;
     }

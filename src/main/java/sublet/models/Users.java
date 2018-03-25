@@ -35,7 +35,7 @@ public class Users {
     public static String registerUser(User user) throws DatabaseException {
         String newSession = GetRandomSession(user);
         AddUser(user);
-        currentUsers.put(newSession,user.getUID());
+        currentUsers.put(newSession, user.getUID());
         return newSession;
     }
 
@@ -47,18 +47,18 @@ public class Users {
         request.session(true);
         User currentUser;
         System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
-        if(request.session().attribute("session") == null){
+        if (request.session().attribute("session") == null) {
             String newSession;
             if (request.cookie("session") != null && currentUsers.containsKey(newSession = request.cookie("session"))) {
                 currentUser = getCurrentUser(newSession);
                 request.session().attribute("session", newSession);
-            }else {
+            } else {
                 return newGuest();
             }
-            if(currentUser != null) {
+            if (currentUser != null) {
                 currentUsers.put(newSession, currentUser.getUID());
             }
-        }else{
+        } else {
             currentUser = getCurrentUserUID(currentUsers.get(request.session().attribute("session").toString()));
         }
         return currentUser;
@@ -99,7 +99,7 @@ public class Users {
     }
 
     public static HashMap<Long, Long> getListingFavoriteCount(long uid) throws DatabaseException {
-        String sql = "select l.lid, count(*) from listingdb l join favdb f on l.lid = f.flid join userlisting ul on ul.lid = l.lid where ul.uid = ? group by l.lid";
+        String sql = "SELECT l.lid, count(*) FROM listingdb l JOIN favdb f ON l.lid = f.flid JOIN userlisting ul ON ul.lid = l.lid WHERE ul.uid = ? GROUP BY l.lid";
         HashMap<Long, Long> listingFavoriteCount = new HashMap<>();
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getFavoriteCount = con.prepareStatement(sql);
@@ -115,7 +115,6 @@ public class Users {
         return listingFavoriteCount;
     }
 
-    //TODO handle exceptions better
 
     /**
      * Add user to database
@@ -166,6 +165,7 @@ public class Users {
 
     /**
      * Get user by uid
+     *
      * @param uid uid of user
      * @return an user object from the database with the uid
      */
@@ -187,6 +187,7 @@ public class Users {
 
     /**
      * Gets an user from username
+     *
      * @param username username of the user
      * @return an user object from the database with the username
      */
@@ -207,7 +208,8 @@ public class Users {
 
     /**
      * Checks if a login is correct
-     * @param user username to check
+     *
+     * @param user     username to check
      * @param password hashed password to check
      * @return true if correct login, false for not
      */
@@ -230,6 +232,7 @@ public class Users {
 
     /**
      * Creates a random session id from the user hashcode and a random number
+     *
      * @param user user that you want to get a hashcode from
      * @return a random hash
      */
