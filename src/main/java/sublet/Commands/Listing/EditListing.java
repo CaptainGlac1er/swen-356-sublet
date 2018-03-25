@@ -15,7 +15,7 @@ public class EditListing extends LoggedInCommand {
     @Override
     public void ProtectedExecute(Controller controller) throws SubletException, PermissionException, DatabaseException {
         Request request = controller.getCurrentRequest();
-        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
+        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")), controller.getSessionUser());
         if (listing != null && (controller.getSessionUser().checkIfSameUser(listing.getUser()) || Roles.CanModListings(controller.getSessionUser().getUserRoles()))) {
             controller.addToModel("listing", listing);
         } else {

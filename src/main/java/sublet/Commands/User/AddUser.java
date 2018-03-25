@@ -22,7 +22,6 @@ public class AddUser implements Command {
     public void Execute(Controller controller) throws RegisterException, DatabaseException {
         Request request = controller.getCurrentRequest();
         if (!controller.isLoggedIn()) {
-            //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             ArrayList<String> exceptions = isValidFormInputs(request.queryParams("password"),
                     request.queryParams("confirmpassword"),
                     request.queryParams("email"),

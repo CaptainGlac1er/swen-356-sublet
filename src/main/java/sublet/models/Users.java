@@ -20,9 +20,7 @@ public class Users {
         if (CheckLogin(user, Security.getSHA256Hash(password))) {
             User u = GetUser(user);
             newSession = GetRandomSession(u);
-            System.out.println(u.toString());
             currentUsers.put(newSession, u.getUID());
-            System.out.println(u.getUsername() + " has been logged in");
             return newSession;
         }
         throw new LoginException("Incorrect Login Information");
@@ -46,7 +44,6 @@ public class Users {
     public static User getCurrentUser(Request request) throws DatabaseException {
         request.session(true);
         User currentUser;
-        System.out.println(request.session().attribute("session") + " " + request.cookie("session"));
         if (request.session().attribute("session") == null) {
             String newSession;
             if (request.cookie("session") != null && currentUsers.containsKey(newSession = request.cookie("session"))) {
@@ -91,9 +88,6 @@ public class Users {
 
     public static User newGuest() {
         User user = new User();
-        for (String key : Roles.CurrentRoles.keySet()) {
-            System.out.println(key + " " + Roles.CurrentRoles.get(key).toString());
-        }
         user.getUserRoles().add(Roles.CurrentRoles.get("Guest"));
         return user;
     }
@@ -153,7 +147,6 @@ public class Users {
             ResultSet rs = getUserPS.executeQuery();
             while (rs.next()) {
                 ret.put(rs.getLong(1), true);
-                System.out.println(rs.getLong(1));
             }
 
         } catch (SQLException e) {

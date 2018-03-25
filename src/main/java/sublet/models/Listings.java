@@ -38,7 +38,7 @@ public class Listings {
 
 
     public static void RemoveListing(long lid, User user) throws PermissionException, DatabaseException {
-        if (Roles.CanModListings(user.getUserRoles()) || GetListing(lid).getUser().checkIfSameUser(user)) {
+        if (Roles.CanModListings(user.getUserRoles()) || GetListing(lid, user).getUser().checkIfSameUser(user)) {
             RemoveListing(lid);
         } else {
             throw new PermissionException("You can not delete this listing");
@@ -182,7 +182,7 @@ public class Listings {
      * @param lid listing id that it was given at creation
      * @return listing object with that listing ID number
      */
-    public static Listing GetListing(long lid) throws DatabaseException {
+    public static Listing GetListing(long lid, User user) throws DatabaseException, PermissionException {
         Listing ret = null;
         String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getlistings WHERE lid = ?";
         try (Connection con = DatabaseConnection.read.getConnection()) {
@@ -195,7 +195,16 @@ public class Listings {
         } catch (SQLException e) {
             throw new DatabaseException("Listing database exception", e);
         }
-        return ret;
+        if (ret == null)
+            return ret;
+        else if (ret.getUser().checkIfSameUser(user))
+            return ret;
+        else if (ret.getListingVisibility() != null && ret.getListingVisibility().name().equals("RIT") && user.getUserRoles().contains(Roles.CurrentRoles.get("RIT")))
+            return ret;
+        else if (ret.getListingVisibility().name().equals("ACTIVE"))
+            return ret;
+        else
+            throw new PermissionException("Can't access this listing");
     }
 
 

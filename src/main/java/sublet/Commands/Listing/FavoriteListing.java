@@ -13,7 +13,7 @@ public class FavoriteListing extends LoggedInCommand {
     public void ProtectedExecute(Controller controller) throws PermissionException, DatabaseException {
         Request request = controller.getCurrentRequest();
         if (controller.isLoggedIn()) {
-            Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
+            Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")), controller.getSessionUser());
             Listings.AddUserFavoriteListing(controller.getSessionUser(), listing);
             controller.addRedirect(Path.Web.INDEX);
         } else {

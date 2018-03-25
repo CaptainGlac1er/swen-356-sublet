@@ -13,7 +13,7 @@ public class SetVisibilityListing extends LoggedInCommand {
     @Override
     public void ProtectedExecute(Controller controller) throws PermissionException, DatabaseException {
         Request request = controller.getCurrentRequest();
-        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")));
+        Listing listing = Listings.GetListing(Long.parseLong(request.params("lid")), controller.getSessionUser());
         listing.setListingVisibility(Listing.getVisibilityValue(request.queryParams("visibility")));
         Listings.UpdateListingVisibility(listing, controller.getSessionUser());
         controller.addRedirect(Path.Web.USER);
