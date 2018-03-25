@@ -2,7 +2,7 @@
 <div id="error" title="${error.getTitle()}">
     ${error.getMessage()}
     <script type="application/javascript">
-        $(function () {
+        /*$(function () {
             $("#error").dialog({
                 modal: true,
                 buttons: {
@@ -11,7 +11,7 @@
                     }
                 }
             })
-        });
+        });*/
     </script>
 </div>
 #end

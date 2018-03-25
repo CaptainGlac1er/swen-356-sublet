@@ -192,8 +192,12 @@ public class Listing {
         this.utilIncluded = val;
     }
 
-    public ListingVisibility[] getVisibiltyOptions() {
-        return ListingVisibility.values();
+    public ArrayList<ListingVisibility> getVisibiltyOptions() {
+        try {
+            return ListingVisibility.getValidVisibility(this.getUser());
+        } catch (DatabaseException e) {
+        }
+        return null;
     }
 
 
@@ -280,15 +284,36 @@ public class Listing {
     }
 
     public enum ListingVisibility {
-        ACTIVE("Active"), ARCHIVE("Archive");
+        ACTIVE("Active", Roles.CurrentRoles.get("User")), ARCHIVE("Archive", Roles.CurrentRoles.get("User")), RIT("Rit", Roles.CurrentRoles.get("RIT"));
         private String name;
+        private ArrayList<Role> rolesRequired;
 
-        ListingVisibility(String name) {
+        ListingVisibility(String name, ArrayList<Roles> roles) {
             this.name = name;
+            rolesRequired = rolesRequired;
         }
 
+        ListingVisibility(String name, Role role) {
+            this.name = name;
+            this.rolesRequired = new ArrayList<Role>();
+            this.rolesRequired.add(role);
+        }
         public String toString() {
             return name;
+        }
+
+        public static ArrayList<ListingVisibility> getValidVisibility(User user) {
+            ArrayList<ListingVisibility> ret = new ArrayList<>();
+            for (ListingVisibility lv : ListingVisibility.values()) {
+                for (Role role : user.getUserRoles()) {
+                    if (lv.rolesRequired.contains(role)) {
+                        ret.add(lv);
+                        break;
+                    }
+
+                }
+            }
+            return ret;
         }
     }
 }

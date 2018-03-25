@@ -15,7 +15,7 @@ public class LoggedInCommand implements Command {
         ProtectedExecute(controller);
     }
 
-    public void ProtectedExecute(Controller controller) throws PermissionException, SubletException, DatabaseException {
+    public void ProtectedExecute(Controller controller) throws PermissionException, ListingException, SubletException, DatabaseException {
 
     }
 

@@ -179,3 +179,22 @@
                 color: white;
             }
 
+.req-string {
+    margin-bottom: 15px;
+}
+
+.star {
+    display: inline;
+    color: rgb(255, 190, 118);
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+#error {
+    background-color: rgba(200, 0, 00, 0.7);
+    margin: 0px auto;
+    width: 50%;
+    min-width: 500px;
+    padding: 10px;
+}
+

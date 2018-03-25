@@ -78,6 +78,8 @@ public class Users {
         user.setBirthday(birthday);
         user.setGradYear(gradYear);
         user.getUserRoles().add(Roles.CurrentRoles.get("User"));
+        if (user.getEmail().toLowerCase().endsWith("rit.edu"))
+            user.getUserRoles().add(Roles.CurrentRoles.get("RIT"));
         return user;
     }
 

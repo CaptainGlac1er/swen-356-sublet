@@ -9,6 +9,7 @@ import sublet.models.User;
 import sublet.models.Users;
 import sublet.util.Path;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,7 +27,9 @@ public class AddUser implements Command {
                     request.queryParams("confirmpassword"),
                     request.queryParams("email"),
                     request.queryParams("fname"),
-                    request.queryParams("lname")
+                    request.queryParams("lname"),
+                    request.queryParams("birthday"),
+                    request.queryParams("gradyear")
             );
 
             if(exceptions.size() == 0){
@@ -43,7 +46,7 @@ public class AddUser implements Command {
             }else{
                 StringBuilder exceptionString = new StringBuilder("");
                for(String re : exceptions){
-                   exceptionString.append(re);
+                   exceptionString.append(re + "<br />");
                }
                 throw new RegisterException(exceptionString.toString());
             }
@@ -57,7 +60,8 @@ public class AddUser implements Command {
     }
 
     private ArrayList<String> isValidFormInputs(String password, String confirmPassword, String email,
-                                                String firstName, String lastName ) {
+                                                String firstName, String lastName, String birthdayString,
+                                                String gradYearString) {
         ArrayList<String> exceptions = new ArrayList<>();
         if(firstName.trim().equals("") | lastName.trim().equals("") | email.trim().equals("") |
            email.trim().equals("") | password.trim().equals("") | confirmPassword.trim().equals("")){
@@ -72,6 +76,18 @@ public class AddUser implements Command {
         if(!isRITEmail(email)){
             String sentenceStart = exceptions.size()!=0?"Also, y" : "Y";
             exceptions.add(sentenceStart + "ou must use your RIT email.");
+        }
+        try {
+            if (birthdayString.length() > 0)
+                LocalDate.parse(birthdayString);
+        } catch (DateTimeException dte) {
+            exceptions.add("Incorrect birthday");
+        }
+        try {
+            if (gradYearString.length() > 0)
+                LocalDate.parse(gradYearString);
+        } catch (DateTimeException dte) {
+            exceptions.add("Incorrect graduation year");
         }
 
         return exceptions;

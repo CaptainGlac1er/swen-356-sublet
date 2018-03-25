@@ -30,10 +30,12 @@
                 </select>
             </div>
             <div class="form-group">
-                <input class="form-input" placeholder="Address" id="address" name="address" class="form-control" type="text">
+                <input class="form-input required" placeholder="Address" id="address" name="address"
+                       class="form-control" type="text">
             </div>
             <div class="form-group">
-                <input class="form-input" placeholder="Rent" id="rent" name="rent" class="form-control" type="text" value="$rent">
+                <input class="required form-input" placeholder="Rent" id="rent" name="rent" class="form-control"
+                       type="text" value="$rent">
             </div>
             <div class="form-group">
                 <div class="form-input">
@@ -90,14 +92,24 @@
                 </select>
             </div>
             <div class="form-group">
-                <textarea class="form-input text-area" placeholder="Description" id="dis" name="dis" class="form-control" type="text">$desc</textarea>
+                <textarea class="required form-input text-area" placeholder="Description" id="dis" name="dis"
+                          class="form-control" type="text">$desc</textarea>
             </div>
 
 
             <input type="hidden" name="lid" value="$lid"/>
+
+            <h3 class="req-string"><strong><h3 class="star"><strong>*</strong></h3>Required</strong></h3>
+
             <button type="submit" class="btn">Submit</button>
         </form>
     #elseif($listing)
         #parse("../fragments/listing.vm")
     #end
+
+
+
+<script>
+    $('.required').after('<h3 class="star"><strong>*</strong></h3>');
+</script>
 #end

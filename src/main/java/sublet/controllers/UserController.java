@@ -52,8 +52,20 @@ public class UserController extends Controller {
         }
         return new ArrayList<>();
     }
+
+    private ArrayList<Listing> getUserRitListings() {
+        try {
+            return Listings.GetUserRitListings(sessionUser);
+        } catch (DatabaseException e) {
+            this.addException(e);
+        }
+        return new ArrayList<>();
+    }
     public Map<String, Object> getModel(){
-        model.put("activelistings", getActiveListing());
+
+        ArrayList<Listing> listings = getActiveListing();
+        listings.addAll(getUserRitListings());
+        model.put("activelistings", listings);
         model.put("archivelistings", getArchiveListing());
         model.put("favoritedlistings", getFavoriteListing());
         return model;

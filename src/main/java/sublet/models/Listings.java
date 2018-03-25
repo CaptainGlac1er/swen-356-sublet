@@ -13,15 +13,6 @@ import java.util.ArrayList;
 public class Listings {
 
 
-
-    public static void AddUserFavoriteListing(User user, Listing listing) {
-        addUserFavoriteListing(user, listing);
-    }
-
-    public static void RemoveUserFavoriteListing(User user, Listing listing) {
-        removeUserFavoriteListing(user, listing);
-    }
-
     /**
      * This method is used to manage how the filtering queries the database
      * @param request The request object
@@ -80,6 +71,7 @@ public class Listings {
                 updateListing.setLong(i, listing.getLID());
                 updateListing.execute();
             } catch (SQLException e) {
+                throw new DatabaseException("Listing database exception");
             }
         } else {
             throw new PermissionException("Can't modify other posters listing");
@@ -108,14 +100,14 @@ public class Listings {
      *
      * @param lid listing id of listing to remove
      */
-    public static void RemoveListing(long lid) {
+    public static void RemoveListing(long lid) throws DatabaseException {
         String sql = "DELETE FROM `listingdb` WHERE `lid` = ?";
         try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement removeListing = con.prepareStatement(sql);
             removeListing.setLong(1, lid);
             removeListing.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Listing database exception");
         }
     }
 
@@ -141,23 +133,25 @@ public class Listings {
             if (rs.next())
                 listing.setLid(rs.getLong("lid"));
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            throw new DatabaseException("Listing database exception");
         }
     }
 
-    public static void UpdateListingVisibility(Listing listing) {
+    public static void UpdateListingVisibility(Listing listing) throws DatabaseException {
         try (Connection con = DatabaseConnection.write.getConnection()) {
             PreparedStatement visListing = null;
             if (listing.getListingVisibility() == Listing.ListingVisibility.ACTIVE)
                 visListing = con.prepareStatement("SELECT activelisting(?)");
             else if (listing.getListingVisibility() == Listing.ListingVisibility.ARCHIVE)
                 visListing = con.prepareStatement("SELECT archivelisting(?)");
+            else if (listing.getListingVisibility() == Listing.ListingVisibility.RIT)
+                visListing = con.prepareStatement("UPDATE `swen-356-sublet`.`listingdb` SET `visibility`=2 WHERE `lid`=?");
             if (visListing != null) {
                 visListing.setLong(1, listing.getLID());
                 visListing.execute();
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            throw new DatabaseException("Listing database exception");
         }
     }
 
@@ -182,6 +176,14 @@ public class Listings {
         return ret;
     }
 
+    public static ArrayList<Listing> GetRitListings() throws DatabaseException {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getritlistings";
+        ArrayList<Listing> ret = new ArrayList<>();
+        getListingsProcessing(sql, ret);
+        return ret;
+
+    }
+
     private static void getListingsProcessing(String sql, ArrayList<Listing> ret) throws DatabaseException {
         try (Connection con = DatabaseConnection.read.getConnection()) {
             PreparedStatement getListing = con.prepareStatement(sql);
@@ -190,7 +192,7 @@ public class Listings {
                 ret.add(createListingFromSQL(rs));
             }
         } catch (SQLException e) {
-
+            throw new DatabaseException("Listing database exception");
         }
     }
 
@@ -254,8 +256,17 @@ public class Listings {
                 ret = createListingFromSQL(rs);
             }
         } catch (SQLException e) {
-
+            throw new DatabaseException("Listing database exception");
         }
+        return ret;
+    }
+
+
+    public static ArrayList<Listing> GetUserRitListings(User user) throws DatabaseException {
+        String sql = "SELECT lid, uid, `desc`, rent, address, furnished, gender, housing, payment, parking, utilities, visibility FROM getritlistings WHERE uid = ?";
+
+        ArrayList<Listing> ret = new ArrayList<>();
+        getUserListingsProcessing(user, sql, ret);
         return ret;
     }
 
@@ -314,7 +325,7 @@ public class Listings {
             }
 
         } catch (SQLException e) {
-
+            throw new DatabaseException("Listing database exception");
         }
     }
 
@@ -327,24 +338,24 @@ public class Listings {
         return ret;
     }
 
-    private static void addUserFavoriteListing(User user, Listing listing) {
+    public static void AddUserFavoriteListing(User user, Listing listing) throws DatabaseException {
         String sql = "SELECT favlisting(?,?)";
         processFavoriteSQL(user, listing, sql);
     }
 
-    private static void removeUserFavoriteListing(User user, Listing listing) {
+    public static void RemoveUserFavoriteListing(User user, Listing listing) throws DatabaseException {
         String sql = "SELECT unfavlisting(?,?)";
         processFavoriteSQL(user, listing, sql);
     }
 
-    private static void processFavoriteSQL(User user, Listing listing, String sql) {
+    private static void processFavoriteSQL(User user, Listing listing, String sql) throws DatabaseException {
         try {
             PreparedStatement addFavorite = DatabaseConnection.write.getConnection().prepareStatement(sql);
             addFavorite.setLong(1, user.getUID());
             addFavorite.setLong(2, listing.getLID());
             addFavorite.execute();
         } catch (SQLException e) {
-
+            throw new DatabaseException("Listing database exception");
         }
     }
 

@@ -50,7 +50,6 @@
                     <a href="/listing/$listing.getLID()/unfav">Unfavorite</a>
                 #end
             #end
-            <a href="">Interested</a>
         #end
     </div>
     ##<h3 class="listing-text rent-text">$listing.getGender()</h3>
