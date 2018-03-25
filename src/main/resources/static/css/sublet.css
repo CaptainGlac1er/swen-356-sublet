@@ -64,11 +64,13 @@ body {
     /*box-shadow: 11px 15px 98px -24px rgba(0,0,0,0.7);*/
     /*padding-left: 15px;*/
     /*border: 5px solid rgb(255, 190, 118);*/
-    border-radius: 20px;
     margin: 5px;
-    background-color: #f36e21;
+    background-color: #C9A68A;
     width: auto;
     overflow: auto;
+    -webkit-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 
 }
 
@@ -90,7 +92,7 @@ body {
 
 .listing-body {
     width: 70%;
-    background-color: #eaeaea;
+    background-color: #D1AB96;
     box-sizing: border-box;
 }
 
@@ -100,7 +102,7 @@ form.data {
 }
 
 .listing-header {
-    background-color: #666666;
+    background-color: #C29579;
     padding: 10px;
     font-size: 25px;
 }
