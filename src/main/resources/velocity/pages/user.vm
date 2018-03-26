@@ -1,4 +1,4 @@
-#parse("../Layout.vm")
+#parse("/velocity/Layout.vm")
 #@mainLayout()
     <div class="listings">
         <script>
@@ -14,17 +14,17 @@
             </ul>
             <div  id="tabs-1">
                 #foreach($listing in $activelistings)
-                    #parse("../fragments/listing.vm")
+                    #parse("/velocity/fragments/listing.vm")
                 #end
             </div>
             <div id="tabs-2">
                 #foreach($listing in $favoritedlistings)
-                    #parse("../fragments/listing.vm")
+                    #parse("/velocity/fragments/listing.vm")
                 #end
             </div>
             <div id="tabs-3">
                 #foreach($listing in $archivelistings)
-                    #parse("../fragments/listing.vm")
+                    #parse("/velocity/fragments/listing.vm")
                 #end
             </div>
         </div>

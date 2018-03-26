@@ -1,4 +1,4 @@
-#parse("../Layout.vm")
+#parse("/velocity/Layout.vm")
 #if($listing)
     #set($fname = "")
     #set($lname = "")

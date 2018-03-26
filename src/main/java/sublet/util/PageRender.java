@@ -19,9 +19,9 @@ public class PageRender {
 
         VelocityEngine configuredEngine = new VelocityEngine();
 
-        configuredEngine.setProperty("runtime.references.strict", true);
+        //configuredEngine.setProperty("runtime.references.strict", true);
 
-        configuredEngine.setProperty("resource.loader", "class");
+        configuredEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
 
         configuredEngine.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 

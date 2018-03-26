@@ -1,5 +1,5 @@
 #* @vtlvariable name="tags" type="java.util.HashMap" *#
-#parse("../Layout.vm")
+#parse("/velocity/Layout.vm")
 #if($listing)
     #set($address = $listing.getAddress())
     #set($rent = $listing.getRent())
@@ -108,7 +108,7 @@
             <button type="submit" class="btn">Submit</button>
         </form>
     #elseif($listing)
-        #parse("../fragments/listing.vm")
+        #parse("/velocity/fragments/listing.vm")
     #end
 
 

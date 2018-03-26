@@ -19,6 +19,11 @@ public class DatabaseConnection {
 
     public Connection getConnection() throws DatabaseException {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new DatabaseException("jdbc somehow didnt load", e);
+        }
+        try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             throw new DatabaseException("Can't connect to Database", e);

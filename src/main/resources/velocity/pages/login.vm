@@ -1,4 +1,4 @@
-#parse("../Layout.vm")
+#parse("/velocity/Layout.vm")
 #@mainLayout()
     <h1 class="form-title" style="margin-bottom: 20px">Login</h1>
 <form action="" method="post" class="data">
